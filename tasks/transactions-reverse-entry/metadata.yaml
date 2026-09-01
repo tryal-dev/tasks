@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: transactions-reverse-entry
+title: "Reverse It, Once"
+author: "@Drakonian"
+difficulty: medium
+topic: transactions
+tags:
+  - reversal
+  - ledger-entry
+  - atomicity
+  - guard-clauses
+
+executionTier: full_execution
+transactionModel: committed
+companyIsolation: fresh
+
+hints:
+  - "Two records tell one story. Before writing any code, write down what each side of a reversal stores: which of `Reversed`, `\"Reversed by Entry No.\"` and `\"Reversed Entry No.\"` is set on the entry being reversed, and which on the new entry. The tests read both sides, and they read the fields you leave at zero as well."
+  - "The refusals are ordered on purpose: a reversal entry is itself flagged `Reversed`, so checking `Reversed` first would report the wrong reason for it. Check `\"Reversed Entry No.\"` before `Reversed`, and `\"Applied Amount\"` last."
+  - "For `ReverseDocument`, the all-or-nothing rule needs no cleanup code: one call is already one write transaction, and an error undoes everything it wrote — as long as nothing in your code ends that transaction early. So do not reach for `Commit`. Scope the run with `SetRange` on `\"Document No.\"` plus `SetRange(\"Reversed Entry No.\", 0)`: the reversals you insert carry the same document no., and leaving them out of the filter also keeps them out of the set you are still walking. Number the new entries from one `FindLast` over the whole table, incrementing per entry."
+
+allowedDependencies:
+  - "Base Application"

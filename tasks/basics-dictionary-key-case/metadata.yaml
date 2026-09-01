@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-dictionary-key-case
+title: "abc-1 Is ABC-1"
+author: "@Drakonian"
+difficulty: easy
+topic: basics
+tags:
+  - dictionary
+  - code
+  - text
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Text keys compare character by character, so abc-1, ABC-1 and 'ABC-1 ' are three different keys and the starter's raw-input dictionary can never merge them. A Code[20] key does the normalising for you — the intermediate Text dictionary has to go."
+  - "Assign each incoming item number to a Code[20] variable before touching the dictionary: the Text → Code conversion uppercases, trims, and refuses anything longer than 20 characters, which gives you rule 5 for free. Keep Totals keyed on that variable, not on the raw Text."
+  - "For each line: try Get with the two-parameter shape (key, var running total); when it returns true, Set the key to the running total plus this line's quantity, otherwise Add the key with this line's quantity. Never call Add twice for the same key — without capturing its Boolean, the second call raises."
+
+allowedDependencies:
+  - "Base Application"

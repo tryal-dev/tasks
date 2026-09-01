@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: integrations-http-retry
+title: "Retry with Backoff"
+author: "@Drakonian"
+difficulty: hard
+topic: integrations
+tags:
+  - httpclient
+  - retry
+  - resilience
+  - interface
+  - mocking
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Classify every response before deciding anything: success, transient (429 or 500–599), or permanent. Each class is one exit from your attempt loop — success returns the body, permanent gives up on the spot, transient only gives up once the attempt budget is spent."
+  - "Build a \"Http Request Message\" (method GET, request URI = Url) and hand it to the handler's Send together with an HttpClient and a \"Http Response Message\". The response codeunit answers both questions your loop asks: whether the status counts as a success, and the raw status code as an integer for the transient check. Read the body only on the success path."
+  - "Keep the tally in a codeunit-scope variable: reset it to 0 at the top of GetWithRetry, and before attempt N (for every N above 1) add BackoffDelayMs(N - 1). Compute the doubling with integer arithmetic from the retry number — and remember that every give-up path must leave ResponseBody empty."
+
+allowedDependencies:
+  - "Base Application"
+  - "System Application"

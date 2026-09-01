@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-timezone-unix
+title: "Time Zones and Unix Timestamps"
+author: "@Drakonian"
+difficulty: medium
+topic: basics
+tags:
+  - datetime
+  - time-zone
+  - unix-timestamp
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Don't compute offsets or epochs yourself — the System Application ships codeunit \"Time Zone\" for offset and daylight saving questions and codeunit \"Unix Timestamp\" for DateTime ↔ Unix seconds. Each of your five procedures is a thin layer over one of their methods. An epoch built with CreateDateTime or split with DT2Date/DT2Time lives in the session's time zone, which is not UTC on the grading server."
+  - "GetTimezoneOffset returns a Duration — a count of milliseconds that fits in a BigInteger. Divide by 60000 for whole minutes, then `div 60` and `mod 60` split hours from minutes. Adding the Duration to a DateTime yields a DateTime, which settles ToLocalTime."
+  - "For the ±HH:MM text: take the sign from the offset, then format the absolute hours and minutes zero-padded — Format(Value, 2, '<Integer,2><Filler Character,0>') renders 5 as 05. CreateTimestampSeconds and EvaluateTimestamp cover both Unix directions in seconds."
+
+allowedDependencies:
+  - "Base Application"

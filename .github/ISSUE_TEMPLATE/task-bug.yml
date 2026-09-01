@@ -1,0 +1,37 @@
+name: "\U0001F41B Report a task problem"
+description: A task's statement, tests, hints, or solution is wrong, unfair, or unclear.
+title: "[Task bug]: "
+labels: ["task-bug"]
+body:
+  - type: input
+    id: task-id
+    attributes:
+      label: Task id
+      description: The directory name under `tasks/` — shown in the platform UI and API.
+      placeholder: basics-add-table-field
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What kind of problem?
+      options:
+        - Tests reject a correct solution (too strict / wrong assertion)
+        - Tests accept a wrong solution (not strict enough)
+        - Statement promises something the tests don't check (or vice versa)
+        - Hint is wrong or misleading
+        - Reference solution looks wrong
+        - Typo / wording
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: What happened?
+      description: >-
+        What you submitted, what you expected, and what the grader said.
+        If you can, include the smallest submission that exposes the problem —
+        note this issue tracker is public.
+    validations:
+      required: true

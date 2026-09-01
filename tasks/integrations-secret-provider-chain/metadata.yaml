@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: integrations-secret-provider-chain
+title: "Credentials Behind an Interface"
+author: "@Drakonian"
+difficulty: medium
+topic: integrations
+tags:
+  - interface
+  - secrettext
+  - secrets
+  - dependency-injection
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "The resolver never picks its own providers — whatever `SetProviders` was handed last is what every later lookup goes through. A value of type `Interface \"Secret Provider v2\"` can live in a codeunit's `var` section just like a record or a codeunit can, and a local procedure can take one as a parameter, which is what turns \"ask the primary, then the fallback\" into the same two lines twice."
+  - "The interface's two `GetSecret` overloads differ only in the type of their `var` parameter, so the type of the variable you receive the value in decides which one AL calls — the plain-`Text` one is the trap the tests count. Note that both overloads report success as a return value, which is separate from whether anything actually came back."
+  - "A `SecretText` can be assigned from a `Text` variable but never read back into one, so the only question you can ask about a value you resolved is whether it has any content at all — and that is exactly the check that turns a provider's success-with-nothing into a miss. On the failing path of `TryResolve`, clearing the `var` parameter is what stops the caller's leftover value from looking like a resolved secret."
+
+allowedDependencies:
+  - "Base Application"
+  - "System Application"

@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: integrations-base64-roundtrip
+title: "Base64 In, Base64 Out"
+author: "@Drakonian"
+difficulty: easy
+topic: integrations
+tags:
+  - base64
+  - temp-blob
+  - streams
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Nobody hand-rolls Base64 in AL — the System Application ships a ready-made codec codeunit. Search the symbols for Base64."
+  - "Codeunit `\"Base64 Convert\"` has `ToBase64`/`FromBase64` overloads that work directly on streams, and `\"Temp Blob\"` hands out `CreateInStream`/`CreateOutStream` over the bytes it holds."
+  - "Encode: create an InStream from the Temp Blob and pass it to `ToBase64` — the overload without the line-break option emits a single line. Decode: create an OutStream and let `FromBase64` write the decoded bytes straight into it."
+
+allowedDependencies:
+  - "System Application"
+  - "Base Application"

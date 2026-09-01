@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: integrations-jwt-claims
+title: "Read the Token Before You Trust It"
+author: "@Drakonian"
+difficulty: medium
+topic: integrations
+tags:
+  - jwt
+  - base64url
+  - json
+  - security
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "The segments are base64url, not Base64. The two alphabets differ in exactly two characters, and base64url throws the `=` padding away — feed a segment straight to a plain Base64 decoder and most tokens blow up on the spot."
+  - "Search the symbols before hand-rolling a decoder: the platform's Base64 codeunit will happily *encode* to base64url, but look hard at what it offers in the other direction. Whatever is missing, you have to supply yourself before calling the decoder that does exist."
+  - "Undo the two substitutions, then put the padding back: a standard Base64 string's length is always a multiple of 4, so append two `=` when the length leaves 2 over and one `=` when it leaves 3. After that it is an ordinary Base64 string. For `exp`/`nbf`, don't hand-roll epoch arithmetic against a `DateTime` — the System Application ships a codeunit that converts a `DateTime` to Unix seconds and back, and comparing whole seconds keeps the boundary rules exact."
+
+allowedDependencies:
+  - "System Application"
+  - "Base Application"

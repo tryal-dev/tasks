@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: performance-sift-key
+title: "Shelf Totals, Straight From the Index"
+author: "@Drakonian"
+difficulty: medium
+topic: performance
+tags:
+  - table
+  - sift
+  - sql-budget
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "The budget counts rows, not statements: a repeat-until over the shelf's movements fetches every row it adds, so with a few hundred seeded movements it can never fit 25 — however few statements it uses. The database can hand back a total as a single row, and the key the statement asks you to declare is exactly what keeps that total pre-computed."
+  - "The read side is Record.CalcSums: it asks SQL for the sum of the filtered set in one statement and one returned row, no loop. With the SumIndexFields key in place and the filters sitting on that key's fields, the answer comes straight from the indexed view SQL Server maintains on every insert — that is what SIFT is."
+  - "In each procedure: SetCurrentKey to the Shelf Code + Item No. key, SetRange the parameters, call CalcSums(Quantity), and return the record's Quantity field — after CalcSums it carries the total for the filtered set, not one row's value."
+
+allowedDependencies:
+  - "Base Application"

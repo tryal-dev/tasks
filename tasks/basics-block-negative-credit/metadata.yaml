@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-block-negative-credit
+title: "Block Negative Credit Limits"
+author: "@Drakonian"
+difficulty: easy
+topic: basics
+tags:
+  - table-extension
+  - onvalidate
+  - validation
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Validation logic for a single field lives in that field's `OnValidate` trigger, inside the field declaration."
+  - "Inside the trigger, compare the field to 0 and raise `Error(...)` when it is negative."
+  - "The tests check that the message contains exactly `must not be negative` — for example `Error('Internal Credit Limit must not be negative.')`."
+
+allowedDependencies:
+  - "Base Application"

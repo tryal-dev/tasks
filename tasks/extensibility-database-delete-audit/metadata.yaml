@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: extensibility-database-delete-audit
+title: "Audit Every Deleted Document"
+author: "@Drakonian"
+difficulty: medium
+topic: extensibility
+
+tags:
+  - event-subscriber
+  - database-triggers
+  - recordref
+  - fieldref
+  - auditing
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "A table's own `OnDelete` trigger and its `OnBeforeDeleteEvent` sit on the table itself. Underneath them the platform runs a second, global layer: it asks the application once per table which database operations it should raise a global trigger for, and then raises that trigger for every such operation on that table. Both halves — the question and the trigger — are published as integration events on a single base application codeunit."
+  - "That codeunit is `GlobalTriggerManagement` (codeunit 49), the one the standard Change Log hooks into. The question it publishes is `OnAfterGetDatabaseTableTriggerSetup(TableId; var OnDatabaseInsert; var OnDatabaseModify; var OnDatabaseDelete; var OnDatabaseRename)` — answer it by switching a flag on for your table and no other. The trigger it publishes for deletions hands you the vanished row as a `RecordRef`."
+  - "Subscribe twice from `\"Vault Delete Audit\"`. In the setup subscriber, set `OnDatabaseDelete := true` when `TableId = Database::\"Vault Document\"`. In `OnAfterOnDatabaseDelete(RecRef: RecordRef)`, exit unless `RecRef.Number = Database::\"Vault Document\"`, then pull the values out with `RecRef.Field(<field no.>)` and `FieldRef.Value()` before inserting the log row — the record is on its way out, so re-reading it from the database is not an option."
+
+allowedDependencies:
+  - "Base Application"

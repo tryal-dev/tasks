@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-path-split
+title: "Last Segment, One-Based"
+author: "@Drakonian"
+difficulty: easy
+topic: basics
+tags:
+  - text
+  - list
+  - split
+  - lastindexof
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Split the path once on both separators and take the last element of the list that comes back. Before you compute that index, check where AL lists start counting — it is not where C#, JavaScript or Python start."
+  - "A List of [Text] runs from index 1 to Count(), so the last element is at Count() itself, not Count() minus one. Asking for index 0 does not return the first element — it raises a runtime error, which is what the starter does on a bare file name."
+  - "For the extension, search the file name (not the whole path) with LastIndexOf('.'). It returns the 1-based position of the last dot and 0 — not -1 — when there is none: when it is 0 return an empty text, otherwise return the Substring that starts one position after the dot."
+
+allowedDependencies:
+  - "Base Application"

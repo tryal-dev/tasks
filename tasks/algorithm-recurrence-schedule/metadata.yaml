@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: algorithm-recurrence-schedule
+title: "Next N Occurrences"
+author: "@Drakonian"
+difficulty: medium
+topic: algorithm
+tags:
+  - dates
+  - datetime
+  - recurrence
+  - scheduling
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Both schedule kinds boil down to the same yes/no question about a single calendar date: is this date an occurrence date? The time of day never varies — every occurrence is at StartTime — so keep the date logic apart from the time. Codeunit globals set by the Create procedures live on until the next call on the same instance, and that is all the state a planner needs."
+  - "Answer the question per kind: a weekly date qualifies when Date2DWY(TheDate, 1) is in Weekdays; a monthly date qualifies when it equals its own month's candidate — start at the first day of the month and step forward to the first matching weekday, then add whole weeks for Second through Fourth, or start at the last day of the month and step backward for Last. CreateDateTime, DT2Date and Date2DMY do all the splitting and joining between dates, times and DateTimes."
+  - "CalculateNextOccurrence is one loop: begin at the later of StartDate and DT2Date(LastOccurrence), and walk one day at a time until a date is an occurrence date AND CreateDateTime(that date, StartTime) is strictly greater than LastOccurrence — that single comparison also settles the same-day case. Return 0DT as soon as the walk passes a non-zero EndDate. NextOccurrences then feeds each result back into CalculateNextOccurrence until it gets 0DT or has collected MaxCount entries."
+
+allowedDependencies:
+  - "Base Application"

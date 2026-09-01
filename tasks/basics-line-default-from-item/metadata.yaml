@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-line-default-from-item
+title: "Default the Line from the Item Card"
+author: "@Drakonian"
+difficulty: easy
+topic: basics
+tags:
+  - table-extension
+  - event-subscriber
+  - sales-line
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "The two table extensions only carry the field — the copy itself needs code that runs while the sales line validates \"No.\". Table 37 announces that moment through an integration event."
+  - "Subscribe in a codeunit with an `[EventSubscriber(...)]` attribute. Its arguments, in order: `ObjectType::Table`; the publisher table written with the `Database::` prefix (not `Table::`); the event name in single quotes; an empty element name (`''`); and two `false` flags."
+  - "A subscriber may declare just the event parameters it uses, as long as their names and types match the publisher's — here that is the `var` sales line record and the item record. In the body, assign the item's grade to the line's field, no conditions — blank grades must copy too."
+
+allowedDependencies:
+  - "Base Application"

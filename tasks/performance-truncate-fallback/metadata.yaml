@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: performance-truncate-fallback
+title: "Wipe It Fast, Empty It Always"
+author: "@Drakonian"
+difficulty: easy
+topic: performance
+tags:
+  - bulk-delete
+  - truncate
+  - staging
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "The starter's one-stroke wipe is the right tool for a table filled by the hundred thousand, but the platform refuses it in a handful of states — temporary instances, active delete-event subscribers, try functions among them — and a refusal the method is not allowed to report becomes a runtime error. Read how the method reports that refusal, and what the documentation recommends doing then."
+  - "Look at Record.Truncate(ResetAutoIncrement): it wipes the rows in one bulk operation, respects the filters on the record, and can reset the AutoIncrement column — but temporary instances, active delete-event subscribers, try functions and a few other states don't support it, and DeleteAll empties any table you can write to."
+  - "Truncate's Boolean return value is the capability answer, and it is optional — ignore it and 'not supported' becomes a runtime error instead of false. Capture it: when truncation reports false, fall back to DeleteAll so the table still ends up empty."
+
+allowedDependencies:
+  - "Base Application"

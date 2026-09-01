@@ -1,0 +1,26 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: integrations-odata-query
+title: "Ask the Service the Right Question"
+author: "@Drakonian"
+difficulty: medium
+topic: integrations
+
+tags:
+  - odata
+  - uri-builder
+  - url-encoding
+  - rest
+  - mocking
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Build the query with the System Application's URL primitives instead of concatenating text: something has to percent-encode the spaces, quotes, parentheses and commas of a filter expression for you, and `Codeunit Uri` shows you the finished absolute URL."
+  - "Write the OData expression first, as plain readable text — `(CustomerName eq 'Fabrikam') and (OrderDate ge 2026-01-01)` — and only then hand it over as one query parameter value. Two small helpers pay off: one that wraps a text in single quotes and doubles the quotes inside it, and one that formats a Date as `2026-02-03` with an explicit format string rather than the locale's."
+  - "`Codeunit \"Uri Builder\"` adds query parameters in the order you call it, and each call re-encodes the whole query string. Read its remarks about the `$` sign carefully: the ordinary `AddQueryParameter` escapes the key too, which turns `$filter` into `%24filter`. There is a sibling method for OData keys — and because every call rewrites the entire query, mixing the two and finishing with the ordinary one re-encodes the keys you already added."
+  - "For `Fetch`, fill a `Codeunit \"Http Request Message\"` (method `GET`, request URI), pass it to the handler's `Send` together with an `HttpClient` variable and a `Codeunit \"Http Response Message\"`, and treat `Send`'s Boolean return as the transport-failure signal. Then ask the response whether its status counts as a success BEFORE reading `GetContent().AsText()`."
+
+allowedDependencies:
+  - "System Application"

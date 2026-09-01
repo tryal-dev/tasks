@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-currency-rounding
+title: "Round Like the Currency Says"
+author: "@Drakonian"
+difficulty: easy
+topic: basics
+tags:
+  - rounding
+  - currency
+  - decimal
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "`Round` takes an optional third argument, the direction text: '=' for nearest, '>' for up, '<' for down. The precision is not yours to choose either — it sits on the Currency record, so start by getting the right record. Note that a blank code is not a record in the Currency table."
+  - "The Currency record has an `Initialize(CurrencyCode)` procedure that handles the blank code for you: it copies the LCY rounding fields from General Ledger Setup into the record, and reads the currency card for any other code. Its `InvoiceRoundingDirection()` then turns the record's Invoice Rounding Type into exactly the text `Round` wants."
+  - "Invoice total: round with the record's Invoice Rounding Precision and the direction from `InvoiceRoundingDirection()`. Unit price: round with the Unit-Amount Rounding Precision and no direction at all. Do not touch the sign of the amount — `Round`'s '>' already moves a negative amount away from zero, which is what Up means."
+
+allowedDependencies:
+  - "Base Application"

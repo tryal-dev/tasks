@@ -1,0 +1,28 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: integrations-form-urlencoded
+title: "Post a Form, Read a Form"
+author: "@Drakonian"
+difficulty: medium
+topic: integrations
+
+tags:
+  - httpclient
+  - rest
+  - url-encoding
+  - form-urlencoded
+  - dictionary
+  - mocking
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Nothing here needs a hand-rolled hex table. The System Application already ships a codeunit that percent-encodes a piece of text exactly the way the writing rule describes, plus the matching one that reverses it — find that pair before you start writing character loops."
+  - "On the reading side, watch what happens to a key the gateway repeats: one Dictionary method refuses a key that is already present and errors, while the other quietly overwrites it. Only one of them gives you last-occurrence-wins."
+  - "The decoder is the half that bites. The .NET routine that BC wraps behind the unescape call is documented to never turn a `+` into a space — deliberately, because an escaped `%2B` has to survive as a literal `+`. So translate every raw `+` into a space over the still-escaped text FIRST, then unescape. Do it the other way round and `%2B` comes back as a space."
+  - "For the POST: `Codeunit \"Http Request Message\"` carries the method and the URI, `Codeunit \"Http Content\"` has a `Create` overload that takes the body and its content type in one call — which is how `Content-Type` ends up where it belongs, on the content's header collection instead of the request's — and `SetContent` puts the one into the other before you hand the request to `HttpClientHandler.Send`. The percent-encoding itself is `Codeunit Uri`: `EscapeDataString` out, `UnescapeDataString` back."
+
+allowedDependencies:
+  - "Base Application"
+  - "System Application"

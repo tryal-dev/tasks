@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: extensibility-qualified-name-dispatch
+title: "Dispatch by Fully Qualified Name"
+author: "@Drakonian"
+difficulty: medium
+topic: extensibility
+tags:
+  - reflection
+  - fully-qualified-name
+  - recordref
+  - codeunit-run
+  - namespaces
+
+executionTier: full_execution
+transactionModel: committed
+companyIsolation: fresh
+
+hints:
+  - "Three BC 28 surfaces do all the heavy lifting: `Record.FullyQualifiedName()`, a `RecordRef.Open` overload that takes a Text name, and a `Codeunit.Run` overload that does too. Wire the happy path first: open the target table from the job's text, loop its rows with FindSet/Next, and run the handler with your job record as the argument."
+  - "There is no 'does this table exist?' method — but you can attempt the open and keep the crash to yourself: a `[TryFunction]` wrapper around `RecordRef.Open` turns the platform error into a Boolean, and your own `Error` call then produces the exact message the contract demands. The same return-value trick on `Codeunit.Run` (`if Codeunit.Run(...) then`) is what lets a failing row be recorded instead of killing the run."
+  - "`Codeunit.Run` with its return value captured commits on every successful return — and refuses to start at all while your session holds uncommitted writes. So never `Insert` a log entry (or `Modify` the job record) between two handler runs: set \"Current Record ID\" in memory only, buffer the outcomes in a temporary \"Dispatch Run Log\" record inside the loop, and write the real entries once, after the last row."
+
+allowedDependencies:
+  - "Base Application"

@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: algorithm-uom-base-quantity
+title: "Qty. per Unit Without the Drift"
+author: "@Drakonian"
+difficulty: easy
+topic: algorithm
+tags:
+  - rounding
+  - decimal
+  - unit-of-measure
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "BC never lets a base quantity keep more than five decimals: the product is rounded to 0.00001 the instant it is computed, and a non-zero Quantity Rounding Precision replaces that step entirely. Halfway products round away from zero — commercial rounding, not banker's rounding."
+  - "Converting each partial posting on its own loses up to half a step every time, so six half-step postings drift three steps away from the ordered base quantity. No formula that looks only at QtyToPost can satisfy guarantee 2 — QtyPostedSoFar has to take part in the arithmetic, not just tag along."
+  - "The running-total trick closes the books: convert the cumulative quantity posted after this posting to base, convert the cumulative quantity posted before it to base, and post the difference. The running sum then equals CalcBaseQty of the total by construction, and each posting stays within one step of its own share."
+
+allowedDependencies:
+  - "Base Application"

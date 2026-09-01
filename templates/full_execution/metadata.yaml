@@ -1,0 +1,45 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+#
+# full_execution task template. Copy this directory to tasks/<your-task-id>/,
+# then work through every field. Full reference: CONTRIBUTING.md.
+#
+# The directory name IS the task id — keep `id` and the folder name in sync.
+
+id: algorithm-your-slug # <topic>-<slug>: topic prefix + kebab-case slug
+title: "Your Task Title"
+
+# Optional display credit shown with the task. Courtesy only — authorship is
+# recorded by git history and covered by the repository's MIT license.
+# author: "@your-github-handle"
+difficulty: medium # easy | medium | hard
+topic: algorithm # must exist in topics.yaml
+
+tags: [] # free-form facets for filtering, e.g. [rounding, vat]
+
+# The submission is compiled together with tests/ into a test app, published
+# into a real BC container, and graded by the [Test] procedures. Correctness
+# lives entirely in the tests.
+executionTier: full_execution
+
+# Do the tests roll back everything they write?
+#   auto_rollback — standard rollback tests (typical for pure logic)
+#   committed     — the tests COMMIT data; then also set companyIsolation: fresh
+# Never affects pass/fail — it only feeds the companyIsolation decision.
+transactionModel: auto_rollback
+
+# reuse (default) lets provably rollback-safe submissions grade in a shared
+# warm company (faster); the platform falls back to fresh automatically.
+# Set fresh if the tests commit data.
+companyIsolation: reuse
+
+# Ordered gentle -> explicit. Don't give away the full solution in hint 1.
+hints:
+  - "First hint (gentle nudge)."
+  - "Second hint (more explicit)."
+
+# Display-only today.
+allowedDependencies:
+  - "Base Application"
+
+# Deliberately absent: bcVersion / runtime / target — they default from the
+# platform's pinned BC version; only set for a deliberate exception.

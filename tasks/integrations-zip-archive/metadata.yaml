@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: integrations-zip-archive
+title: "Zip In, Zip Out"
+author: "@Drakonian"
+difficulty: medium
+topic: integrations
+tags:
+  - zip
+  - gzip
+  - compression
+  - temp-blob
+  - streams
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "You never parse zip or gzip bytes by hand in AL — the System Application ships one module that builds, reads, and sniffs compressed archives. Search the symbols for 'Compression'."
+  - "Codeunit `\"Data Compression\"` holds one archive at a time: `CreateZipArchive`/`AddEntry`/`SaveZipArchive` build one, `OpenZipArchive`/`GetEntryList`/`ExtractEntry` read one, and `CloseZipArchive` disposes it. `\"Temp Blob\"` bridges between the blobs in your signatures and the streams the module expects — a fresh per-entry Temp Blob gives `AddEntry` its InStream."
+  - "For `GetDocumentText`, sniff with `IsZip` and `IsGZip` — give each check a fresh InStream from the payload blob, because sniffing reads the stream's first bytes. Route zip payloads through `GetEntryList` + `ExtractEntry`, gzip payloads through `GZipDecompress`, and read anything else as UTF-8 text straight from the blob."
+
+allowedDependencies:
+  - "System Application"
+  - "Base Application"

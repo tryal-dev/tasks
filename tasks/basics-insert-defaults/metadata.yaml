@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-insert-defaults
+title: "Default Values on Insert"
+author: "@Drakonian"
+difficulty: easy
+topic: basics
+tags:
+  - table-extension
+  - oninsert
+  - defaults
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Table extensions can define table triggers like `OnBeforeInsert` — it runs before the row is written, so your changes land in the database."
+  - "Stamp a default only when the field is blank: `0D` for an empty date, `''` for an empty code."
+  - "Two small ifs inside `OnBeforeInsert`: assign `WorkDate()` only when the date is `0D`, assign `NEW` only when the code is `''`."
+
+allowedDependencies:
+  - "Base Application"

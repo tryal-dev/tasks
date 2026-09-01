@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-workdate-not-today
+title: "The Date Nobody Set"
+author: "@Drakonian"
+difficulty: easy
+topic: basics
+tags:
+  - workdate
+  - date
+  - posting-date
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Business Central has two \"current dates\". `Today` reads the clock in the user's time zone; the work date is a per-session setting on My Settings that users move on purpose to post into another day. The grading tests move the work date and expect your answers to follow — anything that reads the clock cannot keep up."
+  - "`WorkDate` called without an argument returns the session's work date; called with a date it sets it (that is what the tests do before calling your code). Dates compare with < and >, and subtracting one Date from another gives the number of days between them as an Integer."
+  - "A blank date (`0D`) is smaller than every real date, so a plain comparison calls it backdated and a plain subtraction reports it centuries overdue. Test for `0D` first and return the blank-date answer (not backdated, zero days) before comparing or subtracting. For a due date on or after the work date return 0 rather than the negative difference."
+
+allowedDependencies:
+  - "Base Application"

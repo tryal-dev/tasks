@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: performance-setup-cache
+title: "Setup Table Done Right"
+author: "@Drakonian"
+difficulty: medium
+topic: performance
+tags:
+  - setup-table
+  - caching
+  - sql-budget
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Counting statements is only half the exam — the tests also read through a codeunit variable your warm-up call never touched. A global variable in an ordinary codeunit dies with its own instance, so ask yourself where AL lets state outlive every individual variable in the session."
+  - "One codeunit property turns the whole codeunit into session state: every variable of it points at the same lone instance, so its globals become the shared cache. Keep two of them — the setup record itself and a Boolean remembering whether it has been read."
+  - "GetSetup: when the Boolean is clear, Get the row (and when Get fails, Insert an Init'ed one), then set the Boolean; in every case copy the global record to the var parameter. Invalidate: clear the Boolean. The property you are after sits at the top of the codeunit's declaration and is named for exactly what it enforces — a single instance."
+
+allowedDependencies:
+  - "Base Application"

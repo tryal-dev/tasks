@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: integrations-xml-namespaces
+title: "Parse XML That Has Namespaces"
+author: "@Drakonian"
+difficulty: hard
+topic: integrations
+tags:
+  - xml
+  - xpath
+  - namespaces
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "The starter's XPath queries are syntactically fine and match nothing. In XPath, an unprefixed name like ShipmentStatus means 'ShipmentStatus in NO namespace' — but a default xmlns declaration puts an element and its whole subtree in a namespace even though you see no prefixes anywhere. The document and the query disagree about identity, and XPath resolves that disagreement silently: zero matches."
+  - "AL ships an XmlNamespaceManager: AddNamespace binds a prefix of your choosing to a namespace URI, and SelectNodes / SelectSingleNode have overloads that take the manager and resolve those prefixes inside your XPath. After ReadFrom, associate the manager with the document via its NameTable. The prefixes you register are private aliases — they never have to match the sender's, which is exactly what makes prefix-shuffling senders harmless."
+  - "Register one prefix per URI — say sh for the shipping namespace and trk for the tracking namespace — then query with those prefixes on every element step: the header path, //sh:Package, //trk:TrackingNo. One last trap: an attribute without a prefix belongs to NO namespace even when a default namespace is in force, so the weight's unit is selected as @unit, never @sh:unit."
+
+allowedDependencies:
+  - "Base Application"

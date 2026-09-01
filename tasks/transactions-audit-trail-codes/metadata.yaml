@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: transactions-audit-trail-codes
+title: "Source Code on Every Entry"
+author: "@Drakonian"
+difficulty: medium
+topic: transactions
+tags:
+  - audit-trail
+  - source-code
+  - reason-code
+  - table-extension
+  - general-journal
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Two things have to be true before a claim can post: the singleton setup record exists, and both audit codes point at records that really exist. Make initialization the first act of the posting routine and the \"first claim in a fresh company\" case solves itself — the platform's own posting engine reads Source Code Setup on every posting, so a missing record fails the posting, not just your stamping."
+  - "A singleton setup table is read with a parameterless `Get()` — its primary key is blank. The get-or-create shape is the same for all three records here: try to read, and initialize plus insert when the read comes back empty. Guard each setup field with a blankness check so a second call cannot clobber a code somebody chose deliberately."
+  - "`Gen. Jnl.-Post Batch` commits, so it can never run inside the grading transaction. `Gen. Jnl.-Post Line` posts a single line and leaves committing to its caller — that is the one to run. Set `\"Source Code\"` and `\"Reason Code\"` on the line before you hand it over: the G/L entries are built by copying those fields off the journal line, balancing entry included."
+
+allowedDependencies:
+  - "Base Application"
+  - "Business Foundation"

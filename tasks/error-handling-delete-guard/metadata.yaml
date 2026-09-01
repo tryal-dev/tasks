@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: error-handling-delete-guard
+title: "No Deleting Released Orders"
+author: "@Drakonian"
+difficulty: easy
+topic: error-handling
+tags:
+  - event-subscriber
+  - table-trigger-events
+  - sales
+  - error
+
+executionTier: full_execution
+transactionModel: committed
+companyIsolation: fresh
+
+hints:
+  - "You cannot edit the Sales Header table, and no base-app codeunit publishes a 'deleting an order' event — but you don't need one. The platform itself raises an event around every table operation, including the moment just before a record is deleted, and an error raised there cancels the deletion."
+  - "Every table automatically publishes trigger events — Sales Header included. Subscribe with [EventSubscriber(ObjectType::Table, Database::\"Sales Header\", ...)]; the event you want is named after the trigger it wraps and fires before the delete happens."
+  - "Subscribe to 'OnBeforeDeleteEvent' with a `var Rec: Record \"Sales Header\"` parameter. Exit unless Rec.\"Document Type\" is Order and Rec.Status is Released; otherwise call Error with a Label that contains 'is released and cannot be deleted' and a %1 placeholder for Rec.\"No.\"."
+
+allowedDependencies:
+  - "Base Application"

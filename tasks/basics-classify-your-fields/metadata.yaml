@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-classify-your-fields
+title: "Classify Your Fields"
+author: "@Drakonian"
+difficulty: easy
+topic: basics
+tags:
+  - data-classification
+  - privacy
+  - appsource
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Everything you need sits on `Codeunit \"Data Classification Mgt.\"` in the System Application. Browse its public procedures once before writing anything: there is one that answers whether a table can be classified at all, and one per sensitivity level for a single field. The one that classifies a whole table in one call is a trap here — it sweeps the system fields in, and no procedure deletes a row again."
+  - "Do the table in two steps. First loop over `Record \"Field\"` filtered on the table number, `Class = Normal` and a field number below `RecordRef.SystemIdNo()`, putting each field on the plain baseline; then override the handful that deserve more — the overrides win because each one rewrites the row the baseline just created. Field numbers come from `FieldNo(\"Field Name\")`, so nothing is hardcoded and nothing breaks when the app is renumbered."
+  - "`InsertDataSensitivityForField` is the trap: it always inserts, so a second run dies on the existing primary key. The `SetFieldTo...` procedures update the row when it is there and insert it when it is not — which is also what gets a field a row when no baseline created one. For the unknown-field error, `Record \"Field\"` is keyed on table number and field number, so a failed `Get` is your check."
+
+allowedDependencies:
+  - "Base Application"
+  - "System Application"

@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: transactions-stale-record
+title: "Write Back a Record You Read Earlier"
+author: "@Drakonian"
+difficulty: easy
+topic: transactions
+tags:
+  - concurrency
+  - optimistic-concurrency
+  - stale-record
+  - lost-update
+  - modify
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Reproduce the crash first: read a ticket into one variable, Modify it through a second variable, then Modify the first — the platform refuses with the 'Unable to change an earlier version' error, because that instance's row version is older than the database's. Nothing you assign to the stale copy can repair its version; the fix is to never write through it."
+  - "Treat the incoming record as a message, not as a row: the only part of it you may trust is its primary key. Fetch the ticket's current row with that key into a fresh record variable — a freshly fetched instance carries the current row version, so writing through it cannot trip the version check, and it already holds every other user's latest field values."
+  - "Set only Resolved and \"Resolution Note\" on the freshly fetched row, Modify it, and exit true. For the vanished outcome, check the Boolean return of the fetch: when it finds nothing, exit false and touch nothing — an unchecked fetch is exactly the 'record does not exist' crash the contract forbids."
+
+allowedDependencies:
+  - "Base Application"

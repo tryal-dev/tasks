@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: extensibility-master-data-audit
+title: "A Change Log for Item Master Data"
+author: "@Drakonian"
+difficulty: easy
+topic: extensibility
+
+tags:
+  - event-subscriber
+  - trigger-events
+  - xrec
+  - change-log
+  - auditing
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Your codeunit is never called, yet it must react to every insert and modify on a table you don't own. Business Central publishes events for exactly this — and for table operations the publisher is the platform itself: no base application code raises them, so there is no codeunit to subscribe to. Look at what the runtime publishes on the table."
+  - "These are trigger events: for every table the runtime raises `OnAfterInsertEvent`, `OnBeforeModifyEvent` and `OnAfterModifyEvent`, subscribable with `[EventSubscriber(ObjectType::Table, Database::Item, 'OnBeforeModifyEvent', '', false, false)]`. The modify events hand you `var Rec`, `var xRec`, and `RunTrigger` — the row being written, a second copy of it, and whether the caller ran the table triggers. Note what `xRec` really holds: only a page fills it with the row's previous values; when `Modify` is called from code, `xRec` is identical to `Rec`, so diffing the two finds no change at all."
+  - "In `OnBeforeModifyEvent` — before the write reaches the table — re-read the stored row into a second `Item` variable with `Get(Rec.\"No.\")` and diff `Rec` against that, writing a row only for an audited field whose values differ and taking `\"Old Value\"` from the stored row. Two traps: `RunTrigger` is information, not a gate — the event fires for `Modify(false)` too, so never exit when it is false; and `OnAfterValidateEvent` is the wrong hook — it fires for a `Validate` the record may never `Modify` into the database, and the tests fail a log that contains such phantom changes."
+
+allowedDependencies:
+  - "Base Application"

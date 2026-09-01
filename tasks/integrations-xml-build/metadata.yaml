@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: integrations-xml-build
+title: "Generate an XML Document"
+author: "@Drakonian"
+difficulty: medium
+topic: integrations
+tags:
+  - xml
+  - xmldocument
+  - outstream
+  - sales-order
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Don't glue the document together from strings — the first name containing & or < produces output that no parser accepts. AL has dedicated XML types whose values are escaped for you when the document is written."
+  - "XmlDocument.Create gives you an empty document; XmlElement.Create makes a named element, SetAttribute adds attributes, Add nests children (element text can be the third argument of XmlElement.Create). WriteTo sends the finished document straight to an OutStream, and the declaration comes from XmlDeclaration.Create plus SetDeclaration."
+  - "Format's third parameter picks a format number, and format 9 is the XML-invariant one: Format(TheDate, 0, 9) gives 2026-03-15 and Format(TheDecimal, 0, 9) gives 1234.56 on any server locale — plain Format would produce 03/15/26 or 1,234.56 and fail the tests. Format 9 does keep a field's own decimal places, though — a Unit Price of 193.7 comes out as 193.70 — so after formatting, trim trailing zeros and any point left dangling (DelChr with the '>' option does it; only trim when the text contains a point, or a whole 70 loses its zero). For the comment lines, filter the sales lines to those whose No. is not empty before looping."
+
+allowedDependencies:
+  - "Base Application"

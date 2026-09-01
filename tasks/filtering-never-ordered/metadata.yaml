@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: filtering-never-ordered
+title: "Customers Who Never Ordered"
+author: "@Drakonian"
+difficulty: easy
+topic: filtering
+tags:
+  - isempty
+  - setrange
+  - cust-ledger-entry
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Two filters describe 'ordered in the period': one on \"Customer No.\", one on \"Posting Date\". Set both on a \"Cust. Ledger Entry\" record variable, and the question becomes: is anything left in the filtered set?"
+  - "SetRange on a date field takes a from-value and a to-value in one call, and the range it keeps is inclusive at both ends — no comparison expressions needed. The list procedure is a plain FindSet loop over Customer that asks your boolean about each record and collects \"No.\" into the list."
+  - "IsEmpty() answers 'is the filtered set empty?' with the cheapest query BC can send — it stops at the first hit. Count() = 0 or FindFirst() would give the same answer while fetching more than the question needs; the idiomatic anti-join probe is SetRange, SetRange, IsEmpty."
+
+allowedDependencies:
+  - "Base Application"

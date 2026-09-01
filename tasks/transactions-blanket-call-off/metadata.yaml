@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: transactions-blanket-call-off
+title: "Call Off the Blanket Order"
+author: "@Drakonian"
+difficulty: medium
+topic: transactions
+tags:
+  - blanket-order
+  - sales
+  - document-conversion
+  - posting
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Do not build the sales order by hand. Business Central already owns the call-off conversion — the routine behind the blanket order's **Make Order** action — and it is the only thing that sets the two link fields, the prices, the dimensions and the reservations in one go. Your job is to tell it *which* tranche to take, then hand back the number of what it made."
+  - "That routine reads one field to decide what to convert: every blanket line whose `\"Qty. to Ship\"` is non-zero becomes an order line. Since blanket lines are created with that field already filled from the remaining quantity, calling off one line means writing the tranche onto the target line and zeroing every other line first. `Validate` the field rather than assigning it, so the base quantities follow — [Work with blanket sales orders or blanket purchase orders](https://learn.microsoft.com/en-us/dynamics365/business-central/sales-how-to-create-blanket-sales-orders) walks the same two steps by hand in the UI. For `RemainingOnBlanket`, the unposted part is not on the blanket line at all: the order lines created from it point back through `\"Blanket Order No.\"` and `\"Blanket Order Line No.\"`, and each one still owes its `\"Outstanding Quantity\"`."
+  - "Run `Codeunit \"Blanket Sales Order to Order\"` against the blanket `Sales Header` record, then ask it for the document it produced with `GetSalesOrderHeader` — it keeps the created header, and its `\"No.\"` is what `CallOff` returns. Note that the routine resets `\"Qty. to Ship\"` back to zero on the lines it converted, so a second call-off starts from a clean sheet. Run both guards before touching any field: an error thrown halfway leaves the document dirty for the rest of the transaction."
+
+allowedDependencies:
+  - "Base Application"

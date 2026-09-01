@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-add-page-field
+title: "Show the Customer Custom Field on the Card"
+author: "@Drakonian"
+difficulty: easy
+topic: basics
+tags:
+  - page-extension
+  - field
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "`pageextension <id> <Name> extends \"Customer Card\"` is the shell you need."
+  - "Use `addafter(<existing control>)` to anchor the new control."
+  - "`ApplicationArea = All;` is required for the control to be visible."
+  - "The field only exists because of the table extension file included in the starter — keep it in your submission alongside the page extension."
+
+allowedDependencies:
+  - "Base Application"

@@ -1,0 +1,91 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/Drakonian/tryal-dev-tasks/main/schema/metadata.schema.json",
+  "title": "TryAL task metadata",
+  "description": "Schema for tasks/<task-id>/metadata.yaml. The format contract is owned by the platform; do not change field names, enums, or semantics unilaterally.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "title", "difficulty", "topic", "executionTier"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)+$",
+      "description": "Task id. Must equal the directory name. Kebab-case; convention: <topic>-<slug>."
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Display title shown in the catalog."
+    },
+    "author": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Optional display credit, e.g. \"@your-github-handle\". Courtesy only — legal attribution lives in git history and the repository LICENSE (MIT). There is no per-task license field."
+    },
+    "difficulty": {
+      "enum": ["easy", "medium", "hard"]
+    },
+    "topic": {
+      "type": "string",
+      "description": "Must be an id defined in topics.yaml."
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "description": "Free-form facets for filtering."
+    },
+    "executionTier": {
+      "enum": ["compile_only", "full_execution"],
+      "description": "compile_only: success is exactly zero compiler errors. full_execution: graded by the [Test] procedures in tests/. NOTE: this catalog currently accepts only full_execution (lint-enforced repo policy); compile_only remains in the platform format for the future."
+    },
+    "transactionModel": {
+      "enum": ["auto_rollback", "committed", null],
+      "default": null,
+      "description": "full_execution only. Declares whether the test run rolls back all its writes. Never affects pass/fail; only feeds the companyIsolation: reuse decision."
+    },
+    "companyIsolation": {
+      "enum": ["reuse", "fresh"],
+      "default": "reuse",
+      "description": "full_execution only. reuse allows grading in a shared warm company when the submission is provably rollback-safe (automatic fallback to fresh). Set fresh if the tests commit data."
+    },
+    "hints": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "description": "Ordered gentle -> explicit."
+    },
+    "allowedDependencies": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "description": "Display-only today (e.g. \"Base Application\")."
+    },
+    "bcVersion": {
+      "type": "string",
+      "description": "Omit. Defaults from the platform's pinned BC version; only set for a deliberate exception."
+    },
+    "runtime": {
+      "type": "string",
+      "description": "Omit. Defaults from the platform's pinned BC version; only set for a deliberate exception."
+    },
+    "target": {
+      "enum": ["Cloud", "OnPrem"],
+      "description": "Omit. Defaults to Cloud; only set for a deliberate exception."
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "required": ["executionTier"],
+        "properties": { "executionTier": { "const": "compile_only" } }
+      },
+      "then": {
+        "properties": {
+          "transactionModel": {
+            "enum": [null],
+            "description": "transactionModel applies to full_execution tasks only."
+          },
+          "companyIsolation": false
+        }
+      }
+    }
+  ]
+}

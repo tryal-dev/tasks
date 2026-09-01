@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-transferfields-field-ids
+title: "Copy a Record into a Table Whose Field Numbers Disagree"
+author: "@Drakonian"
+difficulty: medium
+topic: basics
+tags:
+  - table
+  - transferfields
+  - validate
+  - archive
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "TransferFields pairs fields by NUMBER, never by name. Put the two field lists side by side before writing anything: only number 1 means the same thing on both tables, number 10 is a quantity on one side and a discount percentage on the other, and number 20 is a Date facing a Code."
+  - "The three-argument overload TransferFields(FromRecord, InitPrimaryKeyFields, SkipFieldsNotMatchingType) exists precisely for that Date-versus-Code pair: passing true for the third argument stops the runtime error. It changes nothing about the pairing, so field 10 still lands in field 10 — the copy has to be written out field by field instead."
+  - "An assignment is only an assignment: it never runs the destination's OnValidate, so the archive's 0..100 check and its upper-casing happen only if you call Validate (or do the same work yourself). You compute everything that no single source field can supply — the extended amount, the shortened reference text, the archive date — and read the Archived flag before writing anything, so a second call fails without touching the first archive row."
+
+allowedDependencies:
+  - "Base Application"

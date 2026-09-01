@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: algorithm-downtime-analysis
+title: "The Maintenance Window"
+author: "@Drakonian"
+difficulty: medium
+topic: algorithm
+
+tags:
+  - text-parsing
+  - sorting
+  - dates
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Nothing works on the raw list order: a stopped line does not say which work center it belongs to — only the latest begins-shift line before it in TIME does. Get the events into chronological order before you attribute anything."
+  - "The timestamp prefix is fixed-width, so ordering the lines as plain text IS chronological order — an insertion sort over the list, comparing whole lines with the < operator, is enough. Then walk the sorted lines once, remembering the current work center and the open stop's start."
+  - "Convert each timestamp to an absolute minute number: days since some fixed date (subtracting two Date values gives days) times 1440, plus hour times 60, plus minute. A stop from S to R lasts R - S minutes and is down at minutes-of-day (S mod 1440) through ((R - 1) mod 1440); tallying into an array of 1440 counters and taking the first index holding the maximum handles both the midnight wrap and the tie rule."
+
+allowedDependencies:
+  - "Base Application"

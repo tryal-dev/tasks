@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-validate-recalc
+title: "Recalculate on Validate"
+author: "@Drakonian"
+difficulty: easy
+topic: basics
+tags:
+  - table-extension
+  - onvalidate
+  - field-triggers
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Add an `OnValidate` trigger to `\"Markup %\"` — it runs only when the field is changed through `Validate()`."
+  - "Inside a field trigger you can read `\"Unit Cost\"` and write `\"Suggested Price\"` directly."
+  - "Multiply `\"Unit Cost\"` by (1 + markup / 100) and round with `Round(Value, 0.01)` — Round's second parameter is the precision (0.01), not a number of decimals."
+
+allowedDependencies:
+  - "Base Application"

@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-format-expressions
+title: "Five Faces of One Date"
+author: "@Drakonian"
+difficulty: easy
+topic: basics
+tags:
+  - format
+  - date
+  - time
+  - iso-week
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Format has a three-argument form: Format(Value, 0, FormatString). The format string names the pieces you want in angle brackets — <Year4>, <Month>, <Day>, <Month Text>, <Weekday Text>, <Week>, <Week Year4>, <Hours24>, <Minutes> — and copies every other character literally, so the dashes, the full stop and the W are typed straight into the string. The one-argument Format follows the session's regional settings, which is exactly what a stamp must not do."
+  - "A field name followed by a comma and a number is a fixed width: <Day,2> renders 3 as 03, <Day> renders it as 3. The week fields are ISO 8601, so <Week Year4> is the year the week belongs to, not the calendar year — 29 December 2025 is week 1 of 2026. For the hour, put <Filler Character,0> right after <Hours24,2> so the width is filled with a zero, not a space."
+  - "Six one-line bodies, each a single Format call on Value with length 0 and a Locked label as the format string: year-dash-month-dash-day with both two-digit; unpadded day, full stop, space, Month Text, space, Year4; Weekday Text alone; Week Year4, dash, W, two-digit Week; two-digit Hours24 with the zero filler, colon, two-digit Minutes; Year4, Month,2, Day,2 with nothing between. A blank date formats to an empty string by itself, but a blank time formats to 00:00 — ClockTime needs an explicit check that returns an empty string for 0T."
+
+allowedDependencies:
+  - "Base Application"

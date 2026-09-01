@@ -1,0 +1,21 @@
+{
+    "name": "Ruleset",
+    "description": "Adjusted Rules",
+    "rules": [
+        {
+            "id": "AA0247",
+            "action": "Hidden",
+            "justification": "namespaces"
+        },
+        {
+            "id": "AS0092",
+            "action": "Hidden",
+            "justification": "applicationInsightsKey"
+        },
+        {
+            "id": "PTE0004",
+            "action": "Hidden",
+            "justification": "permission sets are not required"
+        }
+    ]
+}

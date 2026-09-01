@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: algorithm-luhn-check
+title: "Validate with Luhn"
+author: "@Drakonian"
+difficulty: easy
+topic: algorithm
+tags:
+  - text
+  - checksum
+  - validation
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Split the work into two phases: first normalize the input (drop the spaces, reject anything else that is not a digit, check the length), then run the checksum. Interleaving the phases makes the every-second-digit bookkeeping needlessly tricky."
+  - "Positions count from the RIGHT: walk the string from its last character and flip a Boolean on every step to decide whether to double. Walking from the left doubles the wrong digits whenever the number has an even count of digits — the odd-length examples will pass and the even-length ones will fail."
+  - "In AL: DelChr(Input, '=', ' ') removes every space; a Char between '0' and '9' is a digit, and subtracting the character '0' from it yields its numeric value; a for-loop running downto 1 walks the string right to left. Double when the toggle says so, subtract 9 whenever the doubled value exceeds 9, and finish by checking the sum mod 10 = 0."
+
+allowedDependencies:
+  - "Base Application"

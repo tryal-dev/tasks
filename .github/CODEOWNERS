@@ -1,0 +1,7 @@
+# tests/ inside a task is trusted code executed in the platform's containers,
+# so every task change requires maintainer review before merge. Nothing from
+# an unreviewed branch is ever deployed.
+* @Drakonian
+tasks/ @Drakonian
+schema/ @Drakonian
+topics.yaml @Drakonian

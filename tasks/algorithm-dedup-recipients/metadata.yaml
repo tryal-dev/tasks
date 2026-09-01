@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: algorithm-dedup-recipients
+title: "Deduplicate, Keep the Order"
+author: "@Drakonian"
+difficulty: easy
+topic: algorithm
+tags:
+  - text
+  - list
+  - dictionary
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "The Text type has built-in methods that break a delimited string into pieces and strip surrounding spaces from a piece — no manual position arithmetic with StrPos and CopyStr needed."
+  - "Answering 'have I kept this address already?' needs a normalized form: compare the lowercased trimmed entry, but append the original trimmed entry to the output so the first occurrence's casing survives."
+  - "Recipients.Split(';') returns a List of [Text] you can foreach over, and Entry.Trim() cleans each piece. Store the lowercased entries you have already kept in a Dictionary of [Text, Boolean] (or a List of [Text]) — one ContainsKey/Contains lookup decides whether to append — and assemble the result with '; ' between appends."
+
+allowedDependencies:
+  - "Base Application"

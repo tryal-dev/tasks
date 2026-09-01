@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-runtrigger-contract
+title: "Two Insert Paths: The RunTrigger Contract"
+author: "@Drakonian"
+difficulty: easy
+topic: basics
+tags:
+  - table
+  - triggers
+  - runtrigger
+  - migration
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "`Insert` and `Modify` take an optional Boolean `RunTrigger` parameter that decides whether the table's `OnInsert`/`OnModify` code runs — and it defaults to false."
+  - "Stamp the dates inside the table's own `OnInsert` and `OnModify` triggers, unconditionally — the codeunit then only chooses whether those triggers run."
+  - "The register and update paths pass `RunTrigger` as true; the migration and patch paths pass false, so imported audit dates reach the database untouched."
+
+allowedDependencies:
+  - "Base Application"

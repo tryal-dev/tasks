@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: transactions-batch-commit
+title: "One Poison Record Shouldn't Kill the Batch"
+author: "@Drakonian"
+difficulty: medium
+topic: transactions
+tags:
+  - commit
+  - transaction-boundaries
+  - batch-processing
+  - error-recovery
+
+executionTier: full_execution
+transactionModel: committed
+companyIsolation: fresh
+
+hints:
+  - "Read the poison tests closely: they don't just check that the bad line fails — they check that the lines imported before it are still in the database after the run has died. An unhandled error undoes every write since the last transaction boundary, so ask yourself where your boundaries are during the loop."
+  - "An AL session keeps one write transaction open until it either fails — rolling everything back — or is explicitly made permanent with `Commit()`, which ends the current transaction and starts a new one. Work committed before an error survives it; everything after the last `Commit()` is lost with it."
+  - "Guard the line first, then write its `\"Imported Order\"` and flip its `Status`, then call `Commit()` before moving to the next line. Let a failing line's error propagate uncaught — the tests expect the run itself to fail while every fully imported line stays in the database."
+
+allowedDependencies:
+  - "Base Application"

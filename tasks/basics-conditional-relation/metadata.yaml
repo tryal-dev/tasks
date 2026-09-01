@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-conditional-relation
+title: "Point One Field at Three Tables"
+author: "@Drakonian"
+difficulty: easy
+topic: basics
+
+tags:
+  - table
+  - table-relation
+  - validation
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "A `TableRelation` does not have to name a single table. It can be a chain of conditions, each naming the table the value must exist in while its condition holds — the condition compares another field of the same record against a constant."
+  - "Cover only Item, Resource and G/L Account. A value of `Type` that no condition matches simply has no relation, and then any code is accepted."
+  - "The relation is checked before the field's `OnValidate` trigger runs, so a non-blank `\"No.\"` already exists by the time your trigger sees it — but a blank one was let through unchecked, so handle it before you `Get` anything."
+  - "Compare the incoming `Type` with `xRec`'s to tell a real change from a re-validation, and blank the dependent fields only when they differ. On the free-text field, keep `TableRelation` for the lookup and turn `ValidateTableRelation` off."
+
+allowedDependencies:
+  - "Base Application"

@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: algorithm-filter-expression-check
+title: "The Filter That Crashed the Nightly Job"
+author: "@Drakonian"
+difficulty: medium
+topic: algorithm
+tags:
+  - text
+  - parsing
+  - filters
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Three independent scans — count parentheses, count quotes, check the characters — will always leak: a parenthesis inside quotes is data, a pipe inside quotes is data, and '1..2..3' breaks no count at all. Read the expression once, left to right, always knowing whether you are inside quotes right now."
+  - "Mirror the grammar in code: one small local procedure per rule — an expression is alternatives separated by '|'; an alternative is a group in parentheses or a range; a range is a value, optionally '..' and a second value; a value is a token or a quoted text. Each procedure consumes characters from a shared current position and returns whether it matched."
+  - "Keep the expression, its length, and the current position as codeunit variables. On '(' recurse back into the expression parser and require the matching ')'. Inside quotes, when you meet a quote look at the NEXT character: another quote is an escaped literal (skip both), anything else closes the value. The expression is valid only if parsing succeeds AND the position has moved past the last character — leftover text like a stray ')' or a second '..' is the easiest miss."
+
+allowedDependencies:
+  - "Base Application"

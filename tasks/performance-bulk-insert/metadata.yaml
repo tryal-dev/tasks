@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: performance-bulk-insert
+title: "Insert the Batch, Don't Interrogate It"
+author: "@Drakonian"
+difficulty: medium
+topic: performance
+tags:
+  - bulk-insert
+  - staging
+  - sql-budget
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "The trace shows two statements per candidate row: one asking the staging table whether the key exists, one inserting it. Neither fits the budget per row — the answer to 'what is already staged, and how far does the numbering go?' must be paid for once per call, not once per key."
+  - "One FindSet pass over Import Staging before the loop hands you both answers at once: collect every existing key into a Dictionary and track the highest line number as you go. From then on, membership checks and numbering are pure memory — just remember to add each key you insert to the dictionary too, so a key repeated inside the batch is caught without asking the database."
+  - "The server batches consecutive Insert calls into bulk statements — but only while nothing disturbs the buffer. Any Get, Find or Calc on the same table flushes it, Modify and Delete flush it, and consuming the return value (`if ImportStaging.Insert() then`) switches buffering off entirely. Keep the insert loop write-only: a bare `ImportStaging.Insert();` with nothing else touching the table."
+
+allowedDependencies:
+  - "Base Application"

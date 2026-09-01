@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-variant-dispatch
+title: "One Procedure, Any Type"
+author: "@Drakonian"
+difficulty: medium
+topic: basics
+tags:
+  - variant
+  - data-types
+  - format
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "A Variant answers type probes — IsRecord, IsBoolean, IsGuid, IsOption, IsInteger, IsDecimal, IsDate, IsCode, IsText. Branch on them and convert the payload only after a probe has confirmed what is inside; the compiler cannot check any of this for you."
+  - "Format takes a third parameter: standard format 9 is the culture-invariant XML format — dates render as 2026-04-07, booleans as true/false, decimals with a dot and no thousands separators, and an option as its zero-based number. The one-argument Format obeys the server's regional settings and will betray you on the grading container."
+  - "Order the chain specific-first: IsOption before IsInteger and IsCode before IsText, or the general branch claims the value and tags it wrong. For records, RecordRef.GetTable(Value) followed by reading the RecordRef's Name gives the table name; the Guid keeps its braces with the plain one-argument Format."
+
+allowedDependencies:
+  - "Base Application"

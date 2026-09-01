@@ -1,0 +1,12 @@
+# Topic ids that tasks/*/metadata.yaml may reference in `topic`.
+# This is the website's topic set — the platform derives display names from
+# these entries. Adding a topic here is a coordinated change with the
+# platform owner — propose it in a PR, don't just merge it.
+basics: Basics # first steps — table/page extensions, fields, enums, simple triggers
+extensibility: Extensibility # integration events, subscribers, interfaces bound to enums
+filtering: Filtering # filtering and database queries (SetRange, SetFilter, FindSet)
+performance: Performance # keys, SIFT, CalcSums, SetLoadFields — graded on query budgets
+transactions: Transactions # posting, transactional consistency, locking
+error-handling: Error Handling # TryFunction, ErrorInfo, collecting errors instead of failing fast
+integrations: Integrations # HTTP client, REST, JSON, XML — external data exchange, mocked in tests
+algorithm: Algorithm # logic puzzles, parsing, transforms

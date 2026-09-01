@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: algorithm-amount-in-words
+title: "Amount in Words"
+author: "@Drakonian"
+difficulty: medium
+topic: algorithm
+tags:
+  - text
+  - formatting
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Split the whole part into three-digit groups — millions, thousands, and the rest. Each group is spelled the same way; only the scale word after it changes, and a group of zero contributes nothing."
+  - "The heart of the task is one helper that turns 1–999 into words: the hundreds digit plus the word hundred, then the remainder — a single word below 20, otherwise a tens word, and a hyphen plus unit word when the last digit isn't zero."
+  - "Convert the amount to integer cents once (multiply by 100 and round) — then dollars are cents div 100 and the fraction is cents mod 100, with no decimal drift. Pad the cents with a leading zero when below 10, and remember the case statement is your friend for the word tables."
+
+allowedDependencies:
+  - "Base Application"

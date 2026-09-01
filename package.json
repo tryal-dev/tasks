@@ -1,0 +1,21 @@
+{
+  "name": "tryal-tasks",
+  "private": true,
+  "description": "Community task catalog for TryAL, a practice platform for Business Central AL developers",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "lint": "node scripts/lint.js",
+    "compile": "node scripts/compile.js",
+    "smoke": "node scripts/smoke.js"
+  },
+  "config": {
+    "alToolVersion": "18.0.38.52553-beta"
+  },
+  "devDependencies": {
+    "ajv": "^8.17.1",
+    "js-yaml": "^4.1.0"
+  }
+}

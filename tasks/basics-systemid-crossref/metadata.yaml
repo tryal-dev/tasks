@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-systemid-crossref
+title: "References That Survive Rename"
+author: "@Drakonian"
+difficulty: medium
+topic: basics
+tags:
+  - table
+  - systemid
+  - rename
+  - migration
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "A record has two identities: the primary key users see (and rename) and the SystemId — a GUID the platform assigns on insert and never changes afterwards. A reference that must survive a rename has to store the second one."
+  - "Store Customer.SystemId at bookmark time and resolve with Customer.GetBySystemId(...) — it returns false when no record carries that id, which covers the deleted-customer case without an error. In the migration, IsNullGuid tells a legacy row apart from one that already carries an id."
+  - "For imports, assign the supplied GUID to the row's own SystemId field before inserting, and call the Insert(RunTrigger, InsertWithSystemId) overload with both arguments true — the second one keeps your id instead of generating a fresh one. A second insert with the same id fails with the platform's 'already exists' error, which is exactly what the tests expect."
+
+allowedDependencies:
+  - "Base Application"

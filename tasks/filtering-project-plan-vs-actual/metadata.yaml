@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: filtering-project-plan-vs-actual
+title: "Project Plan vs. Actual per Task"
+author: "@Drakonian"
+difficulty: medium
+topic: filtering
+tags:
+  - projects
+  - planning-lines
+  - ledger-entries
+  - calcsums
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Plan and actuals live in different tables: the plan on Job Planning Line, every posting in Job Ledger Entry. Ask which table each of your three figures should read — and notice which figures the tests say are wrong only on some projects."
+  - "The planning line's \"Qty. Posted\" and \"Remaining Qty.\" are maintained by the usage-link machinery, and that machinery runs only for projects with \"Apply Usage Link\" switched on. On a project without it those fields sit at 0 and at the full plan forever, while the ledger still records every posting."
+  - "Sum Quantity over the task's Job Planning Lines with Line Type Budget or Both Budget and Billable for planned; sum Quantity over its Job Ledger Entries with Entry Type Usage for posted; remaining is the difference. Filter both tables by project no. AND task no."
+
+allowedDependencies:
+  - "Base Application"

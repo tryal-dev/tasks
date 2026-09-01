@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: filtering-marked-union
+title: "Union of Two Filtered Sets"
+author: "@Drakonian"
+difficulty: medium
+topic: filtering
+tags:
+  - mark
+  - markedonly
+  - customer
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Try expressing 'city X or credit limit at least Y' with record filters and watch what happens: filters on two different fields always combine with AND. No single filter expression can produce this list — you need two passes over the table and a way to remember what the first pass found."
+  - "A record variable can remember individual rows across filter changes: Mark(true) tags the current row, and the tag sticks to the variable no matter how the filters change afterwards. Loop the city set tagging every row, then swap the filters to the credit-limit rule and tag those rows too."
+  - "After both passes, clear the field filters and switch the view with MarkedOnly(true) — iteration now visits exactly the tagged rows, each one once. Two traps: remove the city filter before applying the credit filter (or the second pass tags the intersection), and clear filters field by field at the end — Reset wipes the marks along with the filters."
+
+allowedDependencies:
+  - "Base Application"

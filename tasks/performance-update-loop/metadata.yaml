@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: performance-update-loop
+title: "Write Only What Changed"
+author: "@Drakonian"
+difficulty: medium
+topic: performance
+tags:
+  - update-loop
+  - findset
+  - sql-budget
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Only one row in five actually changes, and every Modify is one SQL statement — no exceptions, and writes are never served from any cache. Compute the price first and compare it to what the row already stores: a row you never write costs nothing and keeps its SystemModifiedAt, which is exactly what the untouched-rows test looks at."
+  - "The doubled cost on the rows that DO change comes from how the loop was opened: a row read without update intent has to be re-read with a lock before its UPDATE can run — one extra hidden statement per write. FindSet takes a Boolean parameter that declares that intent up front."
+  - "Open the loop with FindSet(true) and call Modify on the very record variable you are iterating. Copying the record first (Rec2 := Rec, Copy, a RecordRef) or passing it to a helper without var clones it, and a cloned record pays the extra re-read statement on Modify all over again — the docs' write-loop pattern is the iterated variable, the update-intent read, and nothing in between."
+
+allowedDependencies:
+  - "Base Application"

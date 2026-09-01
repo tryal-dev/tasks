@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: integrations-mcp-tool-surface
+title: "Expose the Right MCP Tools"
+author: "@Drakonian"
+difficulty: medium
+topic: integrations
+tags:
+  - mcp
+  - api-page
+  - agents
+  - least-privilege
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Business Central manages MCP server configurations from AL through `Codeunit \"MCP Config\"` in the System Application. Creating a configuration, adding an API page as a tool, setting a tool's individual permissions, activating the configuration, listing its warnings and applying their recommended actions are all procedures on that one codeunit — read its signatures before writing anything."
+  - "A configuration starts life read-only. Granting create, modify, delete or bound actions on a tool is refused with \"Create, update and delete tools are not allowed for this MCP configuration\" until the configuration itself unblocks edit tools, so that switch has to come before the contact tool's permissions. Beware the reverse direction too: switching it back off clears every write flag on every tool in the configuration."
+  - "Looking a configuration up by name returns an empty GUID when nothing matches — that is the whole idempotency check: exit early with the id you found instead of creating a second configuration. For the repair, the warning finder fills a temporary record with one entry per warning, and applying a recommended action fixes that entry and deletes it from the record; collect the entry numbers first and apply afterwards, rather than iterating a set that shrinks under you."
+
+allowedDependencies:
+  - "Base Application"
+  - "System Application"

@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: algorithm-fiscal-periods
+title: "Map Dates to Fiscal Periods"
+author: "@Drakonian"
+difficulty: easy
+topic: algorithm
+tags:
+  - dates
+  - fiscal-year
+  - leap-year
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "The period number is pure month arithmetic: how many months past the start month is the date's month, wrapping around December? Note the off-by-one — the start month itself is period 1, not 0, and a month before the start month must land in 7..12, never in a negative number."
+  - "For the fiscal year start, the only real question is which calendar year: if the date's month is before the start month, the fiscal year began the year before. Once you know day (always 1), month, and year, building the date is one call."
+  - "Never compute February's length yourself — the leap rules, century exception included, already live in the platform's date arithmetic. The fiscal year's last day is exactly one day before the next fiscal year starts, and you can subtract a day from a Date directly (or via CalcDate)."
+
+allowedDependencies:
+  - "Base Application"

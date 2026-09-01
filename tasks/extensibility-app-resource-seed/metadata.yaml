@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: extensibility-app-resource-seed
+title: "Setup Data Ships in the App"
+author: "@Drakonian"
+difficulty: medium
+topic: extensibility
+
+tags:
+  - navapp
+  - resources
+  - json
+  - setup-data
+  - idempotency
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "The store mirrors the NavApp API: `ListResources()` tells you exactly what shipped, and `GetResourceAsJson` hands you a parsed `JsonObject`. Start with the unknown-name path — decide from `ListResources()` whether to proceed, and build the error message from that same list."
+  - "To walk the fixture: `Fixture.Get('regions', Token)` gives the array token, `Token.AsArray()` lets you `foreach RegionToken in ...`, and each element becomes an object via `RegionToken.AsObject()`. Scalar values come out through `.AsValue().AsText()` and `.AsValue().AsDecimal()`."
+  - "Idempotency is one check per region: `if not RegionSetup.Get(...)` then fill the fields and `Insert()`, counting as you go — never `Modify()` an existing record. A `List of [Text]` has a `Contains` method, and the available-names text is a simple foreach over `ListResources()`."
+
+allowedDependencies:
+  - "Base Application"

@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: filtering-customer-lookup
+title: "Range, List and Not-Blank Lookups"
+author: "@Drakonian"
+difficulty: easy
+topic: filtering
+tags:
+  - setrange
+  - setfilter
+  - customer
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Count() on a Customer record variable respects whatever filters are currently set on it — narrow the record down first, then count. Each of the three procedures is one or two filter calls plus a Count()."
+  - "SetRange(City, CityName) keeps exactly the records whose field equals the value — nothing more. For 'either city' you need a filter expression instead: in SetFilter, the | character means OR, and %1/%2 placeholders insert your parameters into the expression."
+  - "Not-blank is also a filter expression: <> means 'different from', so filtering the \"E-Mail\" field with the expression <>%1 and an empty string as the value keeps only customers whose email is filled in. Combine it with the city SetRange — filters on different fields apply together."
+
+allowedDependencies:
+  - "Base Application"

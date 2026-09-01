@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-fixed-width-columns
+title: "A 32-Column Receipt"
+author: "@Drakonian"
+difficulty: easy
+topic: basics
+tags:
+  - format
+  - text
+  - padding
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Three tools cover everything here: `PadStr` (pads on the right, or truncates), `Text.PadLeft`, and `Format` with its `Length` argument. Before you pick one, read what it does when the value is longer than the width — and on which side it adds the filler."
+  - "`Format(Value, Length, FormatString)` with a positive Length returns exactly Length characters: a number gets its spaces on the left and anything longer is silently cut. `<Precision,2:2>` forces two decimals; standard format 2 (or 9) always uses a period and never a thousands separator, while format 0 groups thousands and format 1 follows the region settings."
+  - "The starter's `PadStr(Format(Seq), 5, '0')` appends the zeros. Call `PadLeft(5, '0')` on the formatted number instead — it pads in front and leaves a six-digit sequence untouched. A `<Integer,5><Filler Character,0>` format string zero-fills too, but check for yourself what it does with a sixth digit before you trust it."
+
+allowedDependencies:
+  - "Base Application"

@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: algorithm-icalendar-export
+title: "The Feed the Calendar App Rejected"
+author: "@Drakonian"
+difficulty: medium
+topic: algorithm
+tags:
+  - text
+  - icalendar
+  - export
+  - formatting
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Treat every property as one full content line first — name, colon, escaped value — and only then hand it to a single shared writer that folds it and terminates it. Interleaving folding with string building is where feeds go wrong."
+  - "Two ordering traps: escape backslashes before semicolons and commas, or you will re-escape the escapes you just produced; and check what your date-time formatting does to 7 o'clock — several AL formatting routes pad with blanks or slip in culture-specific separators. Building the stamp from Date2DMY and per-component zero-padding is fully deterministic."
+  - "The folding loop: while the content line holds more than 75 characters, emit the first 75 plus a CRLF and continue with a single space prepended to the rest — the space counts toward the next line's 75. Get an exact CRLF from the Base Application's codeunit \"Type Helper\" (CRLFSeparator), or by assigning character codes 13 and 10 into a two-character Text (TextBuilder.AppendLine also terminates with CRLF)."
+
+allowedDependencies:
+  - "Base Application"

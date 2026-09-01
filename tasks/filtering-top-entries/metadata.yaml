@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: filtering-top-entries
+title: "Top 5 Entries by Amount"
+author: "@Drakonian"
+difficulty: easy
+topic: filtering
+tags:
+  - sorting
+  - setcurrentkey
+  - list
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Records come back in the order of the current key — the primary key unless you change it. That is why the starter's loop sees the oldest entries first: nothing about it ever looks at Amount."
+  - "SetCurrentKey chooses the fields that drive the sort, and Ascending(false) flips the direction. Sort by Amount, walk the records, and stop once you have collected five entry numbers."
+  - "The tie rule costs you nothing: to keep sorting deterministic, BC appends the primary key to whatever sort you pick, and Ascending(false) reverses that part too — so equal amounts arrive newest entry first, exactly the order the tests expect. A descending walk that stops at five is the whole solution."
+
+allowedDependencies:
+  - "Base Application"

@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: transactions-counter-lock
+title: "A Counter That Never Skips or Repeats"
+author: "@Drakonian"
+difficulty: hard
+topic: transactions
+tags:
+  - locking
+  - readisolation
+  - updlock
+  - concurrency
+  - counter
+
+executionTier: full_execution
+transactionModel: committed
+companyIsolation: fresh
+
+hints:
+  - "An allocator is read–add–write inside the caller's transaction. Two things break it in the wild: a concurrent session reading the same current value before your write lands, and your own code trusting a value it read earlier instead of re-reading. Both are solved at the read, not the write."
+  - "Keep the codeunit stateless: fetch the counter row inside the procedure on every call. A record instance or number kept in a global variable is a snapshot of the past — the 'sees an update made between calls' test plants exactly that trap. And since `NextValue` is just a block of one, one shared allocation routine serves both procedures."
+  - "The safe read is a locked read: set the correct `ReadIsolation` on the record variable before `Get` (or call `LockTable` first — ReadIsolation is the modern, per-variable form). A locked read always fetches the latest committed version straight from SQL, bypassing the data cache, and blocks other writers on that row until your transaction ends. When `Get` finds nothing, `Insert` the row instead of `Modify`-ing it."
+
+allowedDependencies:
+  - "Base Application"

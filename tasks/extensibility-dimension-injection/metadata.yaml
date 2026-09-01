@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: extensibility-dimension-injection
+title: "Inject a Project Dimension into Posting"
+author: "@Drakonian"
+difficulty: medium
+topic: extensibility
+
+tags:
+  - dimensions
+  - dimension-sets
+  - event-subscriber
+  - posting
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "A record's dimensions are one integer — \"Dimension Set ID\" — pointing at an immutable, shared set of dimension pairs. Adding a pair means finding (or creating) the set that holds everything the old one had plus yours, and pointing the line at it. Nothing is ever edited in place, and nothing is ever stored as text."
+  - "Whenever a dimension-bearing field such as `\"No.\"` is validated, the Sales Line table goes through one procedure that gathers the line's default-dimension sources and, only if any of those sources actually carries default dimensions, computes the set; it raises table events around both the outer procedure and the inner computation. Subscribe to the event raised after the outer procedure — it fires for every line, whereas the one inside the computation is skipped for a line on a plain G/L account. The header (and its \"Project Code\") is one `Get` away from the line."
+  - "Codeunit `DimensionManagement` does the set mechanics for you: `GetDimensionSet` loads a set into a temporary `Dimension Set Entry` buffer, `GetDimensionSetID` returns the ID of the existing-or-new set matching that buffer, and `UpdateGlobalDimFromDimSetID` recomputes the two global-dimension shortcut fields from a set ID."
+  - "Subscribe to `OnAfterCreateDimFromDefaultDim` on table `Sales Line` — `var SalesLine: Record \"Sales Line\"` is enough; a subscriber may declare a subset of the publisher's parameters. `OnAfterCreateDim` looks equivalent but only fires when the line's account or item has default dimensions of its own, so lines on plain accounts would post without the pair. Load the line's set into the buffer, `Validate` the PROJECT pair into it (modify the pair if present, insert it otherwise), assign `GetDimensionSetID` back to \"Dimension Set ID\", then call `UpdateGlobalDimFromDimSetID` with the line's two shortcut dimension fields."
+
+allowedDependencies:
+  - "Base Application"

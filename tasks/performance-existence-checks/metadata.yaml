@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: performance-existence-checks
+title: "Yes or No, Not the Whole Table"
+author: "@Drakonian"
+difficulty: easy
+topic: performance
+tags:
+  - sql-budget
+  - existence-check
+  - cust-ledger-entry
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Each answer is one word — a yes/no or a single number — yet the starter hauls every ledger entry across the wire to inspect it in AL. Rows you fetch but never show are the whole cost: push the entire question into the database and read back only the answer."
+  - "A condition you test with `if` inside a loop belongs in the filter instead. Once `Open` is part of a `SetRange`, the filtered set IS the answer — one set-based call replaces the whole loop, for existence and for counting alike."
+  - "The record API has a purpose-built method per question: `IsEmpty()` answers 'is there at least one?' with a single TOP-1 statement that returns at most one row, and `Count()` makes SQL Server do the counting and send back just the number. `FindSet` or `FindFirst` plus `repeat` is never the cheap way to answer either."
+
+allowedDependencies:
+  - "Base Application"

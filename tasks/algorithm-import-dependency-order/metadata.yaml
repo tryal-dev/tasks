@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: algorithm-import-dependency-order
+title: "Import in the Right Order"
+author: "@Drakonian"
+difficulty: medium
+topic: algorithm
+tags:
+  - list
+  - graph
+  - rapidstart
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Think of the staged tables as a to-do list: a table is ready to import once every table it depends on is already in the order. A self-reference never counts — a table cannot wait for itself."
+  - "Build the order one table at a time: scan the not-yet-placed tables for ready ones, take the lowest table ID among them, and repeat. If a scan finds no ready table while tables remain, the remaining set is exactly what the error message must name."
+  - "Keep staged tables in a List of [Integer] and each dependency pair as child/parent entries you can scan per table. Each round: a table is ready when every pair naming it as child has its parent already placed (or parent = child); append the smallest ready ID and remove it from the remaining set. On a stuck round, sort the remaining IDs ascending, join them with ', ', and raise the exact one-line error from the statement via a %1 placeholder."
+
+allowedDependencies:
+  - "Base Application"

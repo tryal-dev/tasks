@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-overnight-shift
+title: "The Night Shift Bug"
+author: "@Drakonian"
+difficulty: easy
+topic: basics
+tags:
+  - time
+  - arithmetic
+  - boundaries
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Decide the shape of the window first by comparing OpensAt with ClosesAt. A daytime window needs At to be at or after the opening AND before the closing; a window that crosses midnight is satisfied by either half — at or after the opening OR before the closing. Look closely at which branch the equal-times case lands in: that decides whether it means round the clock or never open."
+  - "Time - Time is an Integer of milliseconds and goes negative when the end is earlier on the clock. A negative difference is really 'the rest of the day', so add a full day of milliseconds to it. Dividing with div by the milliseconds in a minute gives whole minutes and silently drops the seconds — exactly what rule 4 asks for."
+  - "Compare each parameter with the literal 0T before any arithmetic and raise the message yourself with Error and a Label that carries a %1 placeholder for the parameter name. MinutesUntilClose can lean on IsOpen for the closed case and the 0T check; only the closing-minus-now difference is left, and there a zero must be treated like a negative, because an open depot is never zero minutes from closing."
+
+allowedDependencies:
+  - "Base Application"

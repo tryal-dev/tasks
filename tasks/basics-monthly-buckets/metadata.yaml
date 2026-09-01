@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-monthly-buckets
+title: "Twelve Buckets"
+author: "@Drakonian"
+difficulty: easy
+topic: basics
+tags:
+  - array
+  - copyarray
+  - compressarray
+  - date2dmy
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "An AL array has a fixed size and its slots are numbered from 1: `array[12] of Decimal` runs from slot 1 to slot 12, and Date2DMY with 2 as its second argument hands you exactly that range. Slot 0 and slot 13 do not exist — writing to them is a runtime error, so check the month yourself and raise the promised message before the runtime complains with its own."
+  - "A `var` array parameter arrives holding whatever the caller left in it. Every procedure that fills an output array must empty it first — Clear does that for the whole array in one call — otherwise the numbers or labels of the previous call survive into this one."
+  - "For the yearly buckets, filter the ledger entries on the customer and on a posting-date range from 1 January to 31 December of the year (DMY2Date builds those two dates), loop over them, and let the posting month picked by Date2DMY choose the bucket. ArrayLen gives you the number of slots whenever you need a loop bound or the last slot."
+  - "ShiftWindow is a loop from slot 1 to slot 11 that copies slot Slot + 1 into slot Slot, followed by the new month going into slot 12 — CopyArray does not help here, because it insists on a destination array exactly as long as the run it copies (11 slots into an array[12] is a runtime error), and a plain := between two arrays does not compile. For the legend, write each non-empty month's abbreviation into its own slot (SelectStr on a comma-separated Label picks the n-th name) and let CompressArray move the empty slots to the end; count the non-empty months while you fill them."
+
+allowedDependencies:
+  - "Base Application"

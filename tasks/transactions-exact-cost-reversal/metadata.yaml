@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: transactions-exact-cost-reversal
+title: "Return It at the Cost You Sold It"
+author: "@Drakonian"
+difficulty: medium
+topic: transactions
+tags:
+  - inventory-costing
+  - item-application
+  - sales-return
+  - credit-memo
+  - item-ledger-entry
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "A plain sales credit memo hands the valuation back to the costing method, and FIFO will happily price the returned goods off a layer the customer never bought from. Business Central lets a document line name the one item ledger entry it is reversing, and when it does, the costing engine steps aside. Look at what the sales line offers beyond type, quantity and price."
+  - "The field is \"Appl.-from Item Entry\" on the sales line: set it to the entry no. of the outbound Sale entry you are reversing, and posting creates a cost application, so the returned units re-enter inventory at the original entry's cost whatever FIFO would have said. Validate it after Quantity — its validation checks the line's quantity against the entry it points at. The originating entry is the \"Item Ledger Entry\" with Entry Type Sale, Document Type Sales Shipment and Document No. equal to the posted shipment no."
+  - "Build the header with Init, \"Document Type\"::\"Credit Memo\", Insert(true), then Validate \"Sell-to Customer No.\"; build the line with Insert(true) and Validate Type, \"No.\", Quantity, then \"Appl.-from Item Entry\". Post with codeunit \"Sales-Post\" — a Credit Memo header posts as receive plus invoice on its own — and find the result on \"Sales Cr.Memo Header\" via \"Pre-Assigned No.\". Compare the requested quantity against the \"Sales Shipment Line\" before you build anything: Business Central has its own application check and it will error first, with its own wording, if you let it get that far."
+
+allowedDependencies:
+  - "Base Application"

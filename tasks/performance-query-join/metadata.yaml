@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: performance-query-join
+title: "Sales per Salesperson, Without the Chatter"
+author: "@Drakonian"
+difficulty: medium
+topic: performance
+tags:
+  - query
+  - customer
+  - sql-budget
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Two costs are graded: round trips and rows. Every FindSet, Get, CalcSums or Count call is one SQL statement — talking to the database once per customer can never fit the statement budget. And a loop that hauls every ledger entry across the wire to add them up in AL can never fit the row budget, however few statements it uses. Ask one question whose answer is already the report."
+  - "AL has an object type built for join-plus-aggregate questions: a query. Link a Cust. Ledger Entry dataitem to a Customer dataitem with DataItemLink, put Method = Sum on the amount column, and every column you don't aggregate becomes the grouping — one row per salesperson code, one SQL statement."
+  - "Filter the query's salesperson-code column with SetFilter before Open, then Read the rows into the dictionary. Two traps: the grouping column must be the Salesperson Code on the Customer dataitem (the entry's own stamp lies), and the join type matters — the default LeftOuterJoin keeps a salesperson whose customers have no entries in the result with 0, while InnerJoin silently drops them."
+
+allowedDependencies:
+  - "Base Application"

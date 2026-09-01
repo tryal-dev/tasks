@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: algorithm-duplicate-customers
+title: "Find the Duplicate Customers"
+author: "@Drakonian"
+difficulty: medium
+topic: algorithm
+tags:
+  - text
+  - record
+  - normalization
+  - customer
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Duplicates only reveal themselves after both sides pass through the same normalization — compute the given customer's normalized name and VAT keys once, then compare every other customer's normalized fields against those two keys."
+  - "For Normalize, visit the value one character at a time: indexing a Text with [i] yields a Char you can compare against ranges such as 'A'..'Z' and '0'..'9', and uppercasing the whole value first means every kept letter is already uppercase. (DelChr can also get you there, but it deletes a listed set of characters rather than keeping one.)"
+  - "For the finder: Get the customer, compute its two keys, then FindSet over Customer with a filter excluding its own No. — the primary-key scan already visits customers in ascending No. order. Guard each comparison so an empty key never matches, and combine the name and VAT checks with a single 'or' so a customer matching on both fields is added only once."
+
+allowedDependencies:
+  - "Base Application"

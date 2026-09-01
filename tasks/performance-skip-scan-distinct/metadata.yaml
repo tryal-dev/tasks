@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: performance-skip-scan-distinct
+title: "Distinct Values Without a Query"
+author: "@Drakonian"
+difficulty: medium
+topic: performance
+tags:
+  - table
+  - grouping
+  - distinct-values
+  - sql-budget
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Your call reads ten thousand rows to produce a twenty-entry list. Sorted by the column you group on, all duplicates sit in one contiguous run — the answer only needs one row from each run, and the database can be asked for exactly those rows."
+  - "SetCurrentKey(\"Device Code\") puts the readings in group order, so the first row FindSet returns hands you the first device. From any row inside a group you can jump straight to that group's last row: narrow a SetRange to the current code and go to its far end. Widen the filter back, and a single Next has nowhere to land but the first row of the NEXT device."
+  - "The loop: FindSet once, then per device — add \"Device Code\" to the list, SetRange(\"Device Code\", <current code>), FindLast, restore the non-blank filter with SetFilter(\"Device Code\", '<>%1', ''), and let the loop's until Next() = 0 step onto the next device. Each device then costs a couple of one-row statements instead of a walk through its whole group."
+
+allowedDependencies:
+  - "Base Application"

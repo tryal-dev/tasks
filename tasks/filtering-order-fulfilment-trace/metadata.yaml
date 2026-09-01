@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: filtering-order-fulfilment-trace
+title: "Trace an Order's Fulfilment Across Posted Documents"
+author: "@Drakonian"
+difficulty: easy
+topic: filtering
+tags:
+  - sales
+  - posted-documents
+  - partial-shipment
+  - dictionary
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "The order's own lines only hold running totals. Where does Business Central write what each posting actually created? Look at the fields of the posted line tables — they remember exactly where each line came from."
+  - "Sales Shipment Line and Sales Invoice Line both carry \"Order No.\" and \"Order Line No.\" pointing back at the originating order line; Sales Invoice Line additionally carries \"Shipment No.\" and \"Shipment Line No.\" naming the shipment line it bills. Filter on the pair you were given, walk the lines, and group quantities by \"Document No.\"."
+  - "Dictionary.Add raises an error when the key already exists — and an invoice assembled from two shipments has two lines with the same order line, so check ContainsKey and Set the accumulated value instead. For the outstanding quantity, the order line itself tracks Quantity and \"Quantity Shipped\"."
+
+allowedDependencies:
+  - "Base Application"

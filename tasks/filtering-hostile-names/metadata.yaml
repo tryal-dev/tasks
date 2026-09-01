@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: filtering-hostile-names
+title: "Filter Safely on Hostile Names"
+author: "@Drakonian"
+difficulty: medium
+topic: filtering
+tags:
+  - setrange
+  - setfilter
+  - customer
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "A filter string is a tiny query language: | means or, & means and, .. is a range, * and ? are wildcards. Pasting user text into SetFilter hands your users the keys to the query. One of the two filtering methods on Record doesn't parse expressions at all."
+  - "SetRange matches its argument as a plain literal value — that settles the exact-name search with no escaping. The contains search still needs SetFilter, so the fragment has to travel inside the expression safely."
+  - "Inside a filter expression, single quotes make & | ( ) = literal, and an apostrophe inside the quoted part is escaped by doubling it. @ (ignore case) and * (any characters) keep working alongside the quoted text — so the shape is: quote, @, star, escaped fragment, star, quote."
+
+allowedDependencies:
+  - "Base Application"

@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: performance-flowfield-filter
+title: "Over the Threshold, Under Budget"
+author: "@Drakonian"
+difficulty: medium
+topic: performance
+tags:
+  - flowfields
+  - ledger-entries
+  - sql-budget
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "The budget counts round trips, not rows or lines of AL. Anything done once per customer — a Get, a CalcFields, a CalcSums — is one SQL statement each, and with 25+ posting customers that can never fit in 8. There is a second trap in the fixtures: one qualifying customer number has no Customer card at all, so any answer that starts from the customer list starts blind."
+  - "Pushing the comparison into a filter on the customer's calculated sales field looks like a one-statement fix — but the server must then compute that sum for every customer row it scans (the cost moved out of sight, not away), and a number that lives only on ledger entries still never shows up, because the scan still walks the customer list. The tests plant exactly such a number."
+  - "Turn the extract around: it is one pass over Cust. Ledger Entry. Filter Posting Date to the window, FindSet once, and accumulate Sales (LCY) per Customer No. in a Dictionary of [Code[20], Decimal] — then keep the keys whose total is strictly above the threshold. One statement, and card-less numbers come along for free."
+
+allowedDependencies:
+  - "Base Application"

@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-strsubstno-placeholders
+title: "Placeholders, Not Concatenation"
+author: "@Drakonian"
+difficulty: easy
+topic: basics
+tags:
+  - strsubstno
+  - label
+  - placeholders
+  - text
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Write each sentence once, as a `Label` variable with text that carries `%1`, `%2`, `%3` placeholders and whose `Comment` names what each one stands for; then let `StrSubstNo` fill it in. The placeholders may appear in any order in the text, and the same placeholder may appear more than once — the arguments are matched by number, not by position in the sentence."
+  - "Singular and plural are two labels, not one label with an `if` glued into it: decide with `if LineCount = 1` which label to hand to `StrSubstNo`, and pass only the values that label uses — the singular one has no `%3`."
+  - "A `#`-family placeholder such as `#1` followed by more `#` characters is exactly as wide as the characters it occupies, the digit included. `StrSubstNo` left-aligns the value inside that width, pads it with spaces, and prints asterisks across the whole field when the value is too long — you never call `PadStr` yourself. Build the column label as an 8-wide `#1` field, one space, and a 24-wide `#2` field."
+
+allowedDependencies:
+  - "Base Application"

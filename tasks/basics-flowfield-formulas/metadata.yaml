@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-flowfield-formulas
+title: "A Lab Batch Header That Calculates Itself"
+author: "@Drakonian"
+difficulty: medium
+topic: basics
+tags:
+  - flowfield
+  - flowfilter
+  - calcfields
+  - table
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Nothing on the header may be stored: every summary column is a description of a calculation over the reading table, evaluated when someone asks for it. One field property decides whether a field is data, a calculation, or a filter the caller supplies."
+  - "The calculation itself is a second property on the field. Its shape is `<method>(<other table>.<field> where(<field over there> = <something over here>))`, with the destination field dropped for the two methods that need no column. The methods you need are exist, count, sum, min, max, average and lookup; a leading minus sign in front of exist flips its answer."
+  - "Inside `where`, `field(\"Batch No.\")` means \"the value on the current header\", and `field(\"Date Filter\")` means \"whatever the caller filtered that flow filter to\" — which is why an unset date filter restricts nothing. Two of the eight fields are Boolean, five aggregate a Decimal column of the reading table, and the customer name is looked up straight from `Customer`, untouched by the date."
+
+allowedDependencies:
+  - "Base Application"

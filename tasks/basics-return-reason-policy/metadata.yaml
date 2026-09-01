@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-return-reason-policy
+title: "Make a Return Reason's Policies Stick"
+author: "@Drakonian"
+difficulty: easy
+topic: basics
+tags:
+  - validate
+  - sales-return
+  - item-ledger-entry
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Nothing you write in your own codeunit moves the line to the repair location or takes the cost off it — that code already exists in the base application, hanging off the sales line's \"Return Reason Code\" field. Your only question is how to make the platform run it."
+  - "A plain `:=` assignment drops the value into the record's in-memory buffer and stops there. A Record method exists that puts the value in *and* runs the field's OnValidate trigger — which is where the location switch and the zero valuation live."
+  - "Two statements are enough: one that puts the reason code on the line through the field's validation, and one that writes the changed line back to the database. Skip the second and the tests that post the return order still see the old location and the old cost."
+
+allowedDependencies:
+  - "Base Application"

@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: extensibility-cue-thresholds
+title: "Cue Styles from Thresholds"
+author: "@Drakonian"
+difficulty: easy
+topic: extensibility
+
+tags:
+  - cues
+  - system-application
+  - role-center
+  - enum
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Everything you need already ships with the platform: the colored bar on a cue is driven by the same threshold-and-style setup an administrator enters on the Cue Setup page, stored per table field. The System Application exposes a small supported API over that storage — your codeunit should not invent its own."
+  - "The System Application module is called Cues and KPIs, and its facade codeunit exposes InsertData — which writes one company-wide setup entry (low style, threshold 1, middle style, threshold 2, high style) and returns whether the insert happened — and SetCueStyle, which resolves the style for an amount through a var parameter. Identify your cue field with Database::\"Receivables Cue\" and ReceivablesCue.FieldNo(\"Overdue Amount\"), never with literal IDs."
+  - "RegisterThresholds is a single exit(CuesAndKPIs.InsertData(...)) passing Database::\"Receivables Cue\", ReceivablesCue.FieldNo(\"Overdue Amount\"), then Favorable, LowerThreshold, Ambiguous, UpperThreshold, Unfavorable — InsertData already returns false when the entry exists. StyleFor declares a local Enum \"Cues And KPIs Style\" variable, calls CuesAndKPIs.SetCueStyle with the same table and field plus Amount and the variable, and exits with it."
+
+allowedDependencies:
+  - "Base Application"
+  - "System Application"

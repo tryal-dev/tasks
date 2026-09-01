@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: filtering-vat-date-window
+title: "VAT Totals by VAT Date"
+author: "@Drakonian"
+difficulty: easy
+topic: filtering
+tags:
+  - vat
+  - vat-entry
+  - vat-date
+  - calcsums
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "The VAT Entry table carries more than one date. The posting date says when the ledger moved — but the VAT return asks a different question, and there is a field for it (the UI calls it \"VAT Date\")."
+  - "Window the entries on \"VAT Reporting Date\" instead of \"Posting Date\" — that alone re-files both misplaced invoices correctly. But notice what a range filter starting at a real date can never catch: the entries whose VAT date is blank."
+  - "Treat blank VAT dates as a second bucket: filter \"VAT Reporting Date\" to 0D, then window those entries on \"Posting Date\" or \"Document Date\" — whichever General Ledger Setup's \"VAT Reporting Date\" (Default VAT Date) names — and add their sums onto the totals from the first bucket."
+
+allowedDependencies:
+  - "Base Application"

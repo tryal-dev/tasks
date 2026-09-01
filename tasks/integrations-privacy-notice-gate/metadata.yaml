@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: integrations-privacy-notice-gate
+title: "Don't Call Before They Agree"
+author: "@Drakonian"
+difficulty: medium
+topic: integrations
+tags:
+  - privacy-notice
+  - consent
+  - appsource
+  - httpclient
+  - mocking
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Consent is a row in the database, not a fact about your codeunit. Whatever your gate reads, it has to read it again on the next call — the tests flip the state between two calls on the same instance, in both directions."
+  - "The System Application's `Codeunit \"Privacy Notice\"` is the whole toolbox: one procedure registers a notice from an id, an integration name and a link (and its return value already tells you whether it created the record or found one), and another reports the current approval state without showing anything to anyone. Stay away from `ConfirmPrivacyNoticeApproval` — it can open a modal page, and an unhandled page fails a test instantly."
+  - "Three branches, in this order: the state you just read is disagreed → raise your named error; it is anything other than agreed → clear `ResponseBody` and return false without ever touching the handler; agreed → one GET through `HttpClientHandler.Send`, then read the response body. And check the blank link yourself before registering; otherwise, the platform raises its own error message instead of the one the test expects."
+
+allowedDependencies:
+  - "Base Application"
+  - "System Application"

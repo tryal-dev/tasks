@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: transactions-landed-cost
+title: "Landed Cost: Spread the Freight Across the Receipts"
+author: "@Drakonian"
+difficulty: medium
+topic: transactions
+tags:
+  - item-charge
+  - landed-cost
+  - purchase-invoice
+  - value-entry
+  - inventory-costing
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "An invoice line of type Charge (Item) posts cost to G/L but touches no item until you tell Business Central which posted entries the charge belongs to. In the client that link is made through the purchase line's Item Charge Assignment action — find out what that page writes to the database, and you have found the table your code must fill."
+  - "Each link is a row in \"Item Charge Assignment (Purch)\": keyed by your charge line's Document Type, Document No. and Line No., pointing at a posted receipt line via \"Applies-to Doc. Type\" Receipt plus the receipt's document no. and line no., and carrying \"Qty. to Assign\" / \"Amount to Assign\". The rows' \"Qty. to Assign\" must sum to the charge line's quantity or posting refuses the invoice. Codeunit 5805 \"Item Charge Assgnt. (Purch.)\" is the standard code that builds such rows — read its receipt-line and suggest routines to see which fields Microsoft fills."
+  - "Build the invoice header (Insert(true), then Validate \"Buy-from Vendor No.\"), the charge line (Validate Type, \"No.\", Quantity 1, \"Direct Unit Cost\"), then one assignment row per receipt line: \"Unit Cost\" = the charge amount, \"Qty. to Assign\" = the line's weight share of quantity 1 and \"Amount to Assign\" = the rounded amount share — the last line takes both remainders — and mirror the pair into \"Qty. to Handle\" / \"Amount to Handle\", which is what posting actually consumes. Post with codeunit \"Purch.-Post\" and find the result via \"Pre-Assigned No.\" on \"Purch. Inv. Header\"."
+
+allowedDependencies:
+  - "Base Application"

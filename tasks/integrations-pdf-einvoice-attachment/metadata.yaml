@@ -1,0 +1,26 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: integrations-pdf-einvoice-attachment
+title: "The Invoice Inside the PDF"
+author: "@Drakonian"
+difficulty: medium
+topic: integrations
+
+tags:
+  - pdf
+  - e-invoice
+  - zugferd
+  - xml
+  - temp-blob
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Nothing in this task asks you to parse PDF bytes. The System Application ships a module that reads a PDF straight from a stream - search the symbols for an object whose name starts with 'PDF'."
+  - "`Codeunit \"PDF Document\"` answers all three questions the staging record asks: `GetPdfPageCount(PdfStream)`, `GetAttachmentNames(PdfStream)` and `GetDocumentAttachmentStream(PdfStream, TempBlob)`. The last one resolves the standard e-invoice file names itself and returns `false` when the document carries none - that is your error path. Each call reads its stream to the end, so give every call a fresh `CreateInStream` from the same Temp Blob."
+  - "Read the extracted attachment blob as UTF-8 into an `XmlDocument`, then set up an `XmlNamespaceManager` (`NsManager.NameTable(InvoiceXml.NameTable())`, then one `AddNamespace` per URI with prefixes of your choosing) and select the full paths from the root - `//ram:ID` finds the guideline id first. A `YYYYMMDD` string becomes a date with `CopyStr` plus `DMY2Date`, and `Evaluate(Amount, AmountText, 9)` reads the XML decimal format no matter what the session language is."
+
+allowedDependencies:
+  - "System Application"
+  - "Base Application"

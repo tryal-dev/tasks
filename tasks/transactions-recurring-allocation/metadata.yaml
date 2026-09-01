@@ -1,0 +1,26 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: transactions-recurring-allocation
+title: "The Accrual That Posts Itself"
+author: "@Drakonian"
+difficulty: medium
+topic: transactions
+tags:
+  - recurring-journal
+  - allocation
+  - dimensions
+  - posting
+  - general-journal
+
+executionTier: full_execution
+
+# The tests post real general journals, and the standard posting routine commits.
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "None of your code runs while the batch posts, so every rule in the statement has to be recorded in the journal's own setup tables: the template decides whether posting consumes the lines or keeps them, the line itself carries when it comes back and how it is treated, and the department split belongs to a table of its own. Start with what a general journal template can be flagged as."
+  - "A template with `Recurring = true` turns its batches into recurring journals: posting keeps the lines, moves each line's `\"Posting Date\"` on by its `\"Recurring Frequency\"`, honours the `\"Recurring Method\"` and skips lines whose posting date has passed their `\"Expiration Date\"`. Such a template must leave `\"No. Series\"` blank, so every line needs a `\"Document No.\"` of its own — and a run only picks up lines that are due, meaning dated no later than the work date."
+  - "The split lives in table `\"Gen. Jnl. Allocation\"`, keyed by journal template, batch, the accrual line's `\"Line No.\"` and a line number of its own. Insert the record before filling it in — its `OnInsert` reads the journal line it belongs to — then validate `\"Account No.\"`, `\"Shortcut Dimension 1 Code\"` and `\"Allocation %\"`. Validating the percentage is what computes each share's amount: opposite in sign to the line, with the rounding remainder carried from share to share so the split lands to the cent."
+
+allowedDependencies:
+  - "Base Application"

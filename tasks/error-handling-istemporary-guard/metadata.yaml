@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: error-handling-istemporary-guard
+title: "Buffer-Only API"
+author: "@Drakonian"
+difficulty: easy
+topic: error-handling
+tags:
+  - istemporary
+  - temporary-table
+  - guard-clause
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "A record variable knows at run time whether it lives in memory or in the database — the whole guard is a single method call on the record itself, checked at the top of each procedure."
+  - "Record.IsTemporary() returns true only for a temporary record variable. When it returns false, stop with Error and a message containing 'must be temporary'. LinterCop even ships a rule (LC0078) that flags buffer APIs missing exactly this guard."
+  - "Once the guard has passed, plain Insert and Modify are safe: on a temporary record variable they touch only the in-memory copy. For AddLine, FindLast gives you the highest existing \"Line No.\"; for ProcessBuffer, one FindSet/repeat loop can flip Processed and accumulate Quantity."
+
+allowedDependencies:
+  - "Base Application"

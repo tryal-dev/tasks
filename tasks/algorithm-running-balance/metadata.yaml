@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+
+id: algorithm-running-balance
+title: "Statement with Running Balance"
+author: "@Drakonian"
+difficulty: medium
+topic: algorithm
+
+tags:
+  - table
+  - sorting
+  - running-total
+  - temporary-table
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "The running balance is defined oldest-to-newest, but the statement prints newest-to-oldest. Trying to do both in one direction is the classic tangle: walking newest-first you don't know a line's balance until you've seen everything below it. Decide separately in which order you walk the transactions and in which order you number the lines."
+  - "The given ledger table already has a key on (Account No., Posting Date, Entry No.) — filter to the account and sort on it, and the transactions arrive oldest-first with same-day ties in entry-number order, exactly the order in which a cumulative balance is easy. That leaves only the line numbering to run the other way."
+  - "One ascending pass does it: count the filtered transactions first and start the line number at that count; then for each transaction add its amount to a cumulative balance, write a statement line with the current line number and that balance, and decrease the line number by one. (Equivalently: walk descending, start from the account's total, and subtract each line's amount after writing it.)"
+
+allowedDependencies:
+  - "Base Application"

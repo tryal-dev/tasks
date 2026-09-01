@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: transactions-undo-receipt
+title: "Undo the Receipt, Prove the Reversal"
+author: "@Drakonian"
+difficulty: medium
+topic: transactions
+tags:
+  - purchase-receipt
+  - undo
+  - item-ledger-entry
+  - correction
+  - posting
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Business Central already knows how to reverse a posted receipt — that is what the Undo Receipt action on the Posted Purchase Receipt page does, and the action is a thin wrapper over a codeunit you can call yourself. Do not try to reproduce its effect by hand: a negative receipt line plus an item journal adjustment can reach the same on-hand quantity while leaving the purchase order convinced that the goods arrived, which is exactly what the tests measure."
+  - "The codeunit is `\"Undo Purchase Receipt Line\"` and it takes a `\"Purch. Rcpt. Line\"` as its record parameter. Two of its habits decide whether your code is correct. First, it asks a Yes/No question before doing anything unless it is told to stay quiet — there is a setter for that, and a setter only survives if you run the codeunit through a codeunit *variable* rather than the static `Codeunit.Run`. Second, it does not work on one record: it re-filters whatever record set it is handed and walks it to the end, so a line fetched with `Get` — which carries no filters at all — hands it the whole table."
+  - "Select the line with `SetRange` on both `\"Document No.\"` and `\"Line No.\"` before running the undo, call `SetHideDialog(true)` on your codeunit variable first, and read the line's `Quantity` into your return value *before* the run, because the undo rewrites the line. Do your own three checks up front — `Get` for existence, `Correction` for an already-reversed line, `\"Qty. Rcd. Not Invoiced\" <> Quantity` for an invoiced one — in that order, so your message reaches the caller instead of the base application's."
+
+allowedDependencies:
+  - "Base Application"

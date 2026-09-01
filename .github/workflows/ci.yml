@@ -1,0 +1,89 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+# A force-push supersedes the running PR checks — cancel them. Runs on main
+# are never cancelled.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  lint:
+    name: Lint task catalog
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+
+  compile:
+    name: Compile tasks with the AL compiler
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          # Target selection diffs the PR against its base branch.
+          fetch-depth: 0
+      # The AL tool (18.x) is a net10.0 dotnet tool — don't rely on the
+      # runner image having that runtime.
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 10.0.x
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Pick compile targets
+        id: targets
+        # PRs compile only the changed tasks; anything changed outside tasks/
+        # (symbols, scripts, templates, schema, workflow) means a full compile.
+        # Pushes to main always compile the full catalog.
+        run: |
+          if [ "${{ github.event_name }}" != "pull_request" ]; then
+            echo "mode=all" >> "$GITHUB_OUTPUT"
+            echo "Push to main — compiling the full catalog."
+          else
+            files=$(git diff --name-only "origin/${GITHUB_BASE_REF}...HEAD")
+            if [ -z "$files" ] || echo "$files" | grep -qv '^tasks/'; then
+              echo "mode=all" >> "$GITHUB_OUTPUT"
+              echo "Changes outside tasks/ — compiling the full catalog."
+            else
+              ids=$(echo "$files" | cut -d/ -f2 | sort -u \
+                | while read -r id; do [ -d "tasks/$id" ] && echo "$id"; done \
+                | tr '\n' ' ')
+              if [ -n "$(echo "$ids" | tr -d ' ')" ]; then
+                echo "mode=some" >> "$GITHUB_OUTPUT"
+                echo "ids=$ids" >> "$GITHUB_OUTPUT"
+                echo "Changed tasks: $ids"
+              else
+                echo "mode=none" >> "$GITHUB_OUTPUT"
+                echo "Only task deletions — nothing to compile."
+              fi
+            fi
+          fi
+      - name: Read the pinned AL tool version
+        if: steps.targets.outputs.mode != 'none'
+        id: al
+        run: echo "version=$(node -p "require('./package.json').config.alToolVersion")" >> "$GITHUB_OUTPUT"
+      - name: Cache the AL compiler
+        if: steps.targets.outputs.mode != 'none'
+        id: al-cache
+        uses: actions/cache@v6
+        with:
+          path: ~/.dotnet/tools
+          key: al-tool-${{ runner.os }}-${{ steps.al.outputs.version }}
+      - name: Install the AL compiler
+        if: steps.targets.outputs.mode != 'none' && steps.al-cache.outputs.cache-hit != 'true'
+        run: dotnet tool install --global Microsoft.Dynamics.BusinessCentral.Development.Tools --version "${{ steps.al.outputs.version }}"
+      - name: Compile
+        if: steps.targets.outputs.mode != 'none'
+        run: npm run compile -- ${{ steps.targets.outputs.ids }}

@@ -1,0 +1,27 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: integrations-http-default-headers
+title: "Default Headers and the Content-Type Gotcha"
+author: "@Drakonian"
+difficulty: easy
+topic: integrations
+
+tags:
+  - httpclient
+  - rest
+  - headers
+  - content-type
+  - interface
+  - mocking
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "The Rest Client module gives you codeunit-level building blocks: Codeunit \"Http Request Message\" for the request and Codeunit \"Http Content\" for the body. Explore what the request codeunit offers for headers before reaching for the native HttpHeaders collections."
+  - "Two header collections travel with one request: the request's own and the content's. Content-Type belongs to the content's — the request's collection refuses it at run time, which is exactly the classic HttpClient trap this task is about. And header names compare case-insensitively everywhere: an override must find its default even when the casing differs."
+  - "Set the two defaults and every non-Content-Type entry with SetHeader on \"Http Request Message\" — it replaces an existing header even when only the casing differs, so replace-not-duplicate comes for free. Pick the effective content type (the ExtraHeaders entry named Content-Type under any casing, otherwise application/json), build the body with the \"Http Content\" Create overload that takes a content type, and SetContent it onto the request before handing everything to the handler's Send."
+
+allowedDependencies:
+  - "Base Application"
+  - "System Application"

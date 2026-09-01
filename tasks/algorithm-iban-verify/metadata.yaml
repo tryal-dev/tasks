@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: algorithm-iban-verify
+title: "IBAN Verifier"
+author: "@Drakonian"
+difficulty: medium
+topic: algorithm
+tags:
+  - text
+  - validation
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Work in the order the statement gives the rules: normalize, then the cheap structure checks, and only then the arithmetic. Once the structure gate has passed, every character the arithmetic sees is guaranteed to be a digit or an uppercase letter — no defensive checks needed there."
+  - "You cannot build the expanded number — it has up to 68 digits. You also never need it: when you append a digit d to a number n, the new remainder is (r * 10 + d) mod 97 where r is the old remainder, so a single pass over the string is enough."
+  - "Walk the rearranged string once with a running remainder: a digit contributes remainder := (remainder * 10 + digit) mod 97; a letter's value 10-35 is two digits at once, so remainder := (remainder * 100 + value) mod 97. The IBAN is valid when the final remainder is 1."
+
+allowedDependencies:
+  - "Base Application"

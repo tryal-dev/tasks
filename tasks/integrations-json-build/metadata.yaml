@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: integrations-json-build
+title: "Serialize a Sales Order to JSON"
+author: "@Drakonian"
+difficulty: medium
+topic: integrations
+tags:
+  - json
+  - serialization
+  - sales-order
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Assembling JSON by concatenating text makes you responsible for every escaping rule and every regional number and date format. AL ships types that speak JSON natively and take both problems off your hands."
+  - "Build a JsonObject for the header and one JsonObject per line, collect the line objects in a JsonArray, and add the array to the header object under lines. WriteTo turns the finished object into Text."
+  - "Add Decimal and Integer values to a JsonObject as-is — never pre-formatted with Format() — and the writer emits culture-invariant numbers; text values are escaped for you too. Only the date needs help: Format(TheDate, 0, 9) produces the ISO 8601 yyyy-MM-dd form, ready to add as a string."
+
+allowedDependencies:
+  - "Base Application"

@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-duration-clock
+title: "Elapsed Time as hh:mm:ss"
+author: "@Drakonian"
+difficulty: easy
+topic: basics
+tags:
+  - datetime
+  - duration
+  - formatting
+  - rounding
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Subtracting one DateTime from another gives a Duration: a 64-bit count of milliseconds. Don't hand it to Format — that renders a sentence like '1 day 2 hours 5 minutes', not a clock. Treat it as the number it is."
+  - "Duration / 3600000 is decimal division and can never give whole hours. Bring the milliseconds down to whole seconds with div 1000, then take div 3600 for hours, (div 60) mod 60 for minutes and mod 60 for seconds — div already does the truncation the statement asks for. Zero-pad each part with Text.PadLeft(2, '0')."
+  - "Deadline is the reported time plus the SLA converted to milliseconds (hours × 3,600,000) — a DateTime plus a Duration is a DateTime and crosses midnight and month ends by itself. For BillableHours, divide the milliseconds by 3,600,000 to get decimal hours and round with a precision of 0.25 and the '>' direction; an exact multiple of a quarter stays where it is. Check for 0DT before any arithmetic so an unset end is never reported as 'before the start'."
+
+allowedDependencies:
+  - "Base Application"

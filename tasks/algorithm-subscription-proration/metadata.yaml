@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: algorithm-subscription-proration
+title: "Mid-Period Plan Change"
+author: "@Drakonian"
+difficulty: easy
+topic: algorithm
+tags:
+  - date
+  - rounding
+  - proration
+  - subscription
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "January has 31 days and February has 28 or 29 — any '÷ 30' in your formula misprices most months of the year. Count real calendar days, and remember both the period and the remaining window include their boundary days: a change on the last period day still leaves one billable day."
+  - "In AL, subtracting one Date from another yields the number of days between them as an Integer — so the remaining day count from the change date through the period end, both inclusive, is PeriodEnd - ChangeDate + 1, and the period length is PeriodEnd - PeriodStart + 1."
+  - "Round(Amount, 0.01) rounds to the nearest cent with ties away from zero — exactly the rounding the statement asks for. Compute both lines from the same remaining-day count with that same rounding; the symmetry is what makes a same-price switch credit and charge the identical amount."
+
+allowedDependencies:
+  - "Base Application"

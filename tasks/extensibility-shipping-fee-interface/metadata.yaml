@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: extensibility-shipping-fee-interface
+title: "One Interface, Three Calculators"
+author: "@Drakonian"
+difficulty: medium
+topic: extensibility
+tags:
+  - interface
+  - enum
+  - implements
+  - strategy-pattern
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "The base application's Price Calculation has exactly this shape: an enum value picks the strategy, an interface defines the contract, and the calling code never names a concrete codeunit. The AL keywords to research are `interface` and `implements`."
+  - "Three pieces have to agree: the interface declares the signature, each calculator codeunit declares `implements \"Shipping Fee Calculator\"` and provides that exact procedure, and the enum — which already declares `implements` in the starter — lets each value name its own codeunit. The placeholder codeunit shows the exact shape a calculator must have; it is only what the enum's `DefaultImplementation` falls back to for values that have not been wired."
+  - "Each enum value wires itself with `Implementation = \"Shipping Fee Calculator\" = <Your Codeunit Name>;` inside its `value(...) { }` block — a value's own `Implementation` overrides the enum's `DefaultImplementation`. Once that compiles, assigning the value to an `Interface \"Shipping Fee Calculator\"` variable dispatches straight to your codeunit instead of the placeholder, which is exactly what the tests do."
+
+allowedDependencies:
+  - "Base Application"

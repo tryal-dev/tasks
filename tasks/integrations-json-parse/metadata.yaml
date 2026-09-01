@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: integrations-json-parse
+title: "Import an Order from JSON"
+author: "@Drakonian"
+difficulty: medium
+topic: integrations
+tags:
+  - json
+  - parsing
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Sketch the document as a tree first: a root object, one nested object, one array of objects. Every read has two failure modes — the property is absent, or its value won't convert — and your error must name the property either way, so a helper per destination type pays off quickly."
+  - "JsonObject.ReadFrom returns false instead of raising an error when the text isn't JSON — that is your 'invalid JSON' seam. Get hands you a JsonToken; check that the property exists and the token's kind (IsValue, IsObject, IsArray) before converting, because the As... conversions raise their own raw errors on bad content."
+  - "Evaluate with format 9 (XML) parses ISO text region-independently and returns false instead of erroring: if not Evaluate(TheDate, DateText, 9) then Error(...) — the same works for decimals and integers via the value's text."
+
+allowedDependencies:
+  - "Base Application"

@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-uri-builder-endpoints
+title: "Compose Endpoint URLs with Uri Builder"
+author: "@Drakonian"
+difficulty: easy
+topic: basics
+
+tags:
+  - uri-builder
+  - url-encoding
+  - system-application
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Don't concatenate: declare `Codeunit \"Uri Builder\"`, call `Init` with the base address, shape the parts, then hand a `Codeunit Uri` variable to `GetUri` and return its `GetAbsoluteUri()`."
+  - "`AddQueryParameter` and `AddQueryFlag` percent-encode keys and values for you, and flags always land after the key=value parameters. `AddQueryParameter` wants Text — `Format(PageSize)` turns the integer into it."
+  - "`SetPath` treats its argument as ready-made path syntax, not as data — run the item number through `Uri.EscapeDataString` before appending it to `/v1/items/`."
+  - "For the export URL, `Init` the builder with the incoming base URL and add `format` once with the `Enum \"Uri Query Duplicate Behaviour\"::\"Overwrite All Matching\"` policy — the module replaces every existing occurrence and keeps the other parameters in place. That policy is also what the two-argument `AddQueryParameter` overload applies."
+
+allowedDependencies:
+  - "System Application"

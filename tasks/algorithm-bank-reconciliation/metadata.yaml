@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: algorithm-bank-reconciliation
+title: "Match the Bank Statement"
+author: "@Drakonian"
+difficulty: hard
+topic: algorithm
+
+tags:
+  - list
+  - dates
+  - matching
+  - bank-reconciliation
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Candidacy is two comparisons. Amounts must be exactly equal — sign included, so a 250.00 deposit never matches a -250.00 payment. Dates must be at most ToleranceDays apart in either direction, boundary included; subtracting one Date from another in AL gives the distance in days as an Integer."
+  - "Two structures carry the hard rules: a record of which entries are already consumed, so no entry matches twice, and a best-so-far comparison ordered by date distance first, entry date second. Process lines strictly in statement order and let each take its best candidate immediately — resist optimizing the total number of matches; the contract (like BC's own auto-match) is greedy, one line at a time."
+  - "For each line, scan the entries in ascending number order, skip consumed ones, and replace the best candidate only on a strict improvement — strictly smaller distance, or equal distance with a strictly earlier date. The ascending scan plus strict improvement gives you the lowest-entry-number tie-break for free. When all lines are done, the entries never consumed are UnmatchedEntries, ascending — filled after clearing whatever the caller passed in."
+
+allowedDependencies:
+  - "Base Application"

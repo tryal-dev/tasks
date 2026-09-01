@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: performance-early-exit-find
+title: "Stop at the First Bad Line"
+author: "@Drakonian"
+difficulty: medium
+topic: performance
+tags:
+  - find-methods
+  - early-exit
+  - sql-budget
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "The two procedures have different appetites: CountDefects cannot answer without seeing every line, but CheckBatch is done the moment one line fails. Your AL loop in the starter already exits early — the rows are spent by the SQL statement behind the read method, and that statement asks for the whole batch regardless of where the loop stops."
+  - "FindSet is optimized for reading the complete filtered set: it requests all rows at once, so breaking out of the loop refunds nothing. AL's older Find overload pages instead — it asks SQL for a TOP X slice and only fetches more when the loop actually gets there, with X self-tuning. Microsoft's performance docs use exactly this pre-posting batch check as the scenario for it."
+  - "In CheckBatch, replace FindSet() with Find('-') and keep the loop's early exit: the first TOP X slice already contains the defective line 3, and the other ~20,000 rows are never fetched. Leave CountDefects on a plain FindSet full pass — when every line must be inspected, reading the complete set at once is the right choice, which is why its budget fits a whole-batch read."
+
+allowedDependencies:
+  - "Base Application"

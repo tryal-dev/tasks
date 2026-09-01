@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-add-table-field
+title: "Add a Custom Field to Customer"
+author: "@Drakonian"
+difficulty: easy
+topic: basics
+tags:
+  - table-extension
+  - field
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "A table extension adds fields inside a `fields { }` block."
+  - "Field syntax: `field(<id>; \"Custom Field\"; Text[50]) { }` — pick an id in 50100–50199."
+  - "Good practice: set a Caption — analyzers flag fields without one."
+
+allowedDependencies:
+  - "Base Application"

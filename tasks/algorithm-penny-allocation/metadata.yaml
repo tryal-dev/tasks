@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: algorithm-penny-allocation
+title: "No Cent Left Behind"
+author: "@Drakonian"
+difficulty: medium
+topic: algorithm
+tags:
+  - rounding
+  - decimal
+  - allocation
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Round each line's exact share on its own and add the results up: three equal lines of 100.00 hand out 99.99, and six lines whose shares all end in half a cent hand out 1.02 for a 0.99 invoice. The residual is not a rare edge case — it appears whenever the shares don't divide evenly."
+  - "Fixing the books by parking the whole difference on one line breaks guarantee 4: across many lines the drift can grow to several cents, and that line ends up more than a cent away from its fair share. The correction has to be spread over the lines."
+  - "Two classic strategies satisfy all four guarantees. Largest remainder: round every share down, then hand one extra cent each to the lines with the biggest discarded fractions until the total balances. Running total (BC's own VAT-rounding trick): walk the lines keeping the exact cumulative share, and give each line the rounded cumulative share minus everything you have already handed out."
+
+allowedDependencies:
+  - "Base Application"

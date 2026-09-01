@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: integrations-sepa-remittance-wrap
+title: "140 Characters of Remittance"
+author: "@Drakonian"
+difficulty: medium
+topic: integrations
+
+tags:
+  - sepa
+  - text
+  - string-handling
+  - data-exchange
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Compose each entry into its final text the moment it is added — then the length arithmetic works on exactly what would be sent. A plain Format(Amount) is a trap: it follows the server's regional settings and writes 250 (or 250,00) instead of 250.00."
+  - "A format string sets the amount's shape on every server: <Precision,2:2> forces exactly two decimals and <Standard Format,9> selects the culture-invariant XML representation — combine them in one Format call."
+  - "For the overflow, don't drop entries until the entries alone fit — the suffix still needs room. Instead, try candidate texts: for k kept entries the candidate is the first k entries joined with ', ' plus ', and (Total - k) more' (just 'and Total more' when k is 0), and the answer is the largest k whose candidate is at most 140 characters."
+
+allowedDependencies:
+  - "Base Application"

@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: integrations-isolated-storage
+title: "A Module Secret Vault"
+author: "@Drakonian"
+difficulty: easy
+topic: integrations
+tags:
+  - isolated-storage
+  - secrets
+  - datascope
+
+executionTier: full_execution
+transactionModel: committed
+companyIsolation: fresh
+
+hints:
+  - "Isolated Storage is AL's built-in key/value store for extension secrets — the `IsolatedStorage` data type has static methods to set, get, check, and delete entries, and each takes an optional `DataScope` parameter."
+  - "`IsolatedStorage.Get` and `IsolatedStorage.Delete` return an optional Boolean — capture it, and a missing key becomes a branch instead of a runtime error. `IsolatedStorage.Contains` answers the existence question directly."
+  - "Order matters in `SetSecret`: reject the empty value first, then remove any existing entry, then write — never touch the storage before the value has passed validation. One test stores a value, attempts an empty overwrite, and expects the original to still be there."
+
+allowedDependencies:
+  - "Base Application"

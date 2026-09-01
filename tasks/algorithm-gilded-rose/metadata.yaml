@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: algorithm-gilded-rose
+title: "Gilded Rose, AL Edition"
+author: "@Drakonian"
+difficulty: hard
+topic: algorithm
+tags:
+  - table
+  - enum
+  - kata
+  - inventory
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Every category's change is decided by the Sell In value as it stood before the day's update — settle the quality first, decrement Sell In after. Sulfuras opts out of the whole ritual: neither field moves, ever."
+  - "The backstage thresholds sit on the pre-update Sell In: 11 or more days out gains 1, 10 down to 6 gains 2, 5 down to 1 gains 3 — and at 0 or below the pass is worthless: its quality is SET to 0, not merely reduced. Every gain still respects the cap of 50."
+  - "One clean shape: return early for Sulfuras; otherwise compute the day's quality by category — Normal loses 1 (2 expired), Aged Brie mirrors it gaining 1 (2 expired), Conjured doubles Normal losing 2 (4 expired), and the Backstage Pass follows its own three-window/worthless ladder — clamp the result between 0 and 50, decrement Sell In, then Modify. EndOfDay is a FindSet loop calling that same update for each record."
+
+allowedDependencies:
+  - "Base Application"

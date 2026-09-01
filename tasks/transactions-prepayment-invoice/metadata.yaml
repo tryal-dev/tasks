@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: transactions-prepayment-invoice
+title: "Take the Deposit First"
+author: "@Drakonian"
+difficulty: medium
+topic: transactions
+tags:
+  - prepayment
+  - sales-order
+  - posting
+  - dimensions
+
+executionTier: full_execution
+transactionModel: committed
+companyIsolation: fresh
+
+hints:
+  - "Prepayments are a first-class part of the sales order, not something you calculate on the side: the header carries the deposit settings and every line carries its own share of the deposit. Changing the deposit percentage on the header from code is what pushes the new share down onto the lines — the same thing the Sales Order page does when it asks whether to update the lines."
+  - "A prepayment invoice is not posted by the codeunit that posts the order; it has its own posting codeunit, which also takes the sales header and leaves the order alive. Both posting codeunits expose the same switch that lets them run inside a caller's transaction instead of committing on their own, and both hand the posted document number back on the header afterwards. For the removal, remember that a table's delete trigger is where Business Central keeps its own guards."
+  - "`\"Sales-Post Prepayments\"`: `SetSuppressCommit(true)`, then `Invoice(SalesHeader)`; the posted number comes back in the header's `\"Last Prepayment No.\"`. For the final bill, set `Ship` and `Invoice` on the header, suppress the commit on `\"Sales-Post\"` as well, run it, and read `\"Last Posting No.\"`. Deleting a sales line with its trigger running raises the prepayment guard for free."
+
+allowedDependencies:
+  - "Base Application"

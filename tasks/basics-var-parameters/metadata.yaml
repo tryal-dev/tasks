@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-var-parameters
+title: "Why Did My Change Vanish?"
+author: "@Drakonian"
+difficulty: easy
+topic: basics
+tags:
+  - var
+  - parameters
+  - by-reference
+  - list
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Without `var`, a Record or Text parameter is a copy: the procedure's assignments land on the copy and vanish when it returns. With `var`, the procedure works on the caller's own variable."
+  - "Compare each starter signature with the statement. Two procedures are missing the `var` their callers rely on, and one carries a `var` it must not have — a preview that changes the caller's line is the same bug in the other direction, and it only shows once the first fix is in."
+  - "A List is a reference type, so `AppendTag` already reaches the caller's list without `var` — and so would `CountTags` if it normalized entries in place. Loop over the list, normalize each entry into the loop variable, collect the distinct results in a scratch list, and return that list's Count; the caller's list stays exactly as it was."
+
+allowedDependencies:
+  - "Base Application"

@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: extensibility-posted-invoice-stamp
+title: "Stamp the Posted Invoice"
+author: "@Drakonian"
+difficulty: easy
+topic: extensibility
+
+tags:
+  - event-subscriber
+  - sales-post
+  - posting
+  - table-extension
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "You cannot edit codeunit 80 \"Sales-Post\", but you don't need to: it publishes integration events at every step of posting, and a subscriber in your own codeunit runs as if it were part of the routine. In VS Code, Shift+Alt+E lists every event you can subscribe to."
+  - "Look for the event Sales-Post raises just before it inserts the posted invoice header: it hands you the `Sales Invoice Header` about to be inserted (by `var`, so your changes are what gets saved) together with the source `Sales Header`. An AL subscriber may declare only the parameters it needs — they are matched by name."
+  - "The subscriber is `[EventSubscriber(ObjectType::Codeunit, Codeunit::\"Sales-Post\", 'OnBeforeSalesInvHeaderInsert', '', false, false)]` on a procedure taking `var SalesInvHeader: Record \"Sales Invoice Header\"` and `var SalesHeader: Record \"Sales Header\"` — its body copies your field from the source header onto the invoice header."
+
+allowedDependencies:
+  - "Base Application"

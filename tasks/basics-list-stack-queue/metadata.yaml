@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-list-stack-queue
+title: "A Stack and a Queue on One List"
+author: "@Drakonian"
+difficulty: easy
+topic: basics
+tags:
+  - list
+  - collections
+  - stack
+  - queue
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Both Push and Enqueue just add to the end of the one list. The only difference between the stack and the queue is which end you take from: the back is index Count(), the front is index 1."
+  - "Lists are 1-based, so on an empty list Count() is 0 and reading index 0 with Get(Index) raises an error. Get has a second overload that takes a var parameter and returns false instead of raising — or check Count() before touching an index."
+  - "Read the value before you remove it: after RemoveAt(1) every remaining element has moved down one position. Remove(Value) already returns whether it found and removed a first occurrence, and Reverse() reorders the list in place."
+
+allowedDependencies:
+  - "Base Application"

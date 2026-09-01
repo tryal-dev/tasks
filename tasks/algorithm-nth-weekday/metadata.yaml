@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: algorithm-nth-weekday
+title: "Second Tuesday Payment Run"
+author: "@Drakonian"
+difficulty: easy
+topic: algorithm
+tags:
+  - dates
+  - calendar
+  - scheduling
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Every rule here reduces to two questions about a single date: what is its weekday number, and which month does it belong to? Resist reaching for one big formula — a Date plus an Integer is a Date, and seven days after a Tuesday is the next Tuesday. Small loops over real dates beat clever arithmetic."
+  - "For the nth weekday: start at the 1st of the month, step one day forward until Date2DWY(TheDate, 1) matches, then jump whole weeks — 7 * (Occurrence - 1) days. If the jump lands outside the month (Date2DMY(TheDate, 2) no longer matches), the fifth occurrence does not exist and that is your error case. For the last weekday, start from the month's final day and walk backwards — CalcDate('<CM>', AnyDayOfThatMonth) hands you that final day, leap February included."
+  - "FirstWorkdayOnOrAfter is a two-line loop: while the weekday number is 6 or 7, add one day — plain date arithmetic carries you into the next month or year on its own. PaymentRunDates is a for-loop from 1 to MonthCount calling NthWeekdayOfMonth once per month: keep the year and month as plain integers, and when the month passes 12, reset it to 1 and add one to the year."
+
+allowedDependencies:
+  - "Base Application"

@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-init-keeps-key
+title: "Init Doesn't Touch the Key"
+author: "@Drakonian"
+difficulty: easy
+topic: basics
+tags:
+  - init
+  - initvalue
+  - table
+  - enum
+  - list
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Three symptoms, three fixes: a remark that survives into the next row, a status that comes out blank instead of Pending, and numbering that starts over on every call."
+  - "`Record.Init` resets every non-key field to its default — the field's `InitValue` where it has one — and leaves the primary key alone. Call it once per row, before you fill the row."
+  - "Because `Init` keeps the key, you still assign `\"Entry No.\"` yourself on every row: read the highest existing number with `FindLast` before the loop and count up from there."
+  - "`InitValue = Pending;` on the `Status` field is what makes `Init` hand you a Pending row. Assigning the status inside the loop passes the import tests but not the one that calls `Init` on a bare record."
+
+allowedDependencies:
+  - "Base Application"

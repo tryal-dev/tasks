@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: error-handling-rich-errorinfo
+title: "Errors Worth Reading"
+author: "@Drakonian"
+difficulty: easy
+topic: error-handling
+tags:
+  - errorinfo
+  - collectible-errors
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "A plain Error(Text) can carry exactly one string — there is nowhere to hang a hidden troubleshooting text or key/value data on it. AL has a data type that represents an error as an object with several fields; the shortage error needs to become one of those."
+  - "Build the error with ErrorInfo.Create, fill its DetailedMessage and its CustomDimensions (a Dictionary of [Text, Text] — Add each key/value pair, quantities via Format), then raise it with Error(YourErrorInfo)."
+  - "The collection-scope tests only see errors marked collectible: pass true as the second argument of ErrorInfo.Create, or set Collectible := true on the ErrorInfo before raising it."
+
+allowedDependencies:
+  - "Base Application"

@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-item-priority-enum
+title: "Add a Priority Enum to Items"
+author: "@Drakonian"
+difficulty: easy
+topic: basics
+tags:
+  - enum
+  - table-extension
+  - initvalue
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "An enum is a standalone object: `enum 50101 \"Item Priority\" { value(0; Low) { } ... }`."
+  - "Use it as a field type in the table extension: `field(50102; \"Restock Priority\"; Enum \"Item Priority\")`."
+  - "`InitValue = Normal;` on the field makes every new record start at Normal."
+
+allowedDependencies:
+  - "Base Application"

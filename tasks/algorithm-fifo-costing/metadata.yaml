@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+
+id: algorithm-fifo-costing
+title: "FIFO Cost of a Shipment"
+author: "@Drakonian"
+difficulty: hard
+topic: algorithm
+tags:
+  - fifo
+  - inventory-costing
+  - list
+  - rounding
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Each receipt is a cost layer: a remaining quantity and a unit cost. Shipping is not arithmetic on running totals — it is consuming those layers, oldest first, and a layer half-eaten by one shipment must stay half-eaten for the next. The starter's running average has no layers at all, which is exactly why it drifts."
+  - "Process the entries strictly in ledger order and keep a running on-hand quantity. A shipment may only draw on layers received before it; the moment it asks for more than is on hand, raise the error — a receipt further down the ledger changes nothing, because that inventory has not arrived yet."
+  - "One shape that works: two parallel lists holding each layer's remaining quantity and unit cost, plus an index pointing at the oldest layer with anything left. For each shipment, loop: take the smaller of what the layer still holds and what the shipment still needs, add take x unit cost to an exact running cost, shrink the layer, and advance the index past emptied layers. Round the accumulated cost to 0.01 once, only when the shipment is fully served."
+
+allowedDependencies:
+  - "Base Application"

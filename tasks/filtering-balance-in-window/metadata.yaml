@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: filtering-balance-in-window
+title: "Customer Balance in a Date Window"
+author: "@Drakonian"
+difficulty: easy
+topic: filtering
+tags:
+  - flowfield
+  - flowfilter
+  - calcfields
+  - customer
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "The Customer table already knows how to add up its own ledger — look at its FlowFields, and notice that some of their formulas are wired to a FlowFilter field called \"Date Filter\"."
+  - "A FlowFilter doesn't filter which customer rows you see: SetRange(\"Date Filter\", FromDate, ToDate) feeds the date-linked FlowFields the next time you CalcFields them. An as-of balance is just a window that starts at 0D, the empty date."
+  - "Pick the FlowField carefully: \"Balance (LCY)\" has no posting-date link in its formula, so it ignores the Date Filter and always returns the all-time balance — exactly the starter's bug. \"Net Change (LCY)\" is the one whose formula ties Posting Date to the Date Filter."
+
+allowedDependencies:
+  - "Base Application"

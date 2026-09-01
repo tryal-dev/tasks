@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: transactions-document-lifecycle
+title: "Document Lifecycle: Open, Released, Posted"
+author: "@Drakonian"
+difficulty: medium
+topic: transactions
+tags:
+  - status
+  - state-machine
+  - document
+  - testfield
+  - error-handling
+
+executionTier: full_execution
+transactionModel: committed
+companyIsolation: fresh
+
+hints:
+  - "Sketch the full matrix first: three actions times three statuses is nine cells, of which exactly three are legal. Each procedure's first job is to look at `Status` and reject the wrong states — only then may it change anything."
+  - "All six illegal cells are one guard in disguise: each action requires exactly one source status, and rejecting every other state with the standard `must be equal to` message is a one-liner. `TestField(Amount)` likewise produces exactly the `must have a value` error the release guard needs."
+  - "The skeleton of each action: `TestField(Status, ...)` with the action's one legal source status, then assign the new status (and `\"Posted On\" := WorkDate()` in `Post`) and call `Modify()`. Mutate the var parameter itself — the tests read the caller's variable AND re-`Get` the record from the database."
+
+allowedDependencies:
+  - "Base Application"

@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-safe-filename
+title: "A File Name the OS Accepts"
+author: "@Drakonian"
+difficulty: easy
+topic: basics
+tags:
+  - text
+  - convertstr
+  - delchr
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Three static methods of the Text data type do nearly all of the work: one maps characters to other characters one-to-one, one deletes a set of characters from the start or the end of a string, and one copies the first N characters of a string. The whitespace runs are the only part that needs a loop."
+  - "ConvertStr(Proposed, FromCharacters, ToCharacters) replaces every character found in FromCharacters with the character at the same position in ToCharacters, so the two lists must be the same length: nine illegal characters need nine underscores. A tab can ride along in the same call — a Text[1] variable assigned character 9 at position 1 — with a space at the same position in ToCharacters."
+  - "DelChr(Stem, '<>', ' .') strips every leading and trailing space or dot in one call: '<>' names the positions, ' .' is the set of characters. Collapse runs with a loop that replaces two spaces by one while StrPos still finds a pair, fall back to 'document' when the stem is empty, then CopyStr the stem to MaxLength minus the extension length minus one before appending the dot and the extension."
+
+allowedDependencies:
+  - "Base Application"

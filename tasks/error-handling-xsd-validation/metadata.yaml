@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: error-handling-xsd-validation
+title: "Validate Against the Schema"
+author: "@Drakonian"
+difficulty: medium
+topic: error-handling
+tags:
+  - xml
+  - xsd
+  - schema-validation
+  - getlasterrortext
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Well-formedness and schema validity are different questions with different failure channels: a parse attempt on the XmlDocument type answers the first politely with a Boolean, while a schema check reports a violation by raising an error. Your gate's job is to catch that error and turn it into a verdict plus a diagnostic — never to let it escape."
+  - "You don't have to build the validator: the System Application ships a small XML validation codeunit whose Try procedure takes the XML text, the schema text and the schema's namespace. Called in a condition, it returns false instead of raising, and the violation message is then waiting in GetLastErrorText()."
+  - "The shape of the solution: clear Diagnostic first; XmlDocument.ReadFrom returning false means NotWellFormed; then ClearLastError() and codeunit \"Xml Validation\".TryValidateAgainstSchema(XmlPayload, SchemaText(), SchemaNamespace()) — false means SchemaInvalid with GetLastErrorText() as the Diagnostic, otherwise Valid. Without the up-front clears, text from an earlier call can leak into a later verdict."
+
+allowedDependencies:
+  - "Base Application"
+  - "System Application"

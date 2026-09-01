@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-safe-code-copy
+title: "Copy Text Safely into Code Fields"
+author: "@Drakonian"
+difficulty: easy
+topic: basics
+tags:
+  - text
+  - copystr
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Assigning Text longer than the target Code length doesn't truncate — it raises a runtime error. That's the bug in the starter."
+  - "`CopyStr(Value, 1, 20)` truncates safely, and Text has a `Trim()` method for the whitespace."
+  - "Do the trim first, then `CopyStr` the result down to 20 characters — returning Text through a `Code[20]` return type uppercases automatically."
+
+allowedDependencies:
+  - "Base Application"

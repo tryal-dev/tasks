@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: performance-blob-on-demand
+title: "Blobs Are Billed Separately"
+author: "@Drakonian"
+difficulty: easy
+topic: performance
+tags:
+  - blob
+  - calcfields
+  - archive
+  - sql-budget
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Start from what each document already tells you: a filled-in Recorded Size is the final answer for that document, no payload required. Work out how many of the department's documents genuinely need their stored payload opened — every complaint the grader raises traces back to payloads fetched for documents that had already answered."
+  - "A Blob never travels with its row: after FindSet, Content is empty until you explicitly fetch it, and each fetch is its own SQL statement against one row. Narrow the record to the department first — SetRange, then one FindSet pass — and pay the fetch price only inside the branch where Recorded Size is 0. CalcFields(Content) is that fetch, and Content.Length is the byte count."
+  - "SetAutoCalcFields(Content) looks like the tidy fix: one statement, and every payload arrives with its row. Here it is the trap — it drags payloads across the wire for documents whose size was already on record, two thirds of the department, and the grader cannot see those bytes (it counts statements and rows), so nothing will tell you. Keep the plain filtered FindSet and call CalcFields(Content) only for the zero-Recorded-Size documents."
+
+allowedDependencies:
+  - "Base Application"

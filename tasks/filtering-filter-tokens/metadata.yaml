@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: filtering-filter-tokens
+title: "Filters That Understand TODAY, WEEK and ME"
+author: "@Drakonian"
+difficulty: easy
+topic: filtering
+tags:
+  - table
+  - setfilter
+  - date-filter
+  - user-input
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "SetFilter takes your text at face value: 'today' is not a date, so the date filter throws, and 'me' is just a two-letter word that matches nobody. Something has to translate the token into a real date, range or user id BEFORE the filter is set."
+  - "Don't reach for Evaluate and a pile of if-statements: BC's own filter boxes already understand today, week and me, and the code behind that understanding ships in the System Application, ready for your codeunit to call."
+  - "Codeunit \"Filter Tokens\" is that code. MakeDateFilter, MakeTextFilter and MakeDateTimeFilter each take your raw input as a var Text and rewrite it into valid filter syntax — resolve first, then SetFilter whatever came back."
+
+allowedDependencies:
+  - "Base Application"

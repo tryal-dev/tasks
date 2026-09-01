@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: transactions-transfer-in-transit
+title: "Ship Now, Receive Later"
+author: "@Drakonian"
+difficulty: medium
+topic: transactions
+tags:
+  - transfer-order
+  - in-transit
+  - item-ledger-entry
+  - inventory-posting
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Nothing here is written into the ledger by hand — every entry the tests expect is the by-product of posting something real. Ask what document models 'goods on a truck between two warehouses' and what journal moves stock in one step: both post `Transfer`-type item ledger entries, which no pair of adjustments can imitate."
+  - "Build the document the way the base app does: insert a `Transfer Header` (an `Insert(true)` with a blank number pulls one from the transfer order number series), validate `\"Transfer-from Code\"`, `\"Transfer-to Code\"` and `\"In-Transit Code\"`, then insert a `Transfer Line` and validate its `\"Item No.\"` and `Quantity`. Shipment and receipt each have a dedicated posting codeunit that releases the order by itself — avoid the Yes/No wrappers, whose confirmation dialog fails a graded run."
+  - "For `Ship`/`Receive`: `Validate` the line's `\"Qty. to Ship\"` / `\"Qty. to Receive\"`, `Modify(true)`, then run `Codeunit \"TransferOrder-Post Shipment\"` / `\"TransferOrder-Post Receipt\"` against the header — validating `\"Qty. to Receive\"` above what is in transit raises the exact 'You cannot receive more than...' error the tests expect. For `DirectTransfer`, post one item journal line with `\"Entry Type\" = Transfer`, a `\"Location Code\"` and a `\"New Location Code\"` through `Codeunit \"Item Jnl.-Post Line\"`. (A direct-transfer order only matches the two-entry footprint when Inventory Setup's \"Direct Transfer Posting\" is set to \"Direct Transfer\" — under the default \"Receipt and Shipment\" it posts four entries and fails the tests, so the journal path is simpler.) `OnHand` is a filtered `CalcSums` over `\"Item Ledger Entry\".Quantity`."
+
+allowedDependencies:
+  - "Base Application"

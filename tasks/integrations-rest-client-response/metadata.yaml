@@ -1,0 +1,26 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: integrations-rest-client-response
+title: "When the API Says No"
+author: "@Drakonian"
+difficulty: medium
+topic: integrations
+
+tags:
+  - rest-client
+  - http
+  - json
+  - error-handling
+  - mocking
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "You do not have to assemble requests by hand: the System Application module that declares Interface \"Http Client Handler\" also ships a client codeunit that takes your handler and turns a URL into a sent request. Read what each of its sending methods hands back — some give you the whole response, others give you only the parsed JSON of a call that went well."
+  - "The convenient as-JSON shortcuts are the trap. The moment the status is not a success, they raise the module's own generic \"the request failed\" error, and the problem document you were asked to surface never reaches your code. Take the route that returns the response object itself, then ask it for its status code, its reason phrase and its content."
+  - "The send step is the other trap: when the handler reports a transport failure, the module raises an error instead of returning a response — wrap that single call so you can catch it and raise your own sentence instead (see \"Handling errors using try methods\" on Learn). And read the failure body defensively: take it as text and try to parse it, because for the gateway responses the parse must be allowed to fail without taking the status line down with it."
+
+allowedDependencies:
+  - "Base Application"
+  - "System Application"

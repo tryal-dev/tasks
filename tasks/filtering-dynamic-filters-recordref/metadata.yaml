@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: filtering-dynamic-filters-recordref
+title: "Dynamic Filters from Configuration Rows"
+author: "@Drakonian"
+difficulty: medium
+topic: filtering
+tags:
+  - recordref
+  - fieldref
+  - setfilter
+  - configuration
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "You never know the table at compile time, so a Record variable of a fixed table cannot work. RecordRef.Open takes any table number, RecordRef.Field hands you a FieldRef for a field number, and FieldRef.Type tells you what kind of value that field holds."
+  - "Text pasted into a filter string is parsed as a little query language — that is exactly how a | becomes either/or. FieldRef has one filtering method that takes the value as plain data, and SetFilter accepts replacement fields (%1) whose values stay out of the expression. Either way, the value you hand over must already have the FieldRef's own type — Evaluate converts the configured text, and its Boolean return tells you when the text does not fit. A Variant can carry whichever type came out."
+  - "Equals is FieldRef.SetRange(TypedValue); At Least and At Most are FieldRef.SetFilter('>=%1', TypedValue) and FieldRef.SetFilter('<=%1', TypedValue). Check RecordRef.FieldExist before RecordRef.Field for the unknown-field error, guard each Evaluate for the invalid-value error, and finish with RecordRef.GetFilters and RecordRef.Count."
+
+allowedDependencies:
+  - "Base Application"

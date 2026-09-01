@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: performance-setloadfields
+title: "Load Only What You Read"
+author: "@Drakonian"
+difficulty: medium
+topic: performance
+tags:
+  - table-extension
+  - partial-records
+  - customer
+  - sql-budget
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Grading watches two things the output text can't show: which fields are left loaded on the record after each pass, and the SessionInformation SQL counters. By default every Find or Get hauls all of Customer's normal fields — plus a companion-table join for every table extension — across the wire. The Record API has a way to tell the platform which columns you actually want, and the AreFieldsLoaded probes in the tests tell you exactly the shape to aim for."
+  - "SetLoadFields, called before FindSet, is the directory pass: list exactly the fields the loop reads — the primary key rides along for free. List a field you never read and the not-loaded probes fail; read a field you didn't list and the platform quietly does a just-in-time reload behind your back — an extra statement now, and under real concurrency an 'Inconsistent read' error later."
+  - "The contact sheet is the trap hidden in the previous hint: the e-mail is read only for blank-phone customers, but reading even one field the load list didn't name triggers the just-in-time reload — the platform re-fetches the row and re-reads the rest of the set with the wider shape, and those hidden statements blow the 2-statement budget. The load list must name every field the loop MIGHT read, E-Mail included, not just the fields every row reads."
+
+allowedDependencies:
+  - "Base Application"

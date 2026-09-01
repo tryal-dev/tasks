@@ -1,0 +1,61 @@
+name: "\U0001F9E9 Propose a new task"
+description: Pitch a task idea before authoring it — get early feedback and avoid rework.
+title: "[Task idea]: "
+labels: ["task-proposal"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Proposing first is optional — you can also go straight to a PR using
+        `templates/full_execution/`. An issue is worth it when you want a
+        topic/difficulty sanity check before writing tests.
+  - type: dropdown
+    id: topic
+    attributes:
+      label: Topic
+      description: Must be one of the topic ids in `topics.yaml` — a task id is `<topic>-<slug>`.
+      options:
+        - basics (Basics — first steps, table/page extensions, fields, enums, simple triggers)
+        - extensibility (Extensibility — integration events, subscribers, interfaces bound to enums)
+        - filtering (Filtering — queries, SetRange/SetFilter, FindSet)
+        - performance (Performance — keys, SIFT, CalcSums, SetLoadFields, graded on query budgets)
+        - transactions (Transactions — posting, transactional consistency, locking)
+        - error-handling (Error Handling — TryFunction, ErrorInfo, collecting errors instead of failing fast)
+        - integrations (Integrations — HTTP client, REST, JSON, XML, mocked in tests)
+        - algorithm (Algorithm — logic puzzles, parsing, transforms)
+    validations:
+      required: true
+  - type: dropdown
+    id: difficulty
+    attributes:
+      label: Difficulty
+      options:
+        - easy
+        - medium
+        - hard
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: What will the user build?
+      description: The scenario and the objects/procedures the user writes.
+      placeholder: A codeunit that validates VAT registration numbers per country prefix rules…
+    validations:
+      required: true
+  - type: textarea
+    id: grading
+    attributes:
+      label: How will the tests grade it?
+      description: >-
+        Every task is graded by real test codeunits (full_execution). Sketch
+        the assertions. Remember the quality bar: the reference solution must
+        pass all tests and the unchanged starter must fail at least one.
+    validations:
+      required: true
+  - type: checkboxes
+    id: authoring
+    attributes:
+      label: Authoring
+      options:
+        - label: I'd like to author this task myself once the idea is confirmed

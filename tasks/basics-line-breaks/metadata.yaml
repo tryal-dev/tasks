@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-line-breaks
+title: '\n Is Not a Newline'
+author: "@Drakonian"
+difficulty: easy
+topic: basics
+tags:
+  - text
+  - char
+  - line-endings
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - 'Assign ''\n'' to a Text variable and check its StrLen: it is 2. AL text literals have no C-style escapes - the backslash is only ever interpreted by Message, Error, Confirm and Dialog.Open when they display a text, and the only sequence with special meaning inside a literal is a doubled apostrophe.'
+  - "A Char variable holds a character code: assign it 13 and you have a carriage return, assign it 10 and you have a line feed; Format turns the Char into a one-character Text. The Base Application's `Type Helper` codeunit already wraps both as CRLFSeparator() and LFSeparator()."
+  - "For the split, normalize first: Text.Replace every CRLF with a bare LF, then Text.Split on LF. Note the empty body - splitting an empty text yields one empty entry, and the contract wants none."
+
+allowedDependencies:
+  - "Base Application"

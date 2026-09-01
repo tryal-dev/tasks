@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: integrations-xmlport-flat-file
+title: "Fixed-Width File, the Platform Way"
+author: "@Drakonian"
+difficulty: medium
+topic: integrations
+tags:
+  - xmlport
+  - flat-file
+  - fixed-width
+  - bank-file
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "BC's own bank and payroll interfaces don't assemble these files with TextBuilder and CopyStr. The object the tests run — the one behind Xmlport.Export and Xmlport.Import — is not limited to XML: it has modes for plain text files too, and one of them is fixed-width."
+  - "In a text-mode XMLport a tableelement writes one line per record it iterates, and the nodes inside it are that line's columns, left to right: a fieldelement for a column that is a field as it stands, a textelement you fill yourself in its OnBeforePassVariable trigger for a column you have to compute. In fixed-width mode every one of those nodes also declares how many characters it occupies."
+  - "The trailer is a second tableelement beside the first one, sourced from the virtual Integer table filtered down to a single record so it writes exactly once, whatever the payment batch holds; accumulate its count and total in the payment element's OnAfterGetRecord. For the return file, the semicolon, the double quote and the encoding are three properties on the XMLport object itself. Blank lines between the two blocks are not graded, so don't fight them."
+
+allowedDependencies:
+  - "Base Application"

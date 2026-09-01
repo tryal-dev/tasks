@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: algorithm-working-days
+title: "Promise a Ship Date"
+author: "@Drakonian"
+difficulty: medium
+topic: algorithm
+tags:
+  - dates
+  - calendar
+  - shipping
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "No built-in date formula knows your parameters: CalcDate's <WD> notation follows the company base calendar, not the WeekendDays and Holidays lists you were handed. Arithmetic shortcuts (whole weeks times five, minus the holiday count) break on custom weekend patterns, duplicate holidays, and holidays that fall on a weekend — think about deciding each calendar day on its own."
+  - "One question settles everything: is this single date a working day? It is exactly when its weekday number is not in WeekendDays and the date is not in Holidays — Date2DWY(TheDate, 1) gives the weekday number, and List.Contains answers both membership questions, which also makes duplicate holiday entries harmless. Put that in one local procedure and both public procedures become short loops."
+  - "For the count, walk one day at a time from FromDate to ToDate and add 1 whenever the day is working (a Date plus an Integer is a Date). For the promise, start at OrderDate and keep stepping one day forward, counting only working days, until you have counted LeadTimeWorkingDays — the day you stop on is the promise date, and it is a working day by construction."
+
+allowedDependencies:
+  - "Base Application"

@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-address-block
+title: "Print the Eight-Line Address Block"
+author: "@Drakonian"
+difficulty: easy
+topic: basics
+tags:
+  - format-address
+  - country-region
+  - documents
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Business Central already prints addresses for every country it ships with — the layout rules live on the Country/Region card, not in report code. Find the base-application codeunit that the standard documents call to build their address arrays, and let it do the work."
+  - "Codeunit 365 \"Format Address\" fills an array[8] of Text[100] from the same parts your procedure receives: name, name 2, contact, address, address 2, city, post code, county, country code. Watch the order — the contact is the third argument, not the last."
+  - "The language code is not part of that call. The codeunit has its own setter for it, and because the codeunit is SingleInstance the value survives until something else changes it — so set the language on every build, empty code included, before you format."
+
+allowedDependencies:
+  - "Base Application"

@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: extensibility-blocked-customer-override
+title: "The Cash-on-Delivery Exemption"
+author: "@Drakonian"
+difficulty: medium
+topic: extensibility
+
+tags:
+  - table-extension
+  - event-subscriber
+  - ishandled
+  - posting
+  - blocked-customer
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "You cannot edit table 18 Customer or codeunit \"Sales-Post\" — but the guard that raises the blocked-customer error lives in one procedure on the Customer table, and it consults an integration event before deciding anything. Find the procedure that both sales posting and journal posting call to enforce Blocked."
+  - "Customer.CheckBlockedCustOnDocs runs both at document entry (its Transaction parameter is false) and during posting (Transaction is true), and its Shipment parameter is true only for the shipment-posting call. It funnels — together with CheckBlockedCustOnJnls — into a single published event carrying a `var IsHandled`; a subscriber that sets it makes the whole remaining check exit."
+  - "Subscribe to `OnBeforeCheckBlockedCust` on `Database::Customer` and set `IsHandled := true` only when Shipment and Transaction are both true, `Customer.Blocked = Blocked::Ship`, the customer is \"Cash-on-Delivery Approved\", and \"Privacy Blocked\" is false. The event fires *before* the base app's privacy check, so dropping that last condition silently ships to privacy-blocked customers — one grading test builds exactly that customer."
+
+allowedDependencies:
+  - "Base Application"

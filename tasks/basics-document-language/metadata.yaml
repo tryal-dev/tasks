@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-document-language
+title: "Print in the Customer's Language"
+author: "@Drakonian"
+difficulty: medium
+topic: basics
+tags:
+  - language
+  - globallanguage
+  - customer
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Nothing in a text says which language it is written in — the session does. GlobalLanguage() reads the language the session is running in, GlobalLanguage(Id) switches it, and codeunit Language in the System Application turns a customer's Language Code into the ID you need."
+  - "GetLanguageIdOrDefault already falls back to the session language for a code it cannot resolve, so writing that fallback yourself (and reaching for 1033) is exactly the bug the tests hunt for. GetTwoLetterISOLanguageName maps any language ID onto en, da or fr, which settles both the greeting lookup and the wire tag; the default application language has its own getter too."
+  - "AL has no try/finally: an Error raised while the session still runs in the customer's language leaves it there for everything that follows. Build the line under the switched language, put the session language back, and only then check the 100-character limit and raise the error — or run the switched part in a [TryFunction] and restore the language the moment it returns."
+
+allowedDependencies:
+  - "Base Application"

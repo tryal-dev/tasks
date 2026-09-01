@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-stream-line-reader
+title: "Read Lines, Not Bytes"
+author: "@Drakonian"
+difficulty: easy
+topic: basics
+tags:
+  - streams
+  - text
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "After `ReadText` hands you an empty text, was that a blank line or the end of the stream? The method cannot tell you — so a loop built only on `ReadText` and `EOS` cannot reproduce the exact line list either."
+  - "`InStream.Read` has an overload that reads a single Byte, and `EOS` tells you when the stream is exhausted. At that level a line ending is just data: LF is the value 10 and CR is the value 13."
+  - "Collect ordinary characters in a TextBuilder. On LF, add the built text to the list and clear the builder; skip CR entirely. When the loop ends with characters still in the builder, add them as the final line."
+
+allowedDependencies:
+  - "System Application"
+  - "Base Application"

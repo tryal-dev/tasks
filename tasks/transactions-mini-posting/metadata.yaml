@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: transactions-mini-posting
+title: "A Miniature Posting Routine"
+author: "@Drakonian"
+difficulty: hard
+topic: transactions
+tags:
+  - posting
+  - journal
+  - ledger-entry
+  - testfield
+
+executionTier: full_execution
+transactionModel: committed
+companyIsolation: fresh
+
+hints:
+  - "Real posting routines make two passes over the lines: the first validates every line and totals the batch; only the second writes. Everything runs in one database transaction, so a raised error undoes whatever was already written — lean on that for the all-or-nothing rule instead of writing cleanup code."
+  - "`SetRange` on both `\"Batch Name\"` and `Status` before `FindSet` scopes every check to the open lines of the batch — the balance sum included. `TestField` on the three guarded fields produces exactly the `must have a value` error the tests look for."
+  - "For the entry numbers: `LockTable`, then `FindLast` on `\"Mini Ledger Entry\"` once before the write loop, and increment a local next-entry-no per line. In the write loop it is safe to set `Status` to `Posted` while iterating the `Open`-filtered `FindSet` — `Status` is not part of the key, so `Next` keeps walking correctly."
+
+allowedDependencies:
+  - "Base Application"

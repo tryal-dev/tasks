@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: extensibility-quote-to-order-carry
+title: "Survive Quote-to-Order"
+author: "@Drakonian"
+difficulty: easy
+topic: extensibility
+
+tags:
+  - event-subscriber
+  - quote-to-order
+  - sales
+  - table-extension
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "You cannot edit codeunit 86 \"Sales-Quote to Order\", but you don't need to: it publishes integration events at every step of the conversion, and a subscriber in your own codeunit runs as if it were part of the routine. In VS Code, Shift+Alt+E lists every event you can subscribe to."
+  - "The conversion starts by copying the whole quote record into the new order record, so your \"Campaign Tag\" actually travels on its own — what no base code will ever do is set \"Converted From Quote\". Look for the event raised right after the order header is inserted: it hands you the new order (by var, so your changes are what gets saved) together with the source quote."
+  - "The subscriber is `[EventSubscriber(ObjectType::Codeunit, Codeunit::\"Sales-Quote to Order\", 'OnAfterInsertSalesOrderHeader', '', false, false)]` on a procedure taking `var SalesOrderHeader: Record \"Sales Header\"` and `SalesQuoteHeader: Record \"Sales Header\"` — set the flag (and copy the tag) on `SalesOrderHeader`; no Modify needed, the conversion saves the order right after the event."
+
+allowedDependencies:
+  - "Base Application"

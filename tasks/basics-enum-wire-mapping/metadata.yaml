@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-enum-wire-mapping
+title: "Map Carrier Wire Codes to an Enum"
+author: "@Drakonian"
+difficulty: easy
+topic: basics
+tags:
+  - enum
+  - enumextension
+  - reflection
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "The starter's `case` statement is the bug: the grading tests extend `\"Carrier Status\"` from their own app and expect your mapper to pick the new value up with no code change."
+  - "Every enum instance can list its declared values at run time: `Ordinals()` returns the integer codes and `Names()` the value names, in the same order — extension values included."
+  - "Check whether `Ordinals()` contains the wire code before converting with `Enum::\"Carrier Status\".FromInteger()`; for the name, find the ordinal's position via `Ordinals().IndexOf()` and read that position from `Names()` — both lists are 1-based and always in step."
+
+allowedDependencies:
+  - "Base Application"

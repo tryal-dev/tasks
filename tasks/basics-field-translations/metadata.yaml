@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-field-translations
+title: "Multi-Language Descriptions with the Translation Module"
+author: "@Drakonian"
+difficulty: easy
+topic: basics
+tags:
+  - translation
+  - system-application
+  - table
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "The System Application's codeunit `Translation` is a per-record, per-field, per-language store. It keys every row by the record's SystemId, so a product must be inserted before you attach translations to it."
+  - "Store with the four-argument `Set(Rec, FieldId, LanguageId, Value)` and read with the three-argument `Get(Rec, FieldId, LanguageId)` — it returns an empty string when nothing is stored for that language, which is your cue to return the `Description` field instead. Get the field number via `FieldNo`."
+  - "`Translation.Copy(FromRec, ToRec)` carries every stored language to the duplicate in one call, and `Translation.Delete(Rec)` in the table's `OnDelete` trigger removes that record's rows. Note the overloads: `Delete` with a table ID would wipe every product's translations, not just the deleted one's."
+
+allowedDependencies:
+  - "Base Application"
+  - "System Application"

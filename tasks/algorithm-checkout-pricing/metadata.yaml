@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: algorithm-checkout-pricing
+title: "Supermarket Checkout"
+author: "@Drakonian"
+difficulty: medium
+topic: algorithm
+tags:
+  - pricing
+  - discounts
+  - dictionary
+  - kata
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Score the basket, not the beep: a deal can only be judged once you know an item's full scanned quantity, so keep a running tally per item and do all pricing when Total is asked. Interleaved scans and mid-basket totals then cost nothing extra."
+  - "Multibuy is integer division: with quantity Q on an offer of N for P, Q div N complete groups cost P each and the Q mod N leftovers cost the plain unit price. A bulk break is one comparison — once Q reaches the minimum, the discounted unit price replaces the normal one for every unit, including the first; below it, nothing changes."
+  - "Dictionaries keyed by item code carry the whole checkout: one for unit prices, a few for each deal's parameters, one for scanned quantities. Scan errors when the price dictionary has no entry for the item; otherwise it bumps the item's tally. Total walks the tally and prices each line by whichever deal the item carries — multibuy math, bulk comparison, or plain quantity times unit price."
+
+allowedDependencies:
+  - "Base Application"

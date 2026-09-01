@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-guid-api-format
+title: "Braces Off, Lowercase On"
+author: "@Drakonian"
+difficulty: easy
+topic: basics
+tags:
+  - guid
+  - format
+  - evaluate
+  - api
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "`Format(Id)` is the display form — braces and uppercase. `Format` takes an optional third argument that selects one of the standard formats; the GUID table in the Learn article on formatting lists what each number produces."
+  - "Standard format 4 is the hyphenated form without braces (3 drops the hyphens as well — not what the API wants). It is still uppercase, so `LowerCase` finishes the job. The empty value of a Guid is the all-zero GUID; `IsNullGuid` tests for it — never a comparison with an empty text."
+  - "`Evaluate` raises when used as a statement; captured as a Boolean expression it returns `false` instead, and it accepts both `{...}` and the bare spelling. Return `true` only when the parse succeeded and the result is not the null GUID."
+
+allowedDependencies:
+  - "Base Application"

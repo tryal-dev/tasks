@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: extensibility-release-order-cap
+title: "Enforce a Customer Order Cap at Release"
+author: "@Drakonian"
+difficulty: easy
+topic: extensibility
+
+tags:
+  - event-subscriber
+  - table-extension
+  - sales
+  - release
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "You cannot edit codeunit 414 \"Release Sales Document\", but you don't need to: it publishes integration events, and a subscriber in your own codeunit runs as part of the release routine — an error raised there stops the release before the status ever changes. In VS Code, Shift+Alt+E lists every event you can subscribe to."
+  - "Look for the event the release codeunit raises before it does any work — it hands you the `Sales Header` being released. In your subscriber, exit early unless the document type is Order and the sell-to customer has a nonzero cap. The header's `Amount` is a FlowField: it reads as 0 until you calculate it."
+  - "The subscriber is `[EventSubscriber(ObjectType::Codeunit, Codeunit::\"Release Sales Document\", 'OnBeforeReleaseSalesDoc', '', false, false)]` on a procedure taking `var SalesHeader: Record \"Sales Header\"` (a subscriber may declare only the parameters it needs). Get the sell-to customer, call `SalesHeader.CalcFields(Amount)`, and raise an error mentioning \"Max Order Amount (LCY)\" when the amount is strictly greater than the cap."
+
+allowedDependencies:
+  - "Base Application"

@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-incstr-serials
+title: "The Next Serial Number"
+author: "@Drakonian"
+difficulty: easy
+topic: basics
+tags:
+  - incstr
+  - text
+  - list
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "`IncStr` increases the number closest to the end of a text by one and leaves everything else — earlier numbers, separators, leading zeros — untouched. Try it on the statement's examples before writing any parsing code."
+  - "`IncStr` has a second overload, `IncStr(Text, BigInteger)`, that moves that number by any step in one call. `Advance` is that call plus the no-digits check; `NextSerials` can loop `Qty` times, advancing by 1 each time and adding every result to a `List of [Text]`."
+  - "`IncStr` returns an empty string when the text has no digits. Compare its result with `''` and call `Error` with the statement's message, passing the original serial as `%1` — do not let the empty string escape."
+
+allowedDependencies:
+  - "Base Application"

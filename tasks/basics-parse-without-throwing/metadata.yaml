@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-parse-without-throwing
+title: "The Parse That Throws"
+author: "@Drakonian"
+difficulty: easy
+topic: basics
+tags:
+  - evaluate
+  - text
+  - list
+  - duration
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "`Evaluate` returns a Boolean. When you call it as a bare statement, a failed conversion becomes a runtime error; when you test it inside an `if`, it is just `false` you can act on — and the same goes for a number too large for the target type."
+  - "`Text.Split` gives you a `List of [Text]`. Check `Count` before calling `Get`, or use the `Get(Index, var Value)` overload that returns false instead of raising an error. An empty first element is your empty-prefix case."
+  - "For the lead time, `Evaluate` into a `Duration` variable already understands text like `2 days 4 hours` and `90 minutes` — no arithmetic needed. Reject the empty input first, then return whatever `Evaluate` returns."
+
+allowedDependencies:
+  - "Base Application"

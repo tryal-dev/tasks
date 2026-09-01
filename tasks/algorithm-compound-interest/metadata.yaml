@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+
+id: algorithm-compound-interest
+title: "Math Without an Operator"
+author: "@Drakonian"
+difficulty: easy
+topic: algorithm
+
+tags:
+  - math
+  - finance
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "AL's arithmetic operators stop at `div` and `mod` — there is no `^` or `**`. The power function you need already ships with the platform, and CAGR's fractional exponent (1 divided by a Decimal number of years) rules out building it from a multiplication loop."
+  - "Two doors to the same math: the built-in `Power(Number, Power)` system method, or the System Application's `Math` codeunit — declare `Math: Codeunit Math;` and you get `Math.Pow`, `Math.Exp` and `Math.Log`. All of them take fractional arguments."
+  - "Compute (1 + r) raised to Months once and reuse it in the numerator and denominator of the annuity; return Principal / Months before touching the formula when the rate is 0. The effective rate raises (1 + Nominal/100/m) to the power m, and CAGR raises EndValue / StartValue to the power 1 / Years — after checking all three inputs are positive and raising your `positive` error otherwise."
+
+allowedDependencies:
+  - "Base Application"
+  - "System Application"

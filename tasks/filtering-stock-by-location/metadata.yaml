@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: filtering-stock-by-location
+title: "On Hand, Per Location"
+author: "@Drakonian"
+difficulty: easy
+topic: filtering
+tags:
+  - setrange
+  - dictionary
+  - item-ledger-entry
+  - aggregation
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Every posted movement — purchase, sale, adjustment, transfer — leaves an Item Ledger Entry with \"Item No.\", \"Location Code\" and a signed Quantity. The whole answer is one filtered read of that table: narrow it to the one item, and the per-location totals fall out of the entries you walk through."
+  - "Group as you go: for each entry, ContainsKey decides between Add (first entry for that location) and Set with the running sum plus the entry's Quantity. A net-zero location needs no special code — its key was added by its first entry, and later entries just bring the value back to 0."
+  - "Two details separate almost-right from right: skip entries whose \"Location Code\" is blank (a guard inside the loop, or exclude them up front with a not-equal filter), and never loop the Location table to prime the keys — only locations that actually occur on the item's entries may appear."
+
+allowedDependencies:
+  - "Base Application"

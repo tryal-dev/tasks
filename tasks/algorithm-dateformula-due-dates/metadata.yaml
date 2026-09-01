@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: algorithm-dateformula-due-dates
+title: "Terms of Payment"
+author: "@Drakonian"
+difficulty: medium
+topic: algorithm
+
+tags:
+  - dates
+  - dateformula
+  - payment-terms
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Month arithmetic is where hand-rolled calendars die: one month past 31 January must clamp to 28 — or 29 — February, and a year past a leap day clamps too. Before you write day-count loops, notice that this notation is not invented for the task: it is exactly what sits in the Due Date Calculation field of every payment terms record."
+  - "The platform has a dedicated data type for these expressions and a system method that applies one to a reference date — month-end clamping, leap years, left-to-right term order, and the always-move-at-least-a-day weekday rule all come with it. Blank input is a valid, empty formula to that method."
+  - "Convert the incoming text into a DateFormula variable with Evaluate — a failed Evaluate is precisely your invalid-text signal, so raise your own error that names the text — then hand the formula and the document date to CalcDate. The discount check is one on-or-before comparison against the same calculation."
+
+allowedDependencies:
+  - "Base Application"

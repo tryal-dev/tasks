@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: integrations-wire-format
+title: "Locale-Proof Evaluate and Format"
+author: "@Drakonian"
+difficulty: easy
+topic: integrations
+tags:
+  - format
+  - evaluate
+  - locale
+  - data-exchange
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Format(Value) and Evaluate(Value, Text) obey the regional settings of the session they run in — the same code writes 1.5 on one server and 1,5 on another. The wire needs a representation no regional setting can touch."
+  - "Both Format and Evaluate have overloads that take a format number, selecting among predefined representations — most are culture-dependent, but one of them is defined to be the same everywhere."
+  - "Format number 9 is the XML (culture-invariant) format: dot decimal separator, no group separators, YYYY-MM-DD dates. Evaluate with the same format number parses exactly that shape — and used as an expression, it returns false on bad input instead of raising."
+
+allowedDependencies:
+  - "Base Application"

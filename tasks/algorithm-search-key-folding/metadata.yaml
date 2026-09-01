@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: algorithm-search-key-folding
+title: "Müller Equals Muller"
+author: "@Drakonian"
+difficulty: easy
+topic: algorithm
+tags:
+  - text
+  - unicode
+  - search
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "UpperCase gets you a third of the way at best: it turns ü into Ü, never into U. Nothing in AL folds accents for you — every mapped character has to be translated by your own code, and every unmapped one is either kept or a separator."
+  - "Classify one character at a time into three buckets: a fold-map hit becomes its replacement, a plain letter or digit becomes itself uppercased, everything else is a separator. Emit a space only when a separator run sits between two kept characters — collapsing and trimming then fall out for free."
+  - "Text[i] hands you a Char, and a Char compares against literals like 'ä' in a case statement or a set. For the lookup, no database filter can see your folded key — fold the query once (empty key: exit 0 immediately), then walk the Customer records counting those where ToSearchKey(Name) equals it."
+
+allowedDependencies:
+  - "Base Application"

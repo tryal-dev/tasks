@@ -1,0 +1,119 @@
+name: Grade tasks
+
+# Manual only. Every run occupies real Business Central containers on the
+# platform host, so grading is never triggered by a push or a pull request —
+# a maintainer launches it for the tasks they want proven.
+on:
+  workflow_dispatch:
+    inputs:
+      tasks:
+        description: 'Task ids, space or comma separated. "all" grades the whole catalog. Blank grades what changed vs base_ref.'
+        required: false
+        default: ''
+      ref:
+        description: 'Branch, tag or SHA to grade. Blank uses the ref you launch from. For a contributor PR, use their branch.'
+        required: false
+        default: ''
+      base_ref:
+        description: 'Comparison point when "tasks" is blank.'
+        required: false
+        default: 'origin/main'
+      max_tasks:
+        description: 'Refuse to start if the resolved plan is larger than this. Guards against an accidental full-catalog run.'
+        required: false
+        default: '25'
+      concurrency:
+        description: 'Tasks graded at once. The platform runs three execution workers (one per BC container); more than 3 only queues there.'
+        required: false
+        default: '3'
+
+# Queue runs instead of cancelling: a cancelled run leaves tasks staged on the
+# platform and the container pool is the real bottleneck anyway.
+concurrency:
+  group: grade-tasks
+  cancel-in-progress: false
+
+jobs:
+  grade:
+    name: Grade against the platform
+    runs-on: ubuntu-latest
+    # Holds PLATFORM_URL / PLATFORM_API_KEY and, with required reviewers
+    # configured, gates the run behind an approval before the key is exposed.
+    environment: grading
+    timeout-minutes: 360
+    permissions:
+      contents: read
+    env:
+      PLATFORM_URL: ${{ secrets.PLATFORM_URL }}
+      PLATFORM_API_KEY: ${{ secrets.PLATFORM_API_KEY }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.ref }}
+          # The blank-tasks mode diffs the checkout against base_ref.
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      - name: Check credentials
+        run: |
+          if [ -z "$PLATFORM_URL" ] || [ -z "$PLATFORM_API_KEY" ]; then
+            echo "::error title=Grading not configured::Set PLATFORM_URL and PLATFORM_API_KEY in the 'grading' environment."
+            exit 1
+          fi
+          echo "Platform: $PLATFORM_URL"
+
+      # Dispatch inputs reach the shell as environment variables, never as
+      # expression interpolation, so a crafted input cannot become script.
+      - name: Resolve the plan
+        id: plan
+        env:
+          TASKS: ${{ inputs.tasks }}
+          BASE_REF: ${{ inputs.base_ref }}
+          MAX_TASKS: ${{ inputs.max_tasks }}
+        run: |
+          if [ -n "$TASKS" ]; then
+            ids=$(node scripts/smoke.js --list "$TASKS")
+          else
+            ids=$(node scripts/smoke.js --list --changed "$BASE_REF")
+          fi
+          count=$(printf '%s' "$ids" | grep -c . || true)
+          echo "Resolved $count task(s):"
+          printf '%s\n' "$ids"
+          if [ "$count" -eq 0 ]; then
+            echo "::warning title=Nothing to grade::No task matched the requested selection."
+            echo "count=0" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if [ "$count" -gt "$MAX_TASKS" ]; then
+            echo "::error title=Plan too large::$count tasks resolved but max_tasks is $MAX_TASKS. Re-run with a higher max_tasks if that is intended."
+            exit 1
+          fi
+          echo "count=$count" >> "$GITHUB_OUTPUT"
+          {
+            echo "ids<<IDS_EOF"
+            printf '%s\n' "$ids"
+            echo "IDS_EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Check the platform is reachable
+        if: steps.plan.outputs.count != '0'
+        run: |
+          if ! curl -fsS -m 20 -o /dev/null "$PLATFORM_URL/api/v1/health"; then
+            echo "::error title=Platform unreachable::$PLATFORM_URL/api/v1/health did not answer. If the API's IP allowlist is enabled, GitHub-hosted runners are blocked — see RUNBOOK section 10."
+            exit 1
+          fi
+
+      # $IDS is intentionally unquoted: it is a newline-separated list that must
+      # split into one argument per task. Every id was validated by --list.
+      - name: Grade
+        if: steps.plan.outputs.count != '0'
+        env:
+          IDS: ${{ steps.plan.outputs.ids }}
+          SMOKE_CONCURRENCY: ${{ inputs.concurrency }}
+        run: node scripts/smoke.js $IDS

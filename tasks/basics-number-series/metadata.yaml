@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-number-series
+title: "Wire a Document to No. Series"
+author: "@Drakonian"
+difficulty: medium
+topic: basics
+tags:
+  - table
+  - no-series
+  - oninsert
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "The Business Foundation module ships `Codeunit \"No. Series\"` — `GetNextNo` draws the next number and advances the series, `PeekNextNo` only looks. The old NoSeriesManagement codeunit is obsolete."
+  - "In `OnInsert`, act only when `\"No.\"` is blank: draw the number for series code WORKSHOP and stamp `\"No. Series\"` with the same code. A pre-set `\"No.\"` must pass through with no series call at all."
+  - "`PeekNextOrderNo` is a one-liner around `PeekNextNo`. If you reach for `GetNextNo` there instead, every peek consumes a number and the order inserted right after gets a later one — the tests catch exactly that."
+
+allowedDependencies:
+  - "Base Application"
+  - "Business Foundation"

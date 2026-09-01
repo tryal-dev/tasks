@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: algorithm-validity-overlaps
+title: "Conflicting Price List Lines"
+author: "@Drakonian"
+difficulty: medium
+topic: algorithm
+
+tags:
+  - intervals
+  - dates
+  - price-list
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Sorting the lines by starting date turns merging into a single pass — and a blank starting date already sorts before every real date, which matches its meaning. The blank ending date is the trap: 0D compares as the earliest possible date, but it means the latest possible end."
+  - "Walk the sorted lines while tracking the current coverage period's start, end, and whether it is open-ended. The next line joins the current period when that period is open-ended or the line starts no later than the current end plus one day; otherwise emit the period and start a new one from the line."
+  - "Two periods share a day exactly when each starts no later than the other ends, where a blank ending date always satisfies its side of the check. To count each unordered pair once, compare every line only against lines with a higher \"Line No.\" — a second iterator over the same temporary buffer (Copy with the share-table flag) makes that a double loop."
+
+allowedDependencies:
+  - "Base Application"

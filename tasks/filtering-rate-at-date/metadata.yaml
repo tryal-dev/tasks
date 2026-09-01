@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: filtering-rate-at-date
+title: "Which Rate Applied on This Date?"
+author: "@Drakonian"
+difficulty: medium
+topic: filtering
+tags:
+  - table
+  - setrange
+  - findlast
+  - effective-dating
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "On April 15th the March 1st rate is the one in force — but no row carries April 15th. Filtering for rows whose starting date equals the lookup date only works on the very days a rate changes. Think about the whole set of rates that have already started by the lookup date."
+  - "Filter the salesperson's rows to a starting-date RANGE: from the beginning of time through the lookup date. Every row in that range has started; the winner is the newest of them."
+  - "The primary key ends with \"Starting Date\", so inside that range the records are ordered oldest to newest — after SetRange(\"Starting Date\", 0D, AtDate) the applicable rate is simply the last record in the set."
+
+allowedDependencies:
+  - "Base Application"

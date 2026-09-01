@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: algorithm-royalty-statement
+title: "Performance Royalties"
+author: "@Drakonian"
+difficulty: medium
+topic: algorithm
+tags:
+  - table
+  - kata
+  - finance
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "LineAmount and LineCredits depend only on the category and the audience — get the two fee formulas and the credit rule right against the worked example first; BuildStatement then just reuses them for every performance of the agreement."
+  - "The thresholds are strict: at exactly 30 attendees a tragedy earns the base fee only and zero credits, and at exactly 20 a comedy earns no bonus — the surcharges count only the attendees ABOVE the threshold. The comedy's extra credit counts full groups of 5, fractions dropped."
+  - "One clean shape: branch on the category with a fallback branch that calls Error with the category code in the message; BuildStatement first empties the caller's buffer and zeroes both totals, filters the performance table to the agreement, then walks it in Entry No. order, inserting numbered lines and accumulating both totals."
+
+allowedDependencies:
+  - "Base Application"

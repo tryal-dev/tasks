@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-iso-week-keys
+title: "Week 53 of Last Year"
+author: "@Drakonian"
+difficulty: easy
+topic: basics
+tags:
+  - dates
+  - iso-week
+  - leap-year
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Every helper is one or two calls into the platform's date toolbox — no loops, no table of month lengths. Date2DWY takes a date apart by week (day of week, week number, and the year that week belongs to), Date2DMY takes it apart by calendar month, DWY2Date and DMY2Date put the pieces back together, and CalcDate moves a date by a formula."
+  - "The third value Date2DWY returns is the ISO week-numbering year — 2020 for 1 January 2021, 2026 for 29 December 2025 — exactly what the week key needs; Date2DMY's third value and Date.Year() give the calendar year, which is wrong on those days. Pass that same week-year, not the calendar year, together with weekday 1 and the week number to DWY2Date when you rebuild the Monday: DWY2Date(1, 1, 2026) really is 29 December 2025."
+  - "Zero-padding: Format with the format string '<Integer,2><Filler Character,0>' renders 7 as 07 — or prefix a '0' yourself when the week is below 10. The date formula <CM> in CalcDate jumps to the last day of the reference date's month, leap February included; the day number of that date is the month's length, and February's length tells you whether a year is leap — build 1 February of that year with DMY2Date and ask. The quarter is integer arithmetic on the month number: months 1–3 give 1, 4–6 give 2, and so on."
+
+allowedDependencies:
+  - "Base Application"

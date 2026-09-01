@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: filtering-cross-column-search
+title: "Search Across Columns"
+author: "@Drakonian"
+difficulty: medium
+topic: filtering
+tags:
+  - setfilter
+  - filtergroup
+  - cross-column-search
+  - customer
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Every filter you set the ordinary way narrows the result — a record must satisfy all of them. No combination of per-field filters set that way can express 'this column or that one', so the union has to come from somewhere else."
+  - "Filters live in numbered filter groups, and within a group every field's filter must hold. Exactly one group is the exception — it exists to power the search box on list pages, and inside it a record only needs to match at least one of the filters. Its number is not one you would guess."
+  - "FilterGroup(-1) is the cross-column group: set the @*text* filters on Name and City there, then switch back to FilterGroup(0) so later filters — like the non-blank E-Mail one — still narrow. Group -1 ORs its own filters together and ANDs with every other group."
+
+allowedDependencies:
+  - "Base Application"

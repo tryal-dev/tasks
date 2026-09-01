@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: error-handling-try-call-contract
+title: "When Your Try Isn't a Try"
+author: "@Drakonian"
+difficulty: medium
+topic: error-handling
+tags:
+  - tryfunction
+  - getlasterrortext
+  - error-propagation
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "The loop already routes the check through an error-catching wrapper, and the first broken code still takes the caller down. Nothing about the wrapper is wrong — the way the call itself is written is what decides whether anything gets caught."
+  - "A try call only catches when its implicit Boolean return value is used: `if TryCheckScan(...) then ... else ...` catches, while the bare statement `TryCheckScan(...);` is an ordinary call and the error passes straight through. Right after a catch, `GetLastErrorText()` holds the message that was raised."
+  - "Second trap, and it only appears once the first one is fixed: the arguments of a try function are evaluated inside it. With `ResolveCodeLength()` sitting in the argument list, a broken setup is caught by the very call that was meant to catch scan problems, and it becomes a per-code failure instead of reaching the caller. Resolve the length into a local variable before the loop and pass that variable."
+
+allowedDependencies:
+  - "Base Application"

@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: performance-calcsums
+title: "Total Without a Loop"
+author: "@Drakonian"
+difficulty: easy
+topic: performance
+tags:
+  - ledger-entries
+  - sql-budget
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "The budget counts rows read from the database, not lines of AL. A loop that fetches every entry so your code can add them up reads one row per entry — with hundreds of entries it can never fit. Ask the database one question whose answer is already the total."
+  - "A record variable can delegate the arithmetic to SQL: one built-in record method computes the sum of a numeric field over the current filters in a single statement and reads a single row — no FindSet, no repeat."
+  - "SetRange \"Customer No.\", call CalcSums on \"Sales (LCY)\", then read \"Sales (LCY)\" straight off the record variable — after CalcSums the field holds the filtered sum instead of a row's value."
+
+allowedDependencies:
+  - "Base Application"

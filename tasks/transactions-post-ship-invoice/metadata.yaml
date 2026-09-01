@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: transactions-post-ship-invoice
+title: "Ship Now, Invoice Later"
+author: "@Drakonian"
+difficulty: medium
+topic: transactions
+tags:
+  - posting
+  - sales-order
+  - sales-post
+  - shipment
+  - invoice
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Both passes run the same standard posting routine; the two Ship/Invoice checkboxes of the posting dialog are two Boolean fields on the sales header, and posting stores whatever you set there back on the order — so each pass has to set both fields, not assume the one it does not want is off."
+  - "Don't go looking for the posted document afterwards. A re-read of the order fails once it is fully invoiced (posting deletes it), and \"the shipment of this order\" is ambiguous as soon as an order ships twice. The posting routine takes your header record by reference and writes the numbers it assigned back into it — the answer is in the variable you passed, before you do anything else with it."
+  - "The header you get back carries `\"Last Shipping No.\"` and `\"Last Posting No.\"` — the numbers of the shipment and the invoice that call posted; the working `\"Shipping No.\"` / `\"Posting No.\"` fields are cleared at the end of posting. For the nothing-to-post rule, let a `Get` on document type `Order` plus the number decide: take its boolean return and exit with `''` instead of letting the platform raise its own error."
+
+allowedDependencies:
+  - "Base Application"

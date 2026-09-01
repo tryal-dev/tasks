@@ -1,0 +1,26 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: integrations-soap-call
+title: "Call a SOAP Service (Mocked)"
+author: "@Drakonian"
+difficulty: hard
+topic: integrations
+tags:
+  - soap
+  - httpclient
+  - xml
+  - namespaces
+  - interface
+  - mocking
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Nothing here is new — it is three earlier tasks glued together: build the envelope the way integrations-xml-build built its document (only now every element carries a namespace), send it the way integrations-http-get sent its GET (only now it is a POST with a body and two extra headers), and read the answer the way integrations-xml-namespaces read its message. Take the grading tests one at a time; each isolates one of the three skills."
+  - "Request side: XmlElement.Create takes the namespace URI as its second argument — pass it for Envelope, Body, CheckVatRequest AND both children, or the children silently land in no namespace. Codeunit \"Http Content\" has a Create overload taking the content type, which is where text/xml; charset=utf-8 belongs (Content-Type is a content header, not a request header). SOAPAction goes on via \"Http Request Message\".SetHeader — put the double quotes inside the value string."
+  - "Response side: bind your own prefixes to the two namespace URIs with XmlNamespaceManager and query with those — the gateway's prefixes are irrelevant noise. Two traps remain: faultcode and faultstring are unqualified in SOAP 1.1, so that XPath step takes no prefix at all; and every exit path (transport failure, proxy junk, fault) must leave TraderName and FaultReason exactly as the statement demands — start by clearing both."
+
+allowedDependencies:
+  - "Base Application"
+  - "System Application"

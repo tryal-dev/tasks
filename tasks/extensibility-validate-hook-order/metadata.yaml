@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: extensibility-validate-hook-order
+title: "Two Moments in One Validation"
+author: "@Drakonian"
+difficulty: medium
+topic: extensibility
+
+tags:
+  - table-extension
+  - validate
+  - trigger-order
+  - sales-line
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Both fields are maintained during one and the same event — a `Validate` of \"No.\" — but not at the same instant in it. Ask what the line looks like at each point: before table 37's own code runs, `Description` still belongs to the item that is leaving; after it has run, the description belongs to the item that arrived, and the line's other fields were reset on the way."
+  - "An extension can attach code to a base field's validation on either side of that base code: a table extension can `modify(\"No.\")` and give it `OnBeforeValidate` and `OnAfterValidate` triggers, and the same two moments are also published as the table's `OnBeforeValidateEvent` and `OnAfterValidateEvent`, whose ElementName is the field name. Whatever you write in the earlier moment is gone by the time the later one runs."
+  - "You need both moments: read the old description in the earlier one, write both fields in the later one. Because the record itself is re-initialized in between, the description you captured has to wait somewhere that reset cannot reach — a global variable on the table extension, or a single-instance codeunit if you take the subscriber route."
+
+allowedDependencies:
+  - "Base Application"

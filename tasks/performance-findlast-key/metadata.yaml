@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: performance-findlast-key
+title: "Latest Entry, One Read"
+author: "@Drakonian"
+difficulty: easy
+topic: performance
+tags:
+  - findlast
+  - cust-ledger-entry
+  - sql-budget
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Count the rows, not just the statements: the loop reads every entry of the document only to keep one of them. The database can hand you the newest entry directly — ask a question whose answer is a single row."
+  - "Records come back sorted by the current key. Filtered to one document, the primary key \"Entry No.\" already orders the entries oldest to newest — so the newest matching entry is simply the last one in that order, and there is a Find call that fetches exactly that end of the set."
+  - "SetRange the \"Document No.\", then replace the whole FindSet/repeat block with a single FindLast: it asks SQL for TOP 1 in descending key order — one statement, one row — and fills the record with the newest matching entry. No loop, no comparison."
+
+allowedDependencies:
+  - "Base Application"

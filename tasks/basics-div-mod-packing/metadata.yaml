@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-div-mod-packing
+title: "Pallets, Boxes, and Loose Units"
+author: "@Drakonian"
+difficulty: easy
+topic: basics
+tags:
+  - div
+  - mod
+  - integer-division
+  - rounding
+  - item
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "`/` always produces a Decimal, and assigning a Decimal to an Integer rounds it to the nearest whole number — 3.5 boxes becomes 4. AL has two operators that stay in whole numbers: one gives the quotient, the other the remainder."
+  - "Work top-down: pallets first from the quantity and the units per pallet, then boxes from what is left after the pallets, then loose units from what is left after the boxes. `div` gives you each level's count and `mod` what is left for the next level."
+  - "Refuse a fractional quantity by comparing it with itself rounded to precision 1 (`Round`) before any division, and let `TestField` on each packing field produce the field-naming error for a zero. PalletsNeeded is the full pallets plus one when the split leaves any boxes or loose units."
+
+allowedDependencies:
+  - "Base Application"

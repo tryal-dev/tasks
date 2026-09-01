@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-build-sales-order
+title: "Build a Sales Order From Code"
+author: "@Drakonian"
+difficulty: medium
+topic: basics
+tags:
+  - validate
+  - sales-document
+  - field-order
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "A document created from code goes through the same fields a user would touch on the page: insert the header so its OnInsert trigger runs and numbers it, then let the customer no. fill the rest of the header in. On the line, the item is what brings description, unit of measure and price with it."
+  - "`Rec.Validate(Field, Value)` runs the field's OnValidate trigger, `Rec.Field := Value` does not — and `Insert(true)` / `Modify(true)` run the table's triggers, `Insert()` / `Modify()` do not. The usual shape is: init the header, insert it with its triggers (that is what numbers it), validate the customer onto it, modify it."
+  - "Give the line its quantity first and the negotiated price and discount afterwards: validating Quantity re-runs the price and discount lookup for the new quantity and writes whatever it finds over the line — for an item with no price agreement that means the item card's price and a discount of 0."
+
+allowedDependencies:
+  - "Base Application"

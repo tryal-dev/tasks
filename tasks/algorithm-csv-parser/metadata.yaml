@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: algorithm-csv-parser
+title: "The Comma That Broke the Import"
+author: "@Drakonian"
+difficulty: medium
+topic: algorithm
+tags:
+  - text
+  - parsing
+  - csv
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Splitting on every comma is exactly the bug from the incident: a comma inside quotes is data, not a separator. At every character you need to know one thing — are you inside a quoted field right now?"
+  - "Walk the line one character at a time with a Boolean in-quotes flag: outside quotes, a quote turns the flag on and a comma finishes the current field; everything else joins the field being built. Remember to add the field you are building when the line ends — the empty line still yields its one empty field — and if the flag is still on at that point, that is the unterminated-quote error."
+  - "The escape is the only two-character token: inside a quoted field, when you meet a quote, look at the NEXT character. Another quote means append one literal quote and skip past both; anything else (or the end of the line) means the quoted section just closed."
+
+allowedDependencies:
+  - "Base Application"

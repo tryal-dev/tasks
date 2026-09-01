@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: integrations-xmlport-import
+title: "Import an Order Document with an XMLport"
+author: "@Drakonian"
+difficulty: medium
+topic: integrations
+tags:
+  - xmlport
+  - xml
+  - import
+  - staging
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "The document is a header/line hierarchy, so the schema is a table element nested inside a table element. On import, the inner one has to learn which header it belongs to — the document never repeats the order number inside a Line. Two properties on a table element exist for exactly that link; browse the XMLport property list for the pair whose names mention linking."
+  - "Line numbers and the batch id are not in the document, so code has to put them there while the row is being built. Table elements have triggers around the write: one runs right after the record is initialized (before its own elements are read), another runs after the elements are read and before the row would go into the table. A counter that must restart per order belongs in the header's initialization trigger; the number itself can only be assigned once you know the line survives."
+  - "Take the write into your own hands: a table element can be told not to store rows automatically, which turns 'skip this line' into simply not storing it (with automatic storing left on, currXMLport.Skip does the same job). Since the same order number can arrive twice, store rows as an upsert — try the insert, and when it reports that the key already exists, modify instead. Write that same logic in the trigger the runtime picks when the primary key is already there, and assign a line's number only for the lines you actually store."
+
+allowedDependencies:
+  - "Base Application"

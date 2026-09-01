@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: extensibility-ishandled-event
+title: "Override Behavior with an IsHandled Event"
+author: "@Drakonian"
+difficulty: medium
+topic: extensibility
+
+tags:
+  - integration-event
+  - event-subscriber
+  - ishandled
+  - bindsubscription
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "The starter's `OnBeforeCalculateFreight` is an integration event: a procedure with an empty body and the `[IntegrationEvent(false, false)]` attribute. Declaring it does nothing by itself — calling it from `CalculateFreight` is what raises the event, and every subscriber gets to write to its `var` parameters before your next statement runs."
+  - "In `CalculateFreight`, raise the event first and run the default formula only when `IsHandled` is still false afterwards. Base that decision on `IsHandled` alone: one test writes a junk `Freight` without setting `IsHandled`, another overrides `Freight` to exactly 0."
+  - "A subscriber fires for every call in the system unless its codeunit declares `EventSubscriberInstance = Manual;` — then it participates only while someone holds it bound via `BindSubscription`. The promotion's subscriber is `[EventSubscriber(ObjectType::Codeunit, Codeunit::\"Freight Charge Calculator\", 'OnBeforeCalculateFreight', '', false, false)]`, and at 1000 or more it must set both `Freight := 0` and `IsHandled := true`."
+
+allowedDependencies:
+  - "Base Application"

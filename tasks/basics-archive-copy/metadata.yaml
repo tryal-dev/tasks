@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-archive-copy
+title: "Archive a Record with TransferFields"
+author: "@Drakonian"
+difficulty: medium
+topic: basics
+tags:
+  - table
+  - transferfields
+  - flowfield
+  - archive
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "TransferFields copies wherever source and destination FIELD NUMBERS match and the types are compatible; everything else is silently left alone. Mirror the contract's field numbers in the archive, and give \"Archived On\" a number the contract does not use."
+  - "Two things TransferFields never does: calculate a FlowField (a freshly read record carries 0 in \"Total Charges\") and run OnValidate. Whatever those would have produced, your code must produce explicitly — and that no-validation behavior is exactly why the negative legacy fee archives cleanly."
+  - "The archiver's shape: Get the contract, CalcFields the total, Init the archive record, TransferFields from the contract, explicitly set \"Total Charges\" (from the calculated source field) and \"Archived On\", Insert the archive row, Delete the contract."
+
+allowedDependencies:
+  - "Base Application"

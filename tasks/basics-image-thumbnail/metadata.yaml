@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-image-thumbnail
+title: "Make a Proportional Thumbnail"
+author: "@Drakonian"
+difficulty: easy
+topic: basics
+tags:
+  - image
+  - base64
+  - system-application
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Don't reach for streams or DotNet — the System Application's `Image` codeunit does everything this task needs. Look at what `FromBase64`, `GetWidth`, `GetHeight`, `Resize`, and `ToBase64` offer."
+  - "`FromBase64` already errors on anything that is not an image, so rule 3 costs you nothing extra. The real work is the branch: only resize when a side actually exceeds the limit, and figure out which side is the longer one."
+  - "Scale the other side with `Round(Side * MaxDimension / LongerSide, 1)` — the default rounding direction rounds halves up — then clamp a result of 0 up to 1 before resizing, because `Resize` refuses sides smaller than 1 pixel."
+
+allowedDependencies:
+  - "System Application"
+  - "Base Application"

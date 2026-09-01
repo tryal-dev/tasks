@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-confirm-when-needed
+title: "Ask Only When It Matters"
+author: "@Drakonian"
+difficulty: easy
+topic: basics
+tags:
+  - confirm
+  - dialog
+  - sales-order
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Three paths through one procedure: missing number + Yes releases, missing number + No does nothing, number present releases straight away. The clean-path test declares no ConfirmHandler, so any dialog there fails it."
+  - "The System Application ships codeunit `Confirm Management`; its `GetResponseOrDefault(Question, Default)` shows the dialog only when a UI exists and returns your default otherwise — that is why LinterCop LC0021 flags raw `Confirm` calls."
+  - "Check `\"External Document No.\" = ''` first; build the question with `StrSubstNo` and the order's `\"No.\"`, exit with false when the answer is No, and only then set `Status` to `Released` and call `Modify()`."
+
+allowedDependencies:
+  - "Base Application"

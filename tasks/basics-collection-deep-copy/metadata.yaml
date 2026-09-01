@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-collection-deep-copy
+title: "Deep Copy Nested Collections"
+author: "@Drakonian"
+difficulty: easy
+topic: basics
+tags:
+  - list
+  - dictionary
+  - collections
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "List and Dictionary are reference types: `:=` gives you a second variable pointing at the same collection, and `GetRange` copies only the outer list — the inner lists inside it are still the very same objects."
+  - "A real deep copy visits every element: loop over the outer collection, and for each inner list build a brand-new list and fill it with that list's values one by one."
+  - "A small local helper that takes an inner list and returns a freshly built copy keeps each public procedure to a single foreach — and because a new list is created on every call, empty inner lists come out empty and independent for free."
+
+allowedDependencies:
+  - "Base Application"

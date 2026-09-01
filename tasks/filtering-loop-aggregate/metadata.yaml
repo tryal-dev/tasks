@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: filtering-loop-aggregate
+title: "Sum a Filtered Set Correctly"
+author: "@Drakonian"
+difficulty: easy
+topic: filtering
+tags:
+  - findset
+  - repeat-until
+  - aggregation
+  - customer
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "The starter's loop is wrong in three independent ways: it moves to the next record before reading the one it just found, it overwrites the running total instead of adding to it, and its find call errors out when the city has no customers. Each is a one-line fix."
+  - "FindSet() returns a Boolean and leaves you standing ON the first record of the set — so the canonical read loop guards with an if, reads the record inside repeat, and only then steps with Next(). Accumulate with += where := keeps only the last amount."
+  - "Capping happens per record, not per filter: a credit-limit filter like ..Cap silently removes the big customers instead of counting them at the cap. Keep only the city filter and, inside the loop, add whichever is smaller — the customer's \"Credit Limit (LCY)\" or Cap."
+
+allowedDependencies:
+  - "Base Application"

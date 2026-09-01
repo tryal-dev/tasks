@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: integrations-http-get
+title: "Call a REST API (Mocked)"
+author: "@Drakonian"
+difficulty: medium
+topic: integrations
+tags:
+  - httpclient
+  - rest
+  - json
+  - interface
+  - mocking
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Everything you need ships in the System Application's Rest Client module. Start from Interface \"Http Client Handler\": its single Send method names the two codeunits you'll work with — one you fill with your request, one the handler fills with the service's answer."
+  - "Build a \"Http Request Message\" (set the method and the request URI), hand it to the handler's Send, and use Send's Boolean return as your transport-failure signal. Codeunit \"Rest Client\" (Initialize with the handler, then Get) also works — but it raises an error on transport failure, which your contract forbids, so you'd have to catch it."
+  - "Ask the response codeunit whether the status counts as a success BEFORE touching the body — the error responses in the tests deliberately parse fine. GetContent().AsText() yields the body; JsonObject.ReadFrom returns false on malformed text; JsonObject.Get returns false when rate is missing; a found token yields its number via AsValue().AsDecimal(). And set Rate to zero on every failure path."
+
+allowedDependencies:
+  - "Base Application"
+  - "System Application"

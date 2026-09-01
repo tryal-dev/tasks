@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: filtering-propagate-filters
+title: "Pass Filters Along"
+author: "@Drakonian"
+difficulty: medium
+topic: filtering
+tags:
+  - copyfilters
+  - getfilters
+  - customer
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "The var record you receive already carries the caller's filters — counting it as-is answers the first question. The real contract is rule 4: whatever you do to answer the other questions must be invisible to the caller afterwards."
+  - "The blocked count needs one more filter on top of the caller's view. Setting it on the caller's record and clearing it afterwards is fragile — the caller may already have its own filter on that very field, and you'd wipe it. Give a local Customer variable the caller's exact view and narrow that one instead."
+  - "Record offers both halves as single calls: one method copies every filter from another record variable of the same table, another returns all applied filters as one text — their names literally say copy-filters and get-filters. The view description the test expects is exactly that text."
+
+allowedDependencies:
+  - "Base Application"

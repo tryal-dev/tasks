@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: algorithm-batch-validation
+title: "Master Data Gatekeeper"
+author: "@Drakonian"
+difficulty: medium
+topic: algorithm
+tags:
+  - text
+  - parsing
+  - validation
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Two layers keep this manageable: first read one record's fields into a key-to-value lookup, then check the four rules against what you collected. Nothing here ever raises an error — an unreadable record is just an invalid one."
+  - "The Text type has a built-in method for every parsing step: splitting on a separator, trimming, finding the position of the first '=', and measuring length. Indexing like Value[i] yields a Char you can compare against a range such as '0'..'9' — no lookup tables needed."
+  - "For CREDIT, digits-only and the range are two separate checks: verify every character is a digit first, then convert with the Boolean form of Evaluate before testing 500..20000 — the 30-digit credit from the statement is all digits yet overflows Integer, and the erroring form of Evaluate would crash your count instead of rejecting the record."
+
+allowedDependencies:
+  - "Base Application"

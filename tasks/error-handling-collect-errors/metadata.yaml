@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: error-handling-collect-errors
+title: "Collect Every Problem, Not Just the First"
+author: "@Drakonian"
+difficulty: medium
+topic: error-handling
+tags:
+  - errorinfo
+  - collectible-errors
+  - validation
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "ValidateLine is the easy half — a chain of checks that errors out. The interesting question is how ValidateBatch can call something that raises errors, once per line, and still reach the last line of the batch."
+  - "An ErrorInfo created with ErrorInfo.Create(Message, true) is collectible: raised inside a scope that has opted in to collecting, it is parked in a list instead of tearing execution down — outside such a scope it behaves like any ordinary error, which is exactly what ValidateLine needs."
+  - "Decorate ValidateBatch with the correct [ErrorBehavior] and harvest the parked errors with GetCollectedErrors(true) — the true clears the collection, and anything left uncleared resurfaces as one big error the moment the procedure exits. One more trap: inside a collecting scope execution continues past a collected error, so chain ValidateLine's rules with else-if, or a line breaking several rules reports all of them instead of its first."
+
+allowedDependencies:
+  - "Base Application"

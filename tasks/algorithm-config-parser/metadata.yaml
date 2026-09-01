@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: algorithm-config-parser
+title: "Settings on a String"
+author: "@Drakonian"
+difficulty: easy
+topic: algorithm
+tags:
+  - text
+  - dictionary
+  - parsing
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "The Text data type carries its own toolbox — splitting on a separator, trimming spaces, and finding a character's position are each a single built-in call; no manual character loop is needed."
+  - "Splitting an entry on '=' breaks the moment a value contains '=' itself. Find the position of the entry's first '=' instead and cut the entry there: everything before is the key, everything after is the value."
+  - "Dictionary.Add errors on a duplicate key — the opposite of the required policy. Use Set, which adds or replaces, and 'last one wins' falls out for free. For invalid entries, raise Error with a message that starts with 'Invalid config entry' — the tests match that substring."
+
+allowedDependencies:
+  - "Base Application"

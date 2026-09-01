@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: error-handling-posting-gate
+title: "The Invoice Hold"
+author: "@Drakonian"
+difficulty: easy
+topic: error-handling
+tags:
+  - table-extension
+  - event-subscriber
+  - posting
+  - error
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "You cannot edit codeunit \"Sales-Post\" — but you don't have to. Business Central publishes integration events at well-defined moments of the posting flow, and an extension can subscribe to one and raise an error there; an error in a subscriber stops the entire posting."
+  - "Codeunit \"Sales-Post\" publishes OnBeforePostSalesDoc before any posting work begins. Subscribe to it with the [EventSubscriber] attribute in your gate codeunit — a subscriber may declare only the parameters it needs, so `var SalesHeader: Record \"Sales Header\"` alone is enough."
+  - "In the subscriber, Get the customer via SalesHeader.\"Sell-to Customer No.\"; when its \"Invoice Hold\" is true, call Error with a Label that names the customer no. (a %1 placeholder) and contains the exact phrase 'is on invoice hold'."
+
+allowedDependencies:
+  - "Base Application"

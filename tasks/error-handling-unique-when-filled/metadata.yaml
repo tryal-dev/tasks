@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: error-handling-unique-when-filled
+title: "Unique, Except When Blank"
+author: "@Drakonian"
+difficulty: medium
+topic: error-handling
+tags:
+  - table-triggers
+  - validation
+  - keys
+  - error
+  - sql-budget
+
+executionTier: full_execution
+transactionModel: committed
+companyIsolation: fresh
+
+hints:
+  - "There is a key property that hands the whole rule to SQL Server in one line — and it is the trap. An index has no concept of \"not filled in\": to it, blank is a value like any other, so the second document without a PO number is a duplicate of the first. The exemption in the rule is what makes it code, not configuration."
+  - "The rule has to be checked at the moment a record is written, and there are three such moments on a table — a record can arrive, change, or be renumbered. Before letting the write through, ask the register whether that customer already has the number. Note where the record itself is while you ask: not in the database yet on an insert, already in it on a modify, and still in it under its old primary key while a rename is in flight."
+  - "In the table's OnInsert, OnModify and OnRename triggers, leave immediately when \"External Document No.\" is blank. Otherwise filter a second variable of the same table on \"Customer No.\" and \"External Document No.\", exclude the row this record itself occupies — its own key, plus, in OnRename, the key it is coming from (xRec), which a `SetFilter` with `'<>%1&<>%2'` expresses in one go — and raise your Label with the \"Document No.\" of whatever the search finds. Give the table a plain, non-unique secondary key on those two fields so that search stays a single index seek instead of a walk through the customer's documents."
+
+allowedDependencies:
+  - "Base Application"

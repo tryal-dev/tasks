@@ -1,0 +1,20 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-hello-world
+title: "Hello, World!"
+author: "@Drakonian"
+difficulty: easy
+topic: basics
+tags:
+  - text
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "The shell you need: `codeunit <id> \"Hello World\" { }` with the procedure inside."
+  - "A procedure returns its value with `exit(...)`."
+  - "Handle the empty name first: `if Name = '' then exit('Hello, World!');` — then exit the personal greeting built with the `+` text concatenation operator."
+
+allowedDependencies:
+  - "Base Application"

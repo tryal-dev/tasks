@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: error-handling-tryfunction
+title: "Wrap It in a TryFunction"
+author: "@Drakonian"
+difficulty: medium
+topic: error-handling
+tags:
+  - tryfunction
+  - getlasterrortext
+  - table
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "A raised error normally ends execution — but AL can call a procedure so that the error is caught and turned into a false return value instead. Look for a method attribute in the error-handling area of the docs."
+  - "A procedure marked [TryFunction] returns an implicit Boolean when called inside a condition — and it cannot declare its own return value, which is why TryParseAmount is a plain procedure wrapping a local try helper. After a failed try call, GetLastErrorText() holds the caught message; call ClearLastError() before the attempt so a stale text can't survive into a later success."
+  - "Keep Insert out of the try scope. The server blocks database writes inside try functions by default (DisableWriteInsideTryFunctions), and even where they are allowed, a caught error does not roll them back — the classic write-inside-try trap. Parse inside the try; write only after it has returned true."
+
+allowedDependencies:
+  - "Base Application"

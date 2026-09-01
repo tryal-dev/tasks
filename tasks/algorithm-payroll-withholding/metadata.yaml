@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: algorithm-payroll-withholding
+title: "The Payslip Engine"
+author: "@Drakonian"
+difficulty: medium
+topic: algorithm
+tags:
+  - table
+  - kata
+  - finance
+  - payroll
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Start with PersonalAllowance — it reads only the setup record, and IncomeTax builds on it. Check it by hand at the taper threshold, inside the taper zone, and past the point where it reaches zero before touching the bands."
+  - "A band never charges its rate on the whole amount — only on the slice between its own threshold and the next higher one, and the part below the lowest threshold is free. Careful: read by Line No., the rows are not guaranteed to come out in threshold order."
+  - "One clean shape: walk the band rows in ascending Threshold order, remembering the previous row's threshold and rate; each row you reach closes the previous band's slice, and after the loop the remainder above the last threshold is charged at the last rate. IncomeTax runs that walk on gross pay minus PersonalAllowance (floored at zero); NIContribution runs the same walk over its own table on untouched gross pay."
+
+allowedDependencies:
+  - "Base Application"

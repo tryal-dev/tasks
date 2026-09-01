@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: error-handling-dimension-precheck
+title: "Dimensions Before You Post"
+author: "@Drakonian"
+difficulty: medium
+topic: error-handling
+tags:
+  - dimensions
+  - default-dimension
+  - value-posting
+  - posting
+  - validation
+
+executionTier: full_execution
+transactionModel: committed
+companyIsolation: fresh
+
+hints:
+  - "A default dimension is more than a default. Every `Default Dimension` row carries a `\"Value Posting\"` rule for one master record and one dimension, and posting checks the document's dimension *set* against those rules — per line, not just once for the document."
+  - "The dimension set to compare against is `\"Dimension Set ID\"` on the header and on each line; a single pair inside it is `DimensionSetEntry.Get(DimSetID, DimensionCode)`, which simply fails to find anything when that dimension is not in the set. `Default Dimension` is keyed by `\"Table ID\"`, `\"No.\"`, `\"Dimension Code\"` — filter it once per source record, and skip the rows whose `\"Value Posting\"` is blank."
+  - "Codeunit 408 `DimensionManagement` maps a line to its master table for you: `SalesLineTypeToTableID(SalesLine.Type)` returns `Database::Item` for an item line, `Database::\"G/L Account\"` for a G/L account line, and so on. Its `CheckDimValuePosting(TableID, No, DimSetID)` is the very check that posting runs, but it answers yes/no and stops at the first broken rule — so walk the `Default Dimension` rows yourself if you want to name the dimension and report all of them. Watch the Same Code branch: comparing the set's value with the rule's `\"Dimension Value Code\"` already covers the blank case, as long as a missing entry reads back as a blank value."
+
+allowedDependencies:
+  - "Base Application"

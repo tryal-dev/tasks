@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: filtering-item-reference-resolve
+title: "Resolve Scanned Codes Without a Prompt"
+author: "@Drakonian"
+difficulty: medium
+topic: filtering
+tags:
+  - item-reference
+  - sales-line
+  - bar-code
+  - effective-dating
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Validating the sales line's built-in \"Item Reference No.\" looks like the whole job, but it was written for a document, not a scan: it checks starting and ending dates against the order's own date, never against your IntakeDate, and when a bar-code row and a blank-type row both match it simply takes whichever sorts first. The tests pass an intake date months after the order date, so that shortcut resolves the wrong rows."
+  - "Take charge of the lookup yourself: read table \"Item Reference\" with filters for the scanned code and the rows active on the intake date, then try the tiers one at a time in priority order — the caller's own Customer rows, then Bar Code, then blank type. One find per tier, no UI anywhere."
+  - "SetRange(\"Starting Date\", 0D, IntakeDate) admits blank and already-started rows; the ending date needs a filter letting both blank and on-or-after dates through. Apply the winner by validating Type, \"No.\", \"Variant Code\" and the unit of measure onto the line, copy the description and the three item-reference fields over, and Modify so the tests see the change when they re-read the line."
+
+allowedDependencies:
+  - "Base Application"

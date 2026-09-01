@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: algorithm-chunk-partitioner
+title: "Balanced Chunks"
+author: "@Drakonian"
+difficulty: easy
+topic: algorithm
+
+tags:
+  - list
+  - collections
+  - partitioning
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "The chunk sizes are fully determined before you touch a single item: 7 items across 3 chunks can only ever be 3, 2, 2. Work out how many items each chunk must take first, then deal the items out in one pass."
+  - "Integer division of the item count by the chunk count gives every chunk its base size; the remainder counts how many chunks — the earliest ones — carry one extra item. A chunk whose computed size is zero must still appear in the result."
+  - "Reject a non-positive ChunkCount before touching the items. Then keep a running position in the input: for each chunk number from 1 to ChunkCount, compute that chunk's size (base size, plus one while the chunk number is within the remainder), copy that many items into a brand-new inner list, and add it to the result. Lists are reference types — every chunk needs its own fresh list instance, or all chunks end up sharing contents."
+
+allowedDependencies:
+  - "Base Application"

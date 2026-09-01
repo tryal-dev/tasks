@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: performance-dictionary-cache
+title: "Value the Batch Before You Post It"
+author: "@Drakonian"
+difficulty: medium
+topic: performance
+tags:
+  - dictionary
+  - item-journal
+  - sql-budget
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "The budget counts round trips, and grading seeds more distinct items than the whole budget allows. Deduplicating your lookups is not enough — asking the database about items one at a time can never fit, however clever the memoization. The prices have to arrive together."
+  - "Do the repetition in memory: one pass over the batch's lines, accumulating quantity per item number in a Dictionary of [Code[20], Decimal]. After that pass you know exactly which items you need — what's left is fetching their unit prices in a single trip to the Item table."
+  - "One filtered FindSet fetches every price at once: build a filter from the dictionary's keys — each item number quoted and joined with '|' — apply it to the item's No. field with SetFilter, then walk the single result set, multiplying each Unit Price by the quantity cached in the dictionary. Remember the trap: the item card's Unit Price, never the line's stamped Unit Amount."
+
+allowedDependencies:
+  - "Base Application"

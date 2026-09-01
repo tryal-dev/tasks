@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-datetime-sql-tolerance
+title: "Detect Real Changes Despite SQL DateTime Rounding"
+author: "@Drakonian"
+difficulty: easy
+topic: basics
+tags:
+  - datetime
+  - duration
+  - sql
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Writing a DateTime to the database can change it: SQL Server's datetime type keeps 1/300-second precision, so the milliseconds snap to .000, .003 or .007. Two timestamps taken from the same moment can disagree by a few milliseconds — = and <> are too strict for round-tripped values."
+  - "Subtracting one DateTime from another yields a Duration — the difference in milliseconds. Compare its absolute value against the 10 ms tolerance instead of comparing the DateTimes directly. Handle 0DT before doing any arithmetic: an undefined timestamp is only the same moment as another undefined one."
+  - "The Base Application ships this exact comparison: codeunit \"Type Helper\" has a CompareDateTime procedure that returns 0 when two DateTimes fall within the SQL rounding tolerance, and it guards 0DT for you. IsSameMoment can wrap it — and ShouldResync is then 'the stored stamp is 0DT' or 'the two stamps are not the same moment'."
+
+allowedDependencies:
+  - "Base Application"

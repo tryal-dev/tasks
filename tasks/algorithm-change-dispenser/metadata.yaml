@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: algorithm-change-dispenser
+title: "Fewest Coins"
+author: "@Drakonian"
+difficulty: medium
+topic: algorithm
+tags:
+  - coins
+  - dynamic-programming
+  - list
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "The starter's strategy — always take the largest coin that fits — hands out 25, 25, 10, 1, 1, 1 for 63 even when a 21-coin is loaded and three of those settle it. Being locally greedy is not the same as being globally fewest."
+  - "Greed has a second failure mode: for 27 from {4, 5} it takes five 5s and strands a remainder of 2, declaring a makeable amount impossible. The best answer may need to skip the largest coin entirely, so a single pass that never reconsiders cannot be right."
+  - "Work upward instead of downward: for every sub-amount from 1 to the target, the fewest coins is one more than the fewest for (sub-amount minus a denomination), taking the best over every denomination that fits and leads back to a reachable sub-amount. Remember which coin won at each sub-amount, then walk back from the target collecting them; a sub-amount no denomination can reach stays unreachable, and an unreachable target is the impossible case."
+
+allowedDependencies:
+  - "Base Application"

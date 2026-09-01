@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-record-link-notes
+title: "Customer Notes via Record Links"
+author: "@Drakonian"
+difficulty: easy
+topic: basics
+tags:
+  - record-link
+  - notes
+  - blob
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Everything note-shaped in BC lives in the \"Record Link\" system table — and codeunit \"Record Link Management\" exists precisely because the Note BLOB carries a binary length header that plain OutStream/InStream code gets wrong."
+  - "AddNote in prose: Init a \"Record Link\" record, point its \"Record ID\" at the customer, set Type to Note, let WriteNote fill the BLOB, Insert, then return the \"Link ID\" the platform assigned."
+  - "A BLOB field is empty until you load it — call CalcFields(Note) on the fetched \"Record Link\" record before handing it to ReadNote, or you will decode an empty stream."
+  - "CopyLinks(FromRecord, ToRecord) on \"Record Link Management\" copies every link including the note BLOBs. For the sweep, filter Company to the empty value or CompanyName(), then delete each row where RecordRef.Get on its \"Record ID\" returns false — do not call RemoveOrphanedLinks; its confirmation dialog fails grading."
+
+allowedDependencies:
+  - "Base Application"

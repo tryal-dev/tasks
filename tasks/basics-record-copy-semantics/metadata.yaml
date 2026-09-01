@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-record-copy-semantics
+title: "Snapshot or Shared View?"
+author: "@Drakonian"
+difficulty: easy
+topic: basics
+tags:
+  - temporary-table
+  - record-copy
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Record.Copy takes a second parameter, ShareTable. With it, two temporary record variables become two handles on one in-memory table; without it, only the current row's field values and filters travel."
+  - "So neither Copy mode produces an independent multi-row snapshot on its own: ShareTable = true follows the source forever, and a plain Copy leaves the target's data set empty. Freeze the rows by walking the source and inserting a copy of each row into the snapshot."
+  - "AttachSharedView is a single Copy call with ShareTable set to true. TakeSnapshot is a FindSet/repeat loop: assign the source row to the snapshot record, Insert, move on — no ShareTable anywhere near it."
+
+allowedDependencies:
+  - "Base Application"
