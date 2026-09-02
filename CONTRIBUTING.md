@@ -41,10 +41,10 @@ merged PR.
    For a complete worked example of all five parts, see
    [`tasks/basics-add-table-field`](tasks/basics-add-table-field).
 
-   Mind `sortId` in `metadata.yaml`: a positive integer that must be unique
-   across the whole catalog. The template's placeholder is deliberately
-   taken, so a fresh copy fails the lint until you replace it — the message
-   names an unused number.
+   Mind `sortId` in `metadata.yaml`: an integer that must be unique across
+   every TryAL catalog, so each catalog owns a range — this one's is
+   1–4999. The template's placeholder is deliberately taken, so a fresh copy
+   fails the lint until you replace it — the message names an unused number.
 
 3. **Lint before you push:**
 
@@ -174,7 +174,7 @@ live validation in VS Code (with the YAML extension) as you type.
 | Field | Type / enum | Required | Notes |
 |---|---|---|---|
 | `id` | string | yes | Must equal the directory name. |
-| `sortId` | integer | yes | Catalog sort key: a positive integer, unique across all tasks. The lint rejects duplicates and names an unused number. |
+| `sortId` | integer, 1–4999 | yes | Catalog sort key, unique across every TryAL catalog — each catalog owns a disjoint range. The lint rejects duplicates and out-of-range numbers and names an unused one. |
 | `title` | string | yes | Display title. |
 | `author` | string | no | Optional display credit, e.g. `"@your-github-handle"`. Courtesy only — legal attribution is git history + the repo [LICENSE](LICENSE). |
 | `difficulty` | `easy \| medium \| hard` | yes | |

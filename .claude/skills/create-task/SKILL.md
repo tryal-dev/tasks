@@ -256,10 +256,11 @@ end;
 Full field reference: CONTRIBUTING.md. The ones that bite:
 
 - `executionTier: full_execution` — the only tier this catalog accepts.
-- `sortId` — a positive integer, unique across the catalog: take the highest
-  existing `sortId` + 1. The template's placeholder is deliberately taken, so
-  a fresh copy fails the lint until you replace it (the message names an
-  unused number).
+- `sortId` — an integer unique across every TryAL catalog; each catalog owns
+  a range (this repo's schema `minimum`/`maximum`). Take the highest existing
+  `sortId` + 1. The template's placeholder is deliberately taken, so a fresh
+  copy fails the lint until you replace it (the message names an unused
+  number).
 - `hints` run gentle → explicit; the last hint may be nearly explicit but
   must not paste the full solution.
 - Omit `bcVersion` / `runtime` / `target` — they default from the platform's

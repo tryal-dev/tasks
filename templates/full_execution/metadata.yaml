@@ -6,9 +6,9 @@
 # The directory name IS the task id — keep `id` and the folder name in sync.
 
 id: algorithm-your-slug # <topic>-<slug>: topic prefix + kebab-case slug
-# Catalog sort key: a positive integer, unique across all tasks (lint-enforced).
-# The placeholder is deliberately taken — replace it with an unused number;
-# `npm run lint` names one.
+# Catalog sort key: an integer unique across every TryAL catalog. This
+# catalog's range is 1–4999 (lint-enforced). The placeholder is deliberately
+# taken — replace it with an unused number; `npm run lint` names one.
 sortId: 1
 title: "Your Task Title"
 

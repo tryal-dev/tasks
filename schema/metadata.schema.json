@@ -15,7 +15,8 @@
     "sortId": {
       "type": "integer",
       "minimum": 1,
-      "description": "Catalog sort key. A positive integer, unique across all tasks (lint-enforced)."
+      "maximum": 4999,
+      "description": "Catalog sort key. Unique across every TryAL catalog: each catalog owns a disjoint range, and this one's is 1–4999 (lint-enforced)."
     },
     "title": {
       "type": "string",

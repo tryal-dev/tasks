@@ -78,14 +78,22 @@ function loadYaml(taskId, filePath, label) {
   }
 }
 
+function unusedSortIdHint(sortIds) {
+  return sortIds.nextFree === null
+    ? ` (this catalog's range ${sortIds.min}–${sortIds.max} is exhausted)`
+    : ` (an unused one is ${sortIds.nextFree})`;
+}
+
 function formatAjvError(err, sortIds) {
   const where = err.instancePath ? err.instancePath.replace(/^\//, '').replace(/\//g, '.') : '(root)';
   if (err.keyword === 'additionalProperties') {
     return `${where}: unknown field "${err.params.additionalProperty}" (the platform validates strictly and rejects unknown fields)`;
   }
   if (err.keyword === 'required' && err.params.missingProperty === 'sortId') {
-    const hint = sortIds ? ` (an unused one is ${sortIds.nextFree})` : '';
-    return `sortId is missing — every task carries a positive integer sortId, unique across the catalog${hint}`;
+    return `sortId is missing — every task carries an integer sortId, unique across every TryAL catalog; this catalog's range is ${sortIds.min}–${sortIds.max}${unusedSortIdHint(sortIds)}`;
+  }
+  if (err.instancePath === '/sortId' && (err.keyword === 'minimum' || err.keyword === 'maximum')) {
+    return `sortId: must be within this catalog's range ${sortIds.min}–${sortIds.max} — every TryAL catalog owns a disjoint range so numbers stay unique across catalogs (see CONTRIBUTING.md)`;
   }
   if (err.schemaPath.includes('companyIsolation') && err.message === 'boolean schema is false') {
     return 'companyIsolation applies to full_execution tasks only — remove it';
@@ -94,10 +102,14 @@ function formatAjvError(err, sortIds) {
 }
 
 // First pass over every task's sortId, so a duplicate or missing one can be
-// reported together with a number that is actually unused. Unreadable
-// metadata is skipped silently here — lintTask reports it.
-function collectSortIds(taskIds) {
+// reported together with a number that is actually unused. Only numbers
+// inside this catalog's range count towards the suggestion: an out-of-range
+// one is a schema error on its own task and must not drag the suggestion out
+// of the range as well. Unreadable metadata is skipped silently here —
+// lintTask reports it.
+function collectSortIds(taskIds, range) {
   const owners = new Map(); // sortId -> [taskId]
+  let highest = range.min - 1;
   for (const taskId of taskIds) {
     const metaPath = path.join(TASKS_DIR, taskId, 'metadata.yaml');
     if (!isFile(metaPath)) continue;
@@ -110,10 +122,11 @@ function collectSortIds(taskIds) {
     if (meta && typeof meta === 'object' && Number.isInteger(meta.sortId)) {
       if (!owners.has(meta.sortId)) owners.set(meta.sortId, []);
       owners.get(meta.sortId).push(taskId);
+      if (meta.sortId >= range.min && meta.sortId <= range.max && meta.sortId > highest) highest = meta.sortId;
     }
   }
-  const nextFree = owners.size > 0 ? Math.max(...owners.keys()) + 1 : 1;
-  return { owners, nextFree };
+  const nextFree = highest + 1 <= range.max ? highest + 1 : null;
+  return { owners, nextFree, min: range.min, max: range.max };
 }
 
 function lintTask(taskId, validate, topics, sortIds) {
@@ -150,7 +163,7 @@ function lintTask(taskId, validate, topics, sortIds) {
     if (Number.isInteger(meta.sortId)) {
       const others = (sortIds.owners.get(meta.sortId) || []).filter((t) => t !== taskId);
       if (others.length > 0) {
-        error(taskId, `metadata.yaml: sortId ${meta.sortId} is already used by ${others.join(', ')} — sortId is unique across the catalog (an unused one is ${sortIds.nextFree})`);
+        error(taskId, `metadata.yaml: sortId ${meta.sortId} is already used by ${others.join(', ')} — sortId is unique across the catalog${unusedSortIdHint(sortIds)}`);
       }
     }
 
@@ -283,7 +296,7 @@ function lintTask(taskId, validate, topics, sortIds) {
 
 // Templates must stay valid against the schema, or every new task starts
 // broken. Same checks as tasks minus id==dirname.
-function lintTemplates(validate, topics) {
+function lintTemplates(validate, topics, sortIds) {
   const templatesDir = path.join(ROOT, 'templates');
   if (!isDir(templatesDir)) return;
   for (const name of fs.readdirSync(templatesDir)) {
@@ -301,7 +314,7 @@ function lintTemplates(validate, topics) {
 
     if (!validate(meta)) {
       for (const err of validate.errors.filter((e) => e.keyword !== 'if')) {
-        error(label, `metadata.yaml: ${formatAjvError(err)}`);
+        error(label, `metadata.yaml: ${formatAjvError(err, sortIds)}`);
       }
     }
     if (typeof meta.topic === 'string' && topics && !(meta.topic in topics)) {
@@ -335,6 +348,14 @@ function main() {
   const ajv = new Ajv({ allErrors: true, strictTypes: false });
   const validate = ajv.compile(schema);
 
+  // Each catalog owns a disjoint sortId range, declared by its own schema, so
+  // numbers stay unique across catalogs without any cross-repo check.
+  const sortIdRange = { min: schema.properties.sortId.minimum, max: schema.properties.sortId.maximum };
+  if (!Number.isInteger(sortIdRange.min) || !Number.isInteger(sortIdRange.max)) {
+    console.error('schema/metadata.schema.json: properties.sortId needs an integer minimum and maximum — that pair is this catalog\'s sortId range.');
+    process.exit(1);
+  }
+
   let topics = loadYaml('(repo)', path.join(ROOT, 'topics.yaml'), 'topics.yaml');
   if (topics !== undefined && (typeof topics !== 'object' || topics === null || Array.isArray(topics))) {
     error('(repo)', 'topics.yaml must be a mapping of topic id -> display name');
@@ -346,11 +367,11 @@ function main() {
     .map((e) => e.name)
     .sort();
 
-  const sortIds = collectSortIds(taskIds);
+  const sortIds = collectSortIds(taskIds, sortIdRange);
   for (const taskId of taskIds) {
     lintTask(taskId, validate, topics, sortIds);
   }
-  lintTemplates(validate, topics);
+  lintTemplates(validate, topics, sortIds);
 
   const errors = findings.filter((f) => f.level === 'error');
   const warnings = findings.filter((f) => f.level === 'warn');

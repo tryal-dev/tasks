@@ -92,8 +92,9 @@ const LINT_SCHEMA = {
 function maxSortIdPrompt() {
   return [
     'In ' + REPO + ' find the highest sortId declared across tasks/*/metadata.yaml (each file has one top-level "sortId: <integer>" line; e.g. grep -h "^sortId:" tasks/*/metadata.yaml).',
+    'If no task declares one, report this catalog\'s range start minus 1 instead: schema/metadata.schema.json -> properties.sortId.minimum, minus 1.',
     'Do not edit any file, do not run npm run lint or any git command.',
-    'Return structured output: maxSortId (0 if no task declares one).',
+    'Return structured output: maxSortId.',
   ].join('\n')
 }
 
