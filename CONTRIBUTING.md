@@ -41,6 +41,11 @@ merged PR.
    For a complete worked example of all five parts, see
    [`tasks/basics-add-table-field`](tasks/basics-add-table-field).
 
+   Mind `sortId` in `metadata.yaml`: a positive integer that must be unique
+   across the whole catalog. The template's placeholder is deliberately
+   taken, so a fresh copy fails the lint until you replace it — the message
+   names an unused number.
+
 3. **Lint before you push:**
 
    ```bash
@@ -49,8 +54,8 @@ merged PR.
    ```
 
    The lint checks the format contract: schema-valid metadata, id/dirname
-   match, required files, submission limits, valid topic. It reports *all*
-   findings at once.
+   match, unique sortId, required files, submission limits, valid topic. It
+   reports *all* findings at once.
 
    CI also **compiles** your starter, solution and tests with the real AL
    compiler against the platform's pinned BC symbols
@@ -169,6 +174,7 @@ live validation in VS Code (with the YAML extension) as you type.
 | Field | Type / enum | Required | Notes |
 |---|---|---|---|
 | `id` | string | yes | Must equal the directory name. |
+| `sortId` | integer | yes | Catalog sort key: a positive integer, unique across all tasks. The lint rejects duplicates and names an unused number. |
 | `title` | string | yes | Display title. |
 | `author` | string | no | Optional display credit, e.g. `"@your-github-handle"`. Courtesy only — legal attribution is git history + the repo [LICENSE](LICENSE). |
 | `difficulty` | `easy \| medium \| hard` | yes | |

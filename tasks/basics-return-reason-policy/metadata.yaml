@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: basics-return-reason-policy
+sortId: 35
 title: "Make a Return Reason's Policies Stick"
 author: "@Drakonian"
 difficulty: easy

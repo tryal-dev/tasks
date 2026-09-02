@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: transactions-stale-record
+sortId: 99
 title: "Write Back a Record You Read Earlier"
 author: "@Drakonian"
 difficulty: easy

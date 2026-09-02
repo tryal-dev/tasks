@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: basics-fixed-width-columns
+sortId: 16
 title: "A 32-Column Receipt"
 author: "@Drakonian"
 difficulty: easy

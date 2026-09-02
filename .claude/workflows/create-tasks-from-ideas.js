@@ -62,6 +62,14 @@ const FIX_SCHEMA = {
   },
 }
 
+const SORT_ID_SCHEMA = {
+  type: 'object',
+  required: ['maxSortId'],
+  properties: {
+    maxSortId: { type: 'integer' },
+  },
+}
+
 const LINT_SCHEMA = {
   type: 'object',
   required: ['clean', 'errors'],
@@ -81,7 +89,15 @@ const LINT_SCHEMA = {
   },
 }
 
-function createPrompt(idea) {
+function maxSortIdPrompt() {
+  return [
+    'In ' + REPO + ' find the highest sortId declared across tasks/*/metadata.yaml (each file has one top-level "sortId: <integer>" line; e.g. grep -h "^sortId:" tasks/*/metadata.yaml).',
+    'Do not edit any file, do not run npm run lint or any git command.',
+    'Return structured output: maxSortId (0 if no task declares one).',
+  ].join('\n')
+}
+
+function createPrompt(idea, sortId) {
   return [
     'You are authoring a new practice task for the TryAL catalog, in ' + REPO + '. Every path below is relative to the repo root; on Windows prefer forward slashes.',
     '',
@@ -96,6 +112,7 @@ function createPrompt(idea) {
     idea.text,
     '---',
     'Task id (= directory name = metadata.yaml id): ' + idea.id + '. Difficulty: ' + idea.difficulty + '.',
+    'metadata.yaml sortId: ' + sortId + ' - assigned by the orchestrator so the tasks being authored in parallel never collide. Set exactly this value; never compute your own from the catalog.',
     '',
     'Scaffold by copying templates/full_execution to tasks/' + idea.id + ', then write task.md, tests/, solution/, the starter, and metadata.yaml per the skill.',
     'House convention for task.md: one line per paragraph or list item - never hard-wrap prose.',
@@ -155,21 +172,30 @@ function lintPrompt(round) {
   ].join('\n')
 }
 
-function lintFixPrompt(taskId, messages) {
+function lintFixPrompt(taskId, messages, sortId) {
   return [
     'The repo-wide lint (npm run lint) in ' + REPO + ' reported these errors for the task tasks/' + taskId + ':',
     messages.map(m => '- ' + m).join('\n'),
     '',
     'Read .claude/skills/create-task/SKILL.md and CONTRIBUTING.md if needed, fix the errors, touching ONLY files inside tasks/' + taskId + '. If the fix could affect compilation, re-run: COMPILE_CONCURRENCY=2 node scripts/compile.js ' + taskId + '. No git commands.',
+    'If an error concerns sortId, set it to exactly ' + sortId + ' (this task\'s assigned number) - not the number the lint message suggests, which other fixers running in parallel would take too.',
     'Return a short summary of what you changed.',
   ].join('\n')
 }
 
 log('Creating ' + ideas.length + ' tasks: ' + ideas.map(i => i.id).join(', '))
 
+// sortId is unique across the catalog and the authors run in parallel, so
+// they must not each derive "highest + 1" from a catalog the others are
+// writing to — the orchestrator reads the base once and hands out numbers.
+const base = await agent(maxSortIdPrompt(), { label: 'sortid:base', phase: 'Create', schema: SORT_ID_SCHEMA, effort: 'low' })
+if (!base || !Number.isInteger(base.maxSortId)) throw new Error('could not determine the highest existing sortId')
+const sortIds = Object.fromEntries(ideas.map((idea, i) => [idea.id, base.maxSortId + 1 + i]))
+log('sortIds: ' + ideas.map(i => i.id + '=' + sortIds[i.id]).join(', '))
+
 const results = await pipeline(
   ideas,
-  (_, idea) => agent(createPrompt(idea), { label: 'create:' + idea.id, phase: 'Create', schema: CREATE_SCHEMA }),
+  (_, idea) => agent(createPrompt(idea, sortIds[idea.id]), { label: 'create:' + idea.id, phase: 'Create', schema: CREATE_SCHEMA }),
   (created, idea) => {
     if (!created || created.status !== 'created') {
       log(idea.id + ': creation failed, skipping review')
@@ -204,7 +230,7 @@ for (let round = 1; round <= 3; round++) {
   }
   log('Lint round ' + round + ': fixing ' + Object.keys(byTask).length + ' task(s)')
   await parallel(Object.entries(byTask).map(([id, errs]) => () =>
-    agent(lintFixPrompt(id, errs), { label: 'lintfix:' + id, phase: 'Lint' })))
+    agent(lintFixPrompt(id, errs, sortIds[id]), { label: 'lintfix:' + id, phase: 'Lint' })))
 }
 
 return { tasks: results.filter(Boolean), lint }

@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: algorithm-ean-check-digit
+sortId: 151
 title: "EAN-13 Check Digit"
 author: "@Drakonian"
 difficulty: easy

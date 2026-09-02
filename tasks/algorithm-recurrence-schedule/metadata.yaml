@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: algorithm-recurrence-schedule
+sortId: 172
 title: "Next N Occurrences"
 author: "@Drakonian"
 difficulty: medium

@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: algorithm-search-key-folding
+sortId: 155
 title: "Müller Equals Muller"
 author: "@Drakonian"
 difficulty: easy

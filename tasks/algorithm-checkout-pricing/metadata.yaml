@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: algorithm-checkout-pricing
+sortId: 161
 title: "Supermarket Checkout"
 author: "@Drakonian"
 difficulty: medium

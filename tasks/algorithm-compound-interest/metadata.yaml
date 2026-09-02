@@ -1,6 +1,7 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 
 id: algorithm-compound-interest
+sortId: 148
 title: "Math Without an Operator"
 author: "@Drakonian"
 difficulty: easy

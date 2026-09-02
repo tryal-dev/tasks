@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: basics-uri-builder-endpoints
+sortId: 41
 title: "Compose Endpoint URLs with Uri Builder"
 author: "@Drakonian"
 difficulty: easy

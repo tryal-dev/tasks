@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: basics-parse-without-throwing
+sortId: 31
 title: "The Parse That Throws"
 author: "@Drakonian"
 difficulty: easy

@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: extensibility-cue-thresholds
+sortId: 54
 title: "Cue Styles from Thresholds"
 author: "@Drakonian"
 difficulty: easy

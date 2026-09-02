@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: integrations-soap-call
+sortId: 145
 title: "Call a SOAP Service (Mocked)"
 author: "@Drakonian"
 difficulty: hard

@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: basics-hello-world
+sortId: 19
 title: "Hello, World!"
 author: "@Drakonian"
 difficulty: easy

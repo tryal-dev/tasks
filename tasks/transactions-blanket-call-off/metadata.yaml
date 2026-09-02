@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: transactions-blanket-call-off
+sortId: 102
 title: "Call Off the Blanket Order"
 author: "@Drakonian"
 difficulty: medium

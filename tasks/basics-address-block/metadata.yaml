@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: basics-address-block
+sortId: 3
 title: "Print the Eight-Line Address Block"
 author: "@Drakonian"
 difficulty: easy

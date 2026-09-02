@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: algorithm-batch-validation
+sortId: 159
 title: "Master Data Gatekeeper"
 author: "@Drakonian"
 difficulty: medium

@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: extensibility-blocked-customer-override
+sortId: 60
 title: "The Cash-on-Delivery Exemption"
 author: "@Drakonian"
 difficulty: medium

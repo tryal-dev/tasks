@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: extensibility-master-data-audit
+sortId: 55
 title: "A Change Log for Item Master Data"
 author: "@Drakonian"
 difficulty: easy

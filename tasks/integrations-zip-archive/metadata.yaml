@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: integrations-zip-archive
+sortId: 143
 title: "Zip In, Zip Out"
 author: "@Drakonian"
 difficulty: medium

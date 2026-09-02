@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: basics-dictionary-key-case
+sortId: 11
 title: "abc-1 Is ABC-1"
 author: "@Drakonian"
 difficulty: easy

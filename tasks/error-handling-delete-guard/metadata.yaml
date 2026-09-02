@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: error-handling-delete-guard
+sortId: 114
 title: "No Deleting Released Orders"
 author: "@Drakonian"
 difficulty: easy

@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: transactions-recurring-allocation
+sortId: 108
 title: "The Accrual That Posts Itself"
 author: "@Drakonian"
 difficulty: medium

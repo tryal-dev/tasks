@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: basics-line-default-from-item
+sortId: 27
 title: "Default the Line from the Item Card"
 author: "@Drakonian"
 difficulty: easy

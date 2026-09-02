@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: error-handling-rich-errorinfo
+sortId: 117
 title: "Errors Worth Reading"
 author: "@Drakonian"
 difficulty: easy

@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: basics-item-priority-enum
+sortId: 25
 title: "Add a Priority Enum to Items"
 author: "@Drakonian"
 difficulty: easy

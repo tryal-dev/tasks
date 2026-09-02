@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: algorithm-chunk-partitioner
+sortId: 147
 title: "Balanced Chunks"
 author: "@Drakonian"
 difficulty: easy

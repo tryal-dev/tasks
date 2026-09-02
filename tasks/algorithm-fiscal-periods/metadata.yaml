@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: algorithm-fiscal-periods
+sortId: 152
 title: "Map Dates to Fiscal Periods"
 author: "@Drakonian"
 difficulty: easy

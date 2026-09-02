@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: basics-document-language
+sortId: 47
 title: "Print in the Customer's Language"
 author: "@Drakonian"
 difficulty: medium

@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: transactions-mini-posting
+sortId: 113
 title: "A Miniature Posting Routine"
 author: "@Drakonian"
 difficulty: hard

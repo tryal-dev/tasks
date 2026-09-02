@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: basics-variant-dispatch
+sortId: 53
 title: "One Procedure, Any Type"
 author: "@Drakonian"
 difficulty: medium

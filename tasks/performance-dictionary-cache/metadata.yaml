@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: performance-dictionary-cache
+sortId: 90
 title: "Value the Batch Before You Post It"
 author: "@Drakonian"
 difficulty: medium

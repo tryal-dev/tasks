@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: integrations-http-default-headers
+sortId: 125
 title: "Default Headers and the Content-Type Gotcha"
 author: "@Drakonian"
 difficulty: easy

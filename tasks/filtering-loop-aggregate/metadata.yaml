@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: filtering-loop-aggregate
+sortId: 70
 title: "Sum a Filtered Set Correctly"
 author: "@Drakonian"
 difficulty: easy

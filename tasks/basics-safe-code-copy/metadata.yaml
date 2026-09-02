@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: basics-safe-code-copy
+sortId: 37
 title: "Copy Text Safely into Code Fields"
 author: "@Drakonian"
 difficulty: easy

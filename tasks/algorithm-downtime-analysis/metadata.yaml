@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: algorithm-downtime-analysis
+sortId: 164
 title: "The Maintenance Window"
 author: "@Drakonian"
 difficulty: medium

@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: integrations-mcp-tool-surface
+sortId: 133
 title: "Expose the Right MCP Tools"
 author: "@Drakonian"
 difficulty: medium

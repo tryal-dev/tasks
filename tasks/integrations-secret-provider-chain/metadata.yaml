@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: integrations-secret-provider-chain
+sortId: 138
 title: "Credentials Behind an Interface"
 author: "@Drakonian"
 difficulty: medium

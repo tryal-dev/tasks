@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: basics-workdate-not-today
+sortId: 44
 title: "The Date Nobody Set"
 author: "@Drakonian"
 difficulty: easy

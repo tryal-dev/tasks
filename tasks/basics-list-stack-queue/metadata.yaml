@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: basics-list-stack-queue
+sortId: 28
 title: "A Stack and a Queue on One List"
 author: "@Drakonian"
 difficulty: easy

@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: algorithm-nth-weekday
+sortId: 154
 title: "Second Tuesday Payment Run"
 author: "@Drakonian"
 difficulty: easy

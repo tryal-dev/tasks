@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: basics-duration-clock
+sortId: 13
 title: "Elapsed Time as hh:mm:ss"
 author: "@Drakonian"
 difficulty: easy

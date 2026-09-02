@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: transactions-landed-cost
+sortId: 105
 title: "Landed Cost: Spread the Freight Across the Receipts"
 author: "@Drakonian"
 difficulty: medium

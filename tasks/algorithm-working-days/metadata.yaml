@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: algorithm-working-days
+sortId: 176
 title: "Promise a Ship Date"
 author: "@Drakonian"
 difficulty: medium

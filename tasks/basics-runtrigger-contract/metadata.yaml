@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: basics-runtrigger-contract
+sortId: 36
 title: "Two Insert Paths: The RunTrigger Contract"
 author: "@Drakonian"
 difficulty: easy

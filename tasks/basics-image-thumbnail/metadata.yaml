@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: basics-image-thumbnail
+sortId: 20
 title: "Make a Proportional Thumbnail"
 author: "@Drakonian"
 difficulty: easy

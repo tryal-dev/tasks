@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: filtering-stock-by-location
+sortId: 73
 title: "On Hand, Per Location"
 author: "@Drakonian"
 difficulty: easy

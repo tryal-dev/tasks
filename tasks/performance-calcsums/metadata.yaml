@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: performance-calcsums
+sortId: 85
 title: "Total Without a Loop"
 author: "@Drakonian"
 difficulty: easy

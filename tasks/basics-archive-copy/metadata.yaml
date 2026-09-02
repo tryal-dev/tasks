@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: basics-archive-copy
+sortId: 45
 title: "Archive a Record with TransferFields"
 author: "@Drakonian"
 difficulty: medium

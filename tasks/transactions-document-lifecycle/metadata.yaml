@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: transactions-document-lifecycle
+sortId: 103
 title: "Document Lifecycle: Open, Released, Posted"
 author: "@Drakonian"
 difficulty: medium

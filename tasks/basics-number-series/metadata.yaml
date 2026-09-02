@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: basics-number-series
+sortId: 49
 title: "Wire a Document to No. Series"
 author: "@Drakonian"
 difficulty: medium

@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: algorithm-dedup-recipients
+sortId: 150
 title: "Deduplicate, Keep the Order"
 author: "@Drakonian"
 difficulty: easy

@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: extensibility-dimension-injection
+sortId: 62
 title: "Inject a Project Dimension into Posting"
 author: "@Drakonian"
 difficulty: medium

@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: filtering-rate-at-date
+sortId: 83
 title: "Which Rate Applied on This Date?"
 author: "@Drakonian"
 difficulty: medium

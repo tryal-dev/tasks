@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: extensibility-validate-hook-order
+sortId: 66
 title: "Two Moments in One Validation"
 author: "@Drakonian"
 difficulty: medium

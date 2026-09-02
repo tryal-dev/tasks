@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: algorithm-iban-verify
+sortId: 167
 title: "IBAN Verifier"
 author: "@Drakonian"
 difficulty: medium

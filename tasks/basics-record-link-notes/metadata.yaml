@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: basics-record-link-notes
+sortId: 34
 title: "Customer Notes via Record Links"
 author: "@Drakonian"
 difficulty: easy

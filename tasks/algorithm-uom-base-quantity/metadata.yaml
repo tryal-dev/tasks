@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: algorithm-uom-base-quantity
+sortId: 157
 title: "Qty. per Unit Without the Drift"
 author: "@Drakonian"
 difficulty: easy

@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: extensibility-qualified-name-dispatch
+sortId: 64
 title: "Dispatch by Fully Qualified Name"
 author: "@Drakonian"
 difficulty: medium

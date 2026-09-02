@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: algorithm-filter-expression-check
+sortId: 166
 title: "The Filter That Crashed the Nightly Job"
 author: "@Drakonian"
 difficulty: medium

@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: basics-div-mod-packing
+sortId: 12
 title: "Pallets, Boxes, and Loose Units"
 author: "@Drakonian"
 difficulty: easy

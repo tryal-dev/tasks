@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: integrations-base64-roundtrip
+sortId: 124
 title: "Base64 In, Base64 Out"
 author: "@Drakonian"
 difficulty: easy

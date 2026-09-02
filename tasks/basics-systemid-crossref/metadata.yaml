@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: basics-systemid-crossref
+sortId: 50
 title: "References That Survive Rename"
 author: "@Drakonian"
 difficulty: medium

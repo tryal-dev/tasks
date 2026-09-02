@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: filtering-balance-in-window
+sortId: 67
 title: "Customer Balance in a Date Window"
 author: "@Drakonian"
 difficulty: easy

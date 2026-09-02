@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: basics-confirm-when-needed
+sortId: 8
 title: "Ask Only When It Matters"
 author: "@Drakonian"
 difficulty: easy

@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: performance-skip-scan-distinct
+sortId: 97
 title: "Distinct Values Without a Query"
 author: "@Drakonian"
 difficulty: medium

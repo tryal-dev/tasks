@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: basics-enum-wire-mapping
+sortId: 14
 title: "Map Carrier Wire Codes to an Enum"
 author: "@Drakonian"
 difficulty: easy

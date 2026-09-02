@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: performance-sift-key
+sortId: 96
 title: "Shelf Totals, Straight From the Index"
 author: "@Drakonian"
 difficulty: medium

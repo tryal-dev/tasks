@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: transactions-batch-commit
+sortId: 101
 title: "One Poison Record Shouldn't Kill the Batch"
 author: "@Drakonian"
 difficulty: medium

@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: integrations-pdf-einvoice-attachment
+sortId: 135
 title: "The Invoice Inside the PDF"
 author: "@Drakonian"
 difficulty: medium

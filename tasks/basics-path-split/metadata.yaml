@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: basics-path-split
+sortId: 32
 title: "Last Segment, One-Based"
 author: "@Drakonian"
 difficulty: easy

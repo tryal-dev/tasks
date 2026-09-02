@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: basics-field-translations
+sortId: 15
 title: "Multi-Language Descriptions with the Translation Module"
 author: "@Drakonian"
 difficulty: easy

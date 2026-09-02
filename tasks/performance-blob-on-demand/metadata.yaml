@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: performance-blob-on-demand
+sortId: 84
 title: "Blobs Are Billed Separately"
 author: "@Drakonian"
 difficulty: easy

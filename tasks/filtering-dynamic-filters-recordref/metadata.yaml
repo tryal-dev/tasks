@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: filtering-dynamic-filters-recordref
+sortId: 77
 title: "Dynamic Filters from Configuration Rows"
 author: "@Drakonian"
 difficulty: medium

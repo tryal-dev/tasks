@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: algorithm-amount-in-words
+sortId: 158
 title: "Amount in Words"
 author: "@Drakonian"
 difficulty: medium

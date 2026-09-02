@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: integrations-xmlport-import
+sortId: 142
 title: "Import an Order Document with an XMLport"
 author: "@Drakonian"
 difficulty: medium

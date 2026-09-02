@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: integrations-xml-namespaces
+sortId: 146
 title: "Parse XML That Has Namespaces"
 author: "@Drakonian"
 difficulty: hard

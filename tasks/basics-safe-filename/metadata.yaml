@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: basics-safe-filename
+sortId: 38
 title: "A File Name the OS Accepts"
 author: "@Drakonian"
 difficulty: easy

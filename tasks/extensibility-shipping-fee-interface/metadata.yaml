@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: extensibility-shipping-fee-interface
+sortId: 65
 title: "One Interface, Three Calculators"
 author: "@Drakonian"
 difficulty: medium

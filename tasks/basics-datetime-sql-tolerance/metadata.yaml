@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: basics-datetime-sql-tolerance
+sortId: 10
 title: "Detect Real Changes Despite SQL DateTime Rounding"
 author: "@Drakonian"
 difficulty: easy

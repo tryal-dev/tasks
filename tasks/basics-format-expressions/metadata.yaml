@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: basics-format-expressions
+sortId: 17
 title: "Five Faces of One Date"
 author: "@Drakonian"
 difficulty: easy

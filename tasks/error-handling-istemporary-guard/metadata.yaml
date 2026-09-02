@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: error-handling-istemporary-guard
+sortId: 115
 title: "Buffer-Only API"
 author: "@Drakonian"
 difficulty: easy

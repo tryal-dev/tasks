@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: transactions-prepayment-invoice
+sortId: 107
 title: "Take the Deposit First"
 author: "@Drakonian"
 difficulty: medium

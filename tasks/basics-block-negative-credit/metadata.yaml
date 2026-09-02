@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: basics-block-negative-credit
+sortId: 4
 title: "Block Negative Credit Limits"
 author: "@Drakonian"
 difficulty: easy

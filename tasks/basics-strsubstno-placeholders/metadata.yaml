@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: basics-strsubstno-placeholders
+sortId: 40
 title: "Placeholders, Not Concatenation"
 author: "@Drakonian"
 difficulty: easy

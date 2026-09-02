@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: transactions-undo-receipt
+sortId: 111
 title: "Undo the Receipt, Prove the Reversal"
 author: "@Drakonian"
 difficulty: medium

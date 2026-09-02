@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: performance-existence-checks
+sortId: 86
 title: "Yes or No, Not the Whole Table"
 author: "@Drakonian"
 difficulty: easy

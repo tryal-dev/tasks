@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: algorithm-import-dependency-order
+sortId: 169
 title: "Import in the Right Order"
 author: "@Drakonian"
 difficulty: medium

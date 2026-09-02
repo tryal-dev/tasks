@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: extensibility-quote-to-order-carry
+sortId: 57
 title: "Survive Quote-to-Order"
 author: "@Drakonian"
 difficulty: easy

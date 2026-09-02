@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: error-handling-posting-gate
+sortId: 116
 title: "The Invoice Hold"
 author: "@Drakonian"
 difficulty: easy

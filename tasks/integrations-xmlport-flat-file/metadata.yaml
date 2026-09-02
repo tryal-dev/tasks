@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: integrations-xmlport-flat-file
+sortId: 141
 title: "Fixed-Width File, the Platform Way"
 author: "@Drakonian"
 difficulty: medium

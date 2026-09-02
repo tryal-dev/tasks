@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: transactions-reverse-entry
+sortId: 109
 title: "Reverse It, Once"
 author: "@Drakonian"
 difficulty: medium

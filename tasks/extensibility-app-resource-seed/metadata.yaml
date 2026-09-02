@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: extensibility-app-resource-seed
+sortId: 59
 title: "Setup Data Ships in the App"
 author: "@Drakonian"
 difficulty: medium

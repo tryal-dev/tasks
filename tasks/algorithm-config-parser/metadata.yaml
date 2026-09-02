@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: algorithm-config-parser
+sortId: 149
 title: "Settings on a String"
 author: "@Drakonian"
 difficulty: easy

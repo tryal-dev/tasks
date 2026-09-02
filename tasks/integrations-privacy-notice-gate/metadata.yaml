@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: integrations-privacy-notice-gate
+sortId: 136
 title: "Don't Call Before They Agree"
 author: "@Drakonian"
 difficulty: medium

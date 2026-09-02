@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: performance-setup-cache
+sortId: 95
 title: "Setup Table Done Right"
 author: "@Drakonian"
 difficulty: medium

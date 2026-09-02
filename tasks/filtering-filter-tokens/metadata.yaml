@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: filtering-filter-tokens
+sortId: 69
 title: "Filters That Understand TODAY, WEEK and ME"
 author: "@Drakonian"
 difficulty: easy

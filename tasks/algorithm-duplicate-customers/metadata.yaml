@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: algorithm-duplicate-customers
+sortId: 165
 title: "Find the Duplicate Customers"
 author: "@Drakonian"
 difficulty: medium

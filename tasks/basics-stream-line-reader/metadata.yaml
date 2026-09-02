@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: basics-stream-line-reader
+sortId: 39
 title: "Read Lines, Not Bytes"
 author: "@Drakonian"
 difficulty: easy

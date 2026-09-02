@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: basics-currency-rounding
+sortId: 9
 title: "Round Like the Currency Says"
 author: "@Drakonian"
 difficulty: easy

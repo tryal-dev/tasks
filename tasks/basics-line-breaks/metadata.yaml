@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: basics-line-breaks
+sortId: 26
 title: '\n Is Not a Newline'
 author: "@Drakonian"
 difficulty: easy

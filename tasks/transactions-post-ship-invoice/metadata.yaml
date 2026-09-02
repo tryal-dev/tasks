@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: transactions-post-ship-invoice
+sortId: 106
 title: "Ship Now, Invoice Later"
 author: "@Drakonian"
 difficulty: medium

@@ -86,8 +86,8 @@ and passes when every `[Test]` procedure passes. Users see per-test results.
 
 ## Quality gates
 
-- **Lint (CI, offline):** format contract — schema-valid metadata, required
-  files, submission limits and topics.
+- **Lint (CI, offline):** format contract — schema-valid metadata, unique
+  sortId, required files, submission limits and topics.
 - **Compile gate (CI, offline):** each changed task's starter, solution and
   tests are compiled with the real AL compiler against the platform's pinned
   BC symbols ([`compiler/symbols/`](compiler)) — catches invalid AL without

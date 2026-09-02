@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: integrations-json-parse
+sortId: 131
 title: "Import an Order from JSON"
 author: "@Drakonian"
 difficulty: medium

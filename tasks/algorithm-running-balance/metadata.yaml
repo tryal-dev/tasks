@@ -1,6 +1,7 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 
 id: algorithm-running-balance
+sortId: 174
 title: "Statement with Running Balance"
 author: "@Drakonian"
 difficulty: medium

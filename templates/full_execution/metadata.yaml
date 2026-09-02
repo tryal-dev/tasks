@@ -6,6 +6,10 @@
 # The directory name IS the task id — keep `id` and the folder name in sync.
 
 id: algorithm-your-slug # <topic>-<slug>: topic prefix + kebab-case slug
+# Catalog sort key: a positive integer, unique across all tasks (lint-enforced).
+# The placeholder is deliberately taken — replace it with an unused number;
+# `npm run lint` names one.
+sortId: 1
 title: "Your Task Title"
 
 # Optional display credit shown with the task. Courtesy only — authorship is

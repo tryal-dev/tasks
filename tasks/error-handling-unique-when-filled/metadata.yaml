@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: error-handling-unique-when-filled
+sortId: 122
 title: "Unique, Except When Blank"
 author: "@Drakonian"
 difficulty: medium

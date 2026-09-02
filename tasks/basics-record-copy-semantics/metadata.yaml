@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: basics-record-copy-semantics
+sortId: 33
 title: "Snapshot or Shared View?"
 author: "@Drakonian"
 difficulty: easy

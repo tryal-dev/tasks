@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: basics-conditional-relation
+sortId: 7
 title: "Point One Field at Three Tables"
 author: "@Drakonian"
 difficulty: easy

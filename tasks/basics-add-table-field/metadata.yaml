@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: basics-add-table-field
+sortId: 2
 title: "Add a Custom Field to Customer"
 author: "@Drakonian"
 difficulty: easy

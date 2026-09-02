@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: basics-overnight-shift
+sortId: 30
 title: "The Night Shift Bug"
 author: "@Drakonian"
 difficulty: easy

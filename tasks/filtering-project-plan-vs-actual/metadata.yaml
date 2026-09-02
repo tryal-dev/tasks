@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: filtering-project-plan-vs-actual
+sortId: 81
 title: "Project Plan vs. Actual per Task"
 author: "@Drakonian"
 difficulty: medium

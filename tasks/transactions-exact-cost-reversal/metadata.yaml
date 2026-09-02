@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: transactions-exact-cost-reversal
+sortId: 104
 title: "Return It at the Cost You Sold It"
 author: "@Drakonian"
 difficulty: medium

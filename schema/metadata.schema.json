@@ -5,12 +5,17 @@
   "description": "Schema for tasks/<task-id>/metadata.yaml. The format contract is owned by the platform; do not change field names, enums, or semantics unilaterally.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["id", "title", "difficulty", "topic", "executionTier"],
+  "required": ["id", "sortId", "title", "difficulty", "topic", "executionTier"],
   "properties": {
     "id": {
       "type": "string",
       "pattern": "^[a-z0-9]+(-[a-z0-9]+)+$",
       "description": "Task id. Must equal the directory name. Kebab-case; convention: <topic>-<slug>."
+    },
+    "sortId": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Catalog sort key. A positive integer, unique across all tasks (lint-enforced)."
     },
     "title": {
       "type": "string",

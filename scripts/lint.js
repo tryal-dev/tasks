@@ -78,10 +78,14 @@ function loadYaml(taskId, filePath, label) {
   }
 }
 
-function formatAjvError(err) {
+function formatAjvError(err, sortIds) {
   const where = err.instancePath ? err.instancePath.replace(/^\//, '').replace(/\//g, '.') : '(root)';
   if (err.keyword === 'additionalProperties') {
     return `${where}: unknown field "${err.params.additionalProperty}" (the platform validates strictly and rejects unknown fields)`;
+  }
+  if (err.keyword === 'required' && err.params.missingProperty === 'sortId') {
+    const hint = sortIds ? ` (an unused one is ${sortIds.nextFree})` : '';
+    return `sortId is missing — every task carries a positive integer sortId, unique across the catalog${hint}`;
   }
   if (err.schemaPath.includes('companyIsolation') && err.message === 'boolean schema is false') {
     return 'companyIsolation applies to full_execution tasks only — remove it';
@@ -89,7 +93,30 @@ function formatAjvError(err) {
   return `${where}: ${err.message}`;
 }
 
-function lintTask(taskId, validate, topics) {
+// First pass over every task's sortId, so a duplicate or missing one can be
+// reported together with a number that is actually unused. Unreadable
+// metadata is skipped silently here — lintTask reports it.
+function collectSortIds(taskIds) {
+  const owners = new Map(); // sortId -> [taskId]
+  for (const taskId of taskIds) {
+    const metaPath = path.join(TASKS_DIR, taskId, 'metadata.yaml');
+    if (!isFile(metaPath)) continue;
+    let meta;
+    try {
+      meta = yaml.load(fs.readFileSync(metaPath, 'utf8'));
+    } catch {
+      continue;
+    }
+    if (meta && typeof meta === 'object' && Number.isInteger(meta.sortId)) {
+      if (!owners.has(meta.sortId)) owners.set(meta.sortId, []);
+      owners.get(meta.sortId).push(taskId);
+    }
+  }
+  const nextFree = owners.size > 0 ? Math.max(...owners.keys()) + 1 : 1;
+  return { owners, nextFree };
+}
+
+function lintTask(taskId, validate, topics, sortIds) {
   const taskDir = path.join(TASKS_DIR, taskId);
 
   for (const entry of fs.readdirSync(taskDir)) {
@@ -116,7 +143,14 @@ function lintTask(taskId, validate, topics) {
       // 'if' errors are ajv wrapper noise — the failing subschema errors are
       // reported alongside them.
       for (const err of validate.errors.filter((e) => e.keyword !== 'if')) {
-        error(taskId, `metadata.yaml: ${formatAjvError(err)}`);
+        error(taskId, `metadata.yaml: ${formatAjvError(err, sortIds)}`);
+      }
+    }
+
+    if (Number.isInteger(meta.sortId)) {
+      const others = (sortIds.owners.get(meta.sortId) || []).filter((t) => t !== taskId);
+      if (others.length > 0) {
+        error(taskId, `metadata.yaml: sortId ${meta.sortId} is already used by ${others.join(', ')} — sortId is unique across the catalog (an unused one is ${sortIds.nextFree})`);
       }
     }
 
@@ -312,8 +346,9 @@ function main() {
     .map((e) => e.name)
     .sort();
 
+  const sortIds = collectSortIds(taskIds);
   for (const taskId of taskIds) {
-    lintTask(taskId, validate, topics);
+    lintTask(taskId, validate, topics, sortIds);
   }
   lintTemplates(validate, topics);
 

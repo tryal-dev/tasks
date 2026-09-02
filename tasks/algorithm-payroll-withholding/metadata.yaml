@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: algorithm-payroll-withholding
+sortId: 170
 title: "The Payslip Engine"
 author: "@Drakonian"
 difficulty: medium

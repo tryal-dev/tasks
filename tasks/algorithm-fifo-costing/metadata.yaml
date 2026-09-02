@@ -1,6 +1,7 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 
 id: algorithm-fifo-costing
+sortId: 178
 title: "FIFO Cost of a Shipment"
 author: "@Drakonian"
 difficulty: hard

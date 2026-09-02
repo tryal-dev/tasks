@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: basics-init-keeps-key
+sortId: 22
 title: "Init Doesn't Touch the Key"
 author: "@Drakonian"
 difficulty: easy

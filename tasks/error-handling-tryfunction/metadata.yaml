@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: error-handling-tryfunction
+sortId: 121
 title: "Wrap It in a TryFunction"
 author: "@Drakonian"
 difficulty: medium

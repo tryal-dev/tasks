@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: integrations-isolated-storage
+sortId: 126
 title: "A Module Secret Vault"
 author: "@Drakonian"
 difficulty: easy

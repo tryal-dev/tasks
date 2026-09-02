@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: transactions-counter-lock
+sortId: 112
 title: "A Counter That Never Skips or Repeats"
 author: "@Drakonian"
 difficulty: hard

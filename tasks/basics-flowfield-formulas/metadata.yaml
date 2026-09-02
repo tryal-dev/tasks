@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: basics-flowfield-formulas
+sortId: 48
 title: "A Lab Batch Header That Calculates Itself"
 author: "@Drakonian"
 difficulty: medium

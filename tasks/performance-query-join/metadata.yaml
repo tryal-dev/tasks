@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: performance-query-join
+sortId: 93
 title: "Sales per Salesperson, Without the Chatter"
 author: "@Drakonian"
 difficulty: medium

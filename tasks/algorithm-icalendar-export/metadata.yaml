@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: algorithm-icalendar-export
+sortId: 168
 title: "The Feed the Calendar App Rejected"
 author: "@Drakonian"
 difficulty: medium

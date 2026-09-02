@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: integrations-json-build
+sortId: 130
 title: "Serialize a Sales Order to JSON"
 author: "@Drakonian"
 difficulty: medium

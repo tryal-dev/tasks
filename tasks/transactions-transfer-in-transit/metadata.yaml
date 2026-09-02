@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: transactions-transfer-in-transit
+sortId: 110
 title: "Ship Now, Receive Later"
 author: "@Drakonian"
 difficulty: medium

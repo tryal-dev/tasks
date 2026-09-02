@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: algorithm-bank-reconciliation
+sortId: 177
 title: "Match the Bank Statement"
 author: "@Drakonian"
 difficulty: hard

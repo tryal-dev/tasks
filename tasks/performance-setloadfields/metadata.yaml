@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: performance-setloadfields
+sortId: 94
 title: "Load Only What You Read"
 author: "@Drakonian"
 difficulty: medium

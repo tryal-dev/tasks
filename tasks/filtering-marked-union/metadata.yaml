@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: filtering-marked-union
+sortId: 80
 title: "Union of Two Filtered Sets"
 author: "@Drakonian"
 difficulty: medium

@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: algorithm-subscription-proration
+sortId: 156
 title: "Mid-Period Plan Change"
 author: "@Drakonian"
 difficulty: easy

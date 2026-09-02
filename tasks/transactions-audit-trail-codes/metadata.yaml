@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: transactions-audit-trail-codes
+sortId: 100
 title: "Source Code on Every Entry"
 author: "@Drakonian"
 difficulty: medium

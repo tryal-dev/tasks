@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: extensibility-posted-invoice-stamp
+sortId: 56
 title: "Stamp the Posted Invoice"
 author: "@Drakonian"
 difficulty: easy

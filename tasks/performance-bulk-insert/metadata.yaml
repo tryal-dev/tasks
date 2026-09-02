@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: performance-bulk-insert
+sortId: 89
 title: "Insert the Batch, Don't Interrogate It"
 author: "@Drakonian"
 difficulty: medium

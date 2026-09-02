@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: integrations-xml-build
+sortId: 140
 title: "Generate an XML Document"
 author: "@Drakonian"
 difficulty: medium

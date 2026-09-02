@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: filtering-never-ordered
+sortId: 71
 title: "Customers Who Never Ordered"
 author: "@Drakonian"
 difficulty: easy

@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: performance-truncate-fallback
+sortId: 88
 title: "Wipe It Fast, Empty It Always"
 author: "@Drakonian"
 difficulty: easy

@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: basics-guid-api-format
+sortId: 18
 title: "Braces Off, Lowercase On"
 author: "@Drakonian"
 difficulty: easy

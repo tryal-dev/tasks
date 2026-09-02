@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: integrations-jwt-claims
+sortId: 132
 title: "Read the Token Before You Trust It"
 author: "@Drakonian"
 difficulty: medium

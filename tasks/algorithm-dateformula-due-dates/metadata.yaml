@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: algorithm-dateformula-due-dates
+sortId: 163
 title: "Terms of Payment"
 author: "@Drakonian"
 difficulty: medium
