@@ -1,9 +1,10 @@
 # Contributing a task
 
 Thanks for adding to TryAL's task catalog! A task is one directory under
-`tasks/` — a problem statement, starter code, a reference solution, and (for
-executed tasks) the tests that grade it. This guide walks you from zero to a
-merged PR.
+`tasks/` — a problem statement, starter code, and the tests that grade it.
+This catalog is public, so reference solutions are **not** committed here —
+see [Reference solutions](#reference-solutions). This guide walks you from
+zero to a merged PR.
 
 ## Quickstart
 
@@ -36,9 +37,9 @@ merged PR.
    | `task.md` | The problem statement users see, verbatim. Delete the template's HTML comments. |
    | `starter/*.al` | The user's starting point, one file per AL object named `<ObjectName>.<ObjectType>.al` (a flat `starter.al` is rejected by the lint). |
    | `tests/*.al` | The test codeunits that grade submissions. |
-   | `solution/*.al` | Reference solution. Never served to users — it is lint/CI's proof the task is solvable. |
+   | `solution/*.al` | Your reference solution — **gitignored in this catalog**, it stays on your machine (see [Reference solutions](#reference-solutions)). |
 
-   For a complete worked example of all five parts, see
+   For a complete worked example of the committed parts, see
    [`tasks/basics-add-table-field`](tasks/basics-add-table-field).
 
    Mind `sortId` in `metadata.yaml`: an integer that must be unique across
@@ -57,10 +58,11 @@ merged PR.
    match, unique sortId, required files, submission limits, valid topic. It
    reports *all* findings at once.
 
-   CI also **compiles** your starter, solution and tests with the real AL
-   compiler against the platform's pinned BC symbols
-   ([`compiler/symbols/`](compiler)), so broken AL never reaches review. To
-   run that gate locally you need the [.NET SDK](https://dotnet.microsoft.com/download)
+   CI also **compiles** your starter and tests with the real AL compiler
+   against the platform's pinned BC symbols
+   ([`compiler/symbols/`](compiler)), so broken AL never reaches review.
+   Locally the same gate also compiles your `solution/` (and the tests
+   against it) whenever one is present. To run that gate locally you need the [.NET SDK](https://dotnet.microsoft.com/download)
    10.x — the AL compiler ships as a `net10.0` dotnet tool. Install the
    compiler once (same command on every OS; the version is pinned in
    `package.json` → `config.alToolVersion`):
@@ -81,11 +83,13 @@ merged PR.
 
 4. **Open a PR.** CI re-runs the lint and the compile gate automatically.
    Real grading is a separate, **manually triggered** workflow — a maintainer
-   launches **Grade tasks** against your branch, which submits your `solution/`
-   (must pass every test) and your unchanged `starter/` as a counter-check (must
-   compile, and must fail at least one test). It is manual because each run
-   occupies a real Business Central container. Every task PR gets human review
-   before merge: `tests/` is trusted code that runs inside those containers.
+   launches **Grade tasks** against your branch, which submits your unchanged
+   `starter/` (must compile, and must fail at least one test). Your reference
+   solution is graded from the private catalog, not from the PR (see
+   [Reference solutions](#reference-solutions)). It is manual because each
+   run occupies a real Business Central container. Every task PR gets human
+   review before merge: `tests/` is trusted code that runs inside those
+   containers.
 
 ### Review or create with an AI agent
 
@@ -95,6 +99,22 @@ encodes this whole guide — the format contract, the test quality bar, and
 AL test-writing references distilled from Microsoft Learn and the BC test
 libraries. Agents pick it up automatically when asked to create a task;
 you can also invoke it explicitly with `/create-task`.
+
+## Reference solutions
+
+This repository is public, and a task's reference solution is deliberately
+not part of it: `tasks/*/solution/` is gitignored, the lint does not require
+it (`package.json` → `config.solutions: optional`), and CI fails if one is
+ever force-added. The maintainers keep every reference solution in a private
+sibling catalog with the same task format and grade it there.
+
+You still need one — a task without a passing solution is not provably
+solvable. Write `solution/` first (the template and the authoring skill
+assume it) and keep it locally while you work: `npm run compile` compiles it
+and the tests against it whenever it is present, and `npm run smoke` grades
+it if you have platform credentials. Just don't try to commit it. A
+maintainer will ask you for it during review so it can be graded from the
+private catalog before your task is merged.
 
 ## Grading semantics
 
@@ -117,8 +137,9 @@ tests.
   never by literal ID. Any 50000+ id is fine for the test codeunit itself.
 - Name the exact objects and procedure signatures in `task.md` — your tests
   bind to them, so users must be able to predict them.
-- **Quality bar (proven by the Grade tasks workflow):** the solution passes
-  **all** tests; the unchanged starter **compiles** and **fails at least one**.
+- **Quality bar:** the reference solution passes **all** tests (graded by the
+  maintainers from the private catalog); the unchanged starter **compiles**
+  and **fails at least one** (proven here by the Grade tasks workflow).
   Tests that can't discriminate grade nothing — and a starter that doesn't
   compile is a broken task, not a discriminating one, so grading rejects it
   separately.
@@ -201,8 +222,9 @@ Starter and solution must each be a valid submission:
 ## What users see
 
 `GET /tasks/{id}` serves `task.md` as the description plus the starter files,
-hints, allowed dependencies, and the test files. `solution/`,
-`transactionModel`, and `companyIsolation` are never served.
+hints, allowed dependencies, and the test files. `transactionModel` and
+`companyIsolation` are never served; reference solutions exist only in the
+maintainers' private catalog and are never served either.
 
 ## License
 

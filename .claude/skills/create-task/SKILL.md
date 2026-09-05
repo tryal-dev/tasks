@@ -24,6 +24,8 @@ a task is exactly as good as its tests.
 3. **Write `task.md`** — the statement (rules below).
 4. **Write `tests/`** — read the references first (see "Writing the tests").
 5. **Write `solution/`**, then strip it down to the `starter/` skeleton.
+   In this public catalog `tasks/*/solution/` is gitignored: the solution
+   stays on disk for the compile gate and never enters a commit.
 6. **Fill `metadata.yaml`** (field reference: CONTRIBUTING.md).
 7. **Validate:** `npm run lint`, then the self-check list at the end.
 
@@ -160,7 +162,8 @@ Hard platform facts:
 Quality bar — CI-enforced when grading credentials are configured, and
 checked by every reviewer:
 
-- `solution/` passes **all** tests.
+- `solution/` passes **all** tests (graded from the maintainers' private
+  catalog — CI in this repository never sees it).
 - The unchanged starter **compiles together with the tests** and **fails at
   least one** of them. A starter that does not compile is a broken task (the
   user opens a red compiler, not a failing test) and grading rejects it —
@@ -207,9 +210,11 @@ Craft rules:
   `<ObjectName>.<ObjectType>.al` (a flat `starter.al` is lint-rejected).
 - The starter is the natural empty shell of the solution: object declared,
   body reduced to a `// TODO:` comment. It must never pass the tests.
-- `solution/` is never served; it is the proof the task is solvable and the
-  thing CI grades. Keep it idiomatic — it sets the standard reviewers
-  compare submissions against.
+- `solution/` is never served; it is the proof the task is solvable. In this
+  catalog it is not committed either (gitignored — reference solutions live
+  in the maintainers' private sibling catalog); `npm run compile` and the
+  Grade tasks workflow use it only when it is present in the checkout. Keep
+  it idiomatic — it sets the standard reviewers compare submissions against.
 
 ## Grading what the user adds
 
@@ -249,7 +254,8 @@ end;
   in the starter with the promised signature (never raised), and let the
   starter fail because the event never fires.
 - `tasks/basics-add-table-field` is the canonical small example; `npm run
-  compile` gates both pairings (`tests vs solution`, `tests vs starter`).
+  compile` gates `tests vs starter` always and `tests vs solution` whenever
+  a local `solution/` is present.
 
 ## `metadata.yaml` gotchas
 
@@ -274,6 +280,6 @@ Full field reference: CONTRIBUTING.md. The ones that bite:
    - every statement promise has a test; every test is predictable from the
      statement;
    - solution passes all tests, starter fails at least one — the lint cannot
-     run tests, so unless the CI grading smoke test runs, say plainly in the
-     PR that grading proof is pending;
+     run tests and the solution is not in the PR, so unless you graded it
+     yourself, say plainly in the PR that grading proof is pending;
    - objects referenced by name only; hints ordered; template comments gone.

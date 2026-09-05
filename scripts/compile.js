@@ -1,12 +1,14 @@
 #!/usr/bin/env node
-// Offline compile gate: verifies every task's starter, solution and tests are
-// valid AL by compiling them with the real AL compiler against the pinned
-// symbol set in compiler/symbols/. Mirrors the platform's compile step:
+// Offline compile gate: verifies every task's starter, tests and — when the
+// task carries one — solution are valid AL by compiling them with the real AL
+// compiler against the pinned symbol set in compiler/symbols/. A catalog that
+// keeps its reference solutions in a private sibling has no solution/ here;
+// then only the starter pairing is gated. Mirrors the platform's compile step:
 //
 //   1. the submission (starter or solution) is compiled as its own app
 //      (app.json generated per compile, platform/application pinned);
 //   2. the tests are compiled as a second app that depends on the compiled
-//      solution .app — a second /packagecachepath, like the platform's
+//      submission .app — a second /packagecachepath, like the platform's
 //      test/.alpackages folder.
 //
 // Success per compile = exit 0 AND out.app exists AND zero error-severity
@@ -393,9 +395,14 @@ async function compileTarget(ctx, label, taskDir, appNameBase) {
     const solutionFiles = alFilesIn(path.join(taskDir, 'solution'));
     const solutionApp = makeAppJson(appNameBase, idRanges, []);
     const solutionDir = path.join(work, 'solution');
-    writeProject(solutionDir, solutionFiles, solutionApp);
-    const solutionResult = await runCompile(ctx.al, solutionDir, [SYMBOLS_DIR], analyzerPaths);
-    ok = reportCompile(out, 'solution', solutionResult, fileMapOf(solutionFiles)) && ok;
+    let solutionResult = null;
+    if (solutionFiles.length > 0) {
+      writeProject(solutionDir, solutionFiles, solutionApp);
+      solutionResult = await runCompile(ctx.al, solutionDir, [SYMBOLS_DIR], analyzerPaths);
+      ok = reportCompile(out, 'solution', solutionResult, fileMapOf(solutionFiles)) && ok;
+    } else {
+      out.push('  [solution] skipped — no solution/ in this checkout');
+    }
 
     const starterFiles = starterFilesOf(taskDir);
     const starterApp = makeAppJson(appNameBase, idRanges, []);
@@ -425,10 +432,12 @@ async function compileTarget(ctx, label, taskDir, appNameBase) {
       return reportCompile(out, `tests vs ${label}`, testsResult, fileMapOf(testFiles));
     };
     if (testFiles.length > 0) {
-      if (solutionResult.failure) {
-        out.push('  [tests vs solution] skipped — the solution app they depend on did not compile');
-      } else {
-        ok = (await compileTestsAgainst('solution', solutionApp, solutionDir)) && ok;
+      if (solutionResult !== null) {
+        if (solutionResult.failure) {
+          out.push('  [tests vs solution] skipped — the solution app they depend on did not compile');
+        } else {
+          ok = (await compileTestsAgainst('solution', solutionApp, solutionDir)) && ok;
+        }
       }
       if (starterResult === null) {
         out.push('  [tests vs starter] skipped — no starter files');

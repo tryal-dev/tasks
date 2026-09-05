@@ -20,6 +20,12 @@ const MAX_FILE_BYTES = 70 * 1024;
 
 const EXPECTED_ENTRIES = new Set(['metadata.yaml', 'task.md', 'starter', 'tests', 'solution']);
 
+// Whether every task must commit its reference solution — package.json →
+// config.solutions. A public catalog keeps its solutions in a private sibling
+// catalog instead ("optional"): a solution/ that is present is still validated,
+// a missing one is not an error.
+const SOLUTION_POLICIES = new Set(['required', 'optional']);
+
 const findings = []; // { task, level: 'error'|'warn', message }
 
 function error(task, message) {
@@ -129,7 +135,7 @@ function collectSortIds(taskIds, range) {
   return { owners, nextFree, min: range.min, max: range.max };
 }
 
-function lintTask(taskId, validate, topics, sortIds) {
+function lintTask(taskId, validate, topics, sortIds, solutionPolicy) {
   const taskDir = path.join(TASKS_DIR, taskId);
 
   for (const entry of fs.readdirSync(taskDir)) {
@@ -225,7 +231,9 @@ function lintTask(taskId, validate, topics, sortIds) {
   const solutionDir = path.join(taskDir, 'solution');
   let solutionFiles = [];
   if (!isDir(solutionDir)) {
-    error(taskId, 'solution/ is missing — the reference solution is the proof the task is solvable');
+    if (solutionPolicy === 'required') {
+      error(taskId, 'solution/ is missing — the reference solution is the proof the task is solvable');
+    }
   } else {
     solutionFiles = collectAlDir(taskId, solutionDir, 'solution');
     if (solutionFiles.length === 0) {
@@ -296,7 +304,7 @@ function lintTask(taskId, validate, topics, sortIds) {
 
 // Templates must stay valid against the schema, or every new task starts
 // broken. Same checks as tasks minus id==dirname.
-function lintTemplates(validate, topics, sortIds) {
+function lintTemplates(validate, topics, sortIds, solutionPolicy) {
   const templatesDir = path.join(ROOT, 'templates');
   if (!isDir(templatesDir)) return;
   for (const name of fs.readdirSync(templatesDir)) {
@@ -327,7 +335,9 @@ function lintTemplates(validate, topics, sortIds) {
     if (!isDir(path.join(tplDir, 'starter'))) {
       error(label, 'starter/ is missing');
     }
-    if (!isDir(path.join(tplDir, 'solution'))) error(label, 'solution/ is missing');
+    if (solutionPolicy === 'required' && !isDir(path.join(tplDir, 'solution'))) {
+      error(label, 'solution/ is missing');
+    }
     if (name === 'full_execution' && !isDir(path.join(tplDir, 'tests'))) {
       error(label, 'tests/ is missing');
     }
@@ -356,6 +366,13 @@ function main() {
     process.exit(1);
   }
 
+  const pkgConfig = JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8')).config || {};
+  const solutionPolicy = pkgConfig.solutions === undefined ? 'required' : pkgConfig.solutions;
+  if (!SOLUTION_POLICIES.has(solutionPolicy)) {
+    console.error(`package.json: config.solutions must be one of ${[...SOLUTION_POLICIES].join(', ')} — got ${JSON.stringify(solutionPolicy)}.`);
+    process.exit(1);
+  }
+
   let topics = loadYaml('(repo)', path.join(ROOT, 'topics.yaml'), 'topics.yaml');
   if (topics !== undefined && (typeof topics !== 'object' || topics === null || Array.isArray(topics))) {
     error('(repo)', 'topics.yaml must be a mapping of topic id -> display name');
@@ -369,9 +386,9 @@ function main() {
 
   const sortIds = collectSortIds(taskIds, sortIdRange);
   for (const taskId of taskIds) {
-    lintTask(taskId, validate, topics, sortIds);
+    lintTask(taskId, validate, topics, sortIds, solutionPolicy);
   }
-  lintTemplates(validate, topics, sortIds);
+  lintTemplates(validate, topics, sortIds, solutionPolicy);
 
   const errors = findings.filter((f) => f.level === 'error');
   const warnings = findings.filter((f) => f.level === 'warn');

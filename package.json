@@ -12,7 +12,8 @@
     "smoke": "node scripts/smoke.js"
   },
   "config": {
-    "alToolVersion": "18.0.38.52553-beta"
+    "alToolVersion": "18.0.38.52553-beta",
+    "solutions": "optional"
   },
   "devDependencies": {
     "ajv": "^8.17.1",

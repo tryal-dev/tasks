@@ -3,7 +3,9 @@
 // plus a Business Central container — and asserts the two properties that make
 // a task worth solving:
 //
-//   solution/  compiles AND every [Test] passes;
+//   solution/  compiles AND every [Test] passes — when the checkout carries
+//              one. A public catalog keeps its reference solutions in a
+//              private sibling; there only the starter property is graded;
 //   starter/   compiles AND at least one [Test] fails.
 //
 // The starter must reach the test phase: a starter that fails to compile also
@@ -198,16 +200,25 @@ async function smokeTask(taskId, log) {
   log(`${taskId} (${meta.executionTier}) — staged`);
 
   try {
-    const solution = await submitAndWait(taskId, alFilesOnly(readDirFiles(path.join(taskDir, 'solution'))), 'solution', log);
-    log(`  [solution] ${describeResult(solution)}`);
-    if (!solution.success) {
-      const detail = reachedTests(solution) ? failedTestLines(solution) : compilerErrorLines(solution);
-      throw new Error(
-        `[solution] the reference solution did not pass — the task is not provably solvable\n${detail.join('\n')}`,
-      );
+    const solutionFiles = alFilesOnly(readDirFiles(path.join(taskDir, 'solution')));
+    let solution = null;
+    if (Object.keys(solutionFiles).length === 0) {
+      log('  [solution] skipped — no solution/ in this checkout');
+    } else {
+      solution = await submitAndWait(taskId, solutionFiles, 'solution', log);
+      log(`  [solution] ${describeResult(solution)}`);
+      if (!solution.success) {
+        const detail = reachedTests(solution) ? failedTestLines(solution) : compilerErrorLines(solution);
+        throw new Error(
+          `[solution] the reference solution did not pass — the task is not provably solvable\n${detail.join('\n')}`,
+        );
+      }
     }
 
     if (meta.executionTier !== 'full_execution') {
+      if (solution === null) {
+        throw new Error('[solution] nothing was graded — a task that is not full_execution has no starter check, and this checkout has no solution/');
+      }
       log('  OK');
       return { taskId, solution, starter: null };
     }
@@ -283,7 +294,9 @@ async function runPool(items, concurrency, worker) {
 }
 
 function summaryRow(r) {
-  const sol = reachedTests(r.solution) ? `${r.solution.passed}/${r.solution.total} passed` : 'compiled';
+  let sol = 'n/a';
+  if (reachedTests(r.solution)) sol = `${r.solution.passed}/${r.solution.total} passed`;
+  else if (r.solution) sol = 'compiled';
   const starter = r.starter ? `${r.starter.failed}/${r.starter.total} failed` : 'n/a';
   return `| \`${r.taskId}\` | ✅ | ${sol} | ${starter} |`;
 }
@@ -301,7 +314,10 @@ function writeStepSummary(results, failures) {
     lines.push(`### ❌ \`${f.taskId}\``, '', '```', f.message, '```', '');
   }
   if (failures.length === 0 && results.length > 0) {
-    lines.push(`All ${results.length} task(s) graded green: solution passes every test, starter compiles and fails at least one.`);
+    const proof = results.every((r) => r.solution === null)
+      ? 'starter compiles and fails at least one test (no solution/ in this checkout)'
+      : 'solution passes every test, starter compiles and fails at least one';
+    lines.push(`All ${results.length} task(s) graded green: ${proof}.`);
   }
   fs.appendFileSync(file, lines.join('\n') + '\n');
 }

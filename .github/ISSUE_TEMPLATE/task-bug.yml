@@ -1,5 +1,5 @@
 name: "\U0001F41B Report a task problem"
-description: A task's statement, tests, hints, or solution is wrong, unfair, or unclear.
+description: A task's statement, tests, or hints are wrong, unfair, or unclear.
 title: "[Task bug]: "
 labels: ["task-bug"]
 body:
@@ -20,7 +20,6 @@ body:
         - Tests accept a wrong solution (not strict enough)
         - Statement promises something the tests don't check (or vice versa)
         - Hint is wrong or misleading
-        - Reference solution looks wrong
         - Typo / wording
         - Other
     validations:

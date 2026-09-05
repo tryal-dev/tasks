@@ -29,7 +29,10 @@ cp -r templates/full_execution tasks/algorithm-your-idea
 ```
 
 **2. Fill in the files** — `metadata.yaml`, `task.md`, `starter/`,
-`tests/`, `solution/`. Every template file is annotated with what goes where,
+`tests/`. Write a `solution/` as well to prove the task, but it stays on
+your machine: this catalog is public and `tasks/*/solution/` is gitignored
+(see [CONTRIBUTING.md → Reference solutions](CONTRIBUTING.md#reference-solutions)).
+Every template file is annotated with what goes where,
 and [`tasks/basics-add-table-field`](tasks/basics-add-table-field)
 is a small complete example to crib from.
 
@@ -40,15 +43,15 @@ npm install
 npm run lint
 ```
 
-CI additionally compiles your starter, solution and tests with the real AL
+CI additionally compiles your starter and tests with the real AL
 compiler — see [CONTRIBUTING.md](CONTRIBUTING.md) for running that gate
 locally with `npm run compile`.
 
 Read **[CONTRIBUTING.md](CONTRIBUTING.md)** for the full walkthrough: grading
 semantics, the metadata field reference, and the quality bar your task must
-meet. Budget real time for the tests — the bar is that your `solution/` passes
-every test and the unchanged `starter/` fails at least one, which is what makes
-a task worth solving. Not sure the idea fits the catalog? Open a
+meet. Budget real time for the tests — the bar is that your reference
+solution passes every test and the unchanged `starter/` fails at least one,
+which is what makes a task worth solving. Not sure the idea fits the catalog? Open a
 [**Propose a new task** issue](https://github.com/Drakonian/tryal-dev-tasks/issues/new/choose)
 first and get feedback before writing tests.
 
@@ -59,8 +62,10 @@ tasks/<task-id>/          one directory per task — the directory name IS the t
 ├── metadata.yaml         grading config + catalog metadata (JSON-Schema validated)
 ├── task.md               problem statement served to users
 ├── starter/*.al          starter code, one file per AL object
-├── tests/*.al            the test codeunits that grade submissions
-└── solution/*.al         reference solution — never served, proves solvability
+└── tests/*.al            the test codeunits that grade submissions
+                          (no solution/ — this repository is public; reference
+                          solutions live in a private sibling catalog and
+                          tasks/*/solution/ is gitignored here)
 
 templates/                copyable skeleton for new tasks
 schema/                   JSON Schema for metadata.yaml (live editor validation)
@@ -88,8 +93,8 @@ and passes when every `[Test]` procedure passes. Users see per-test results.
 
 - **Lint (CI, offline):** format contract — schema-valid metadata, unique
   sortId, required files, submission limits and topics.
-- **Compile gate (CI, offline):** each changed task's starter, solution and
-  tests are compiled with the real AL compiler against the platform's pinned
+- **Compile gate (CI, offline):** each changed task's starter and tests are
+  compiled with the real AL compiler against the platform's pinned
   BC symbols ([`compiler/symbols/`](compiler)) — catches invalid AL without
   a BC container. Diagnostics show up as inline PR annotations; analyzer
   findings are surfaced but non-fatal, like on the platform. Pushes to main
@@ -97,9 +102,10 @@ and passes when every `[Test]` procedure passes. Users see per-test results.
 - **Grading (CI, manual):** a maintainer runs the **Grade tasks** workflow
   from the Actions tab for selected task ids (or `all`). Each task is uploaded
   to the platform's staging area and graded in a real BC container: the
-  `solution/` must compile and pass every test, and the unchanged `starter/`
-  must compile but fail at least one. It is never automatic — every run
-  occupies real containers on the platform host.
+  unchanged `starter/` must compile but fail at least one test. The reference
+  solution must pass every test too, but it is graded from the private
+  catalog — this repository does not carry solutions. It is never automatic —
+  every run occupies real containers on the platform host.
 - **Human review (always):** a task's `tests/` are trusted code executed in
   the platform's containers, so every PR needs maintainer approval. The
   platform imports tasks from a pinned, approved ref — never from an open

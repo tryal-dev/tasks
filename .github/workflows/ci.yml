@@ -17,6 +17,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+      # This catalog is public and carries no reference solutions — they live
+      # in a private sibling catalog. tasks/*/solution/ is gitignored so a
+      # local solution never lands in a commit; this catches a force-added one.
+      - name: Check no reference solution is committed
+        run: |
+          tracked=$(git ls-files 'tasks/*/solution/*')
+          if [ -n "$tracked" ]; then
+            echo "$tracked"
+            echo "::error title=Reference solution committed::solution/ must not be committed to this public catalog — see CONTRIBUTING.md, section Reference solutions."
+            exit 1
+          fi
       - uses: actions/setup-node@v6
         with:
           node-version: 24
@@ -32,7 +43,7 @@ jobs:
         with:
           # Target selection diffs the PR against its base branch.
           fetch-depth: 0
-      # The AL tool (18.x) is a net10.0 dotnet tool — don't rely on the
+      # The AL tool (18.x+) is a net10.0 dotnet tool — don't rely on the
       # runner image having that runtime.
       - uses: actions/setup-dotnet@v5
         with:

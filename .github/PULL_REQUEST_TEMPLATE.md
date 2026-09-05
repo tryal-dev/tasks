@@ -6,6 +6,7 @@
 
 - [ ] `npm run lint` passes locally (CI runs it too)
 - [ ] The task compiles — CI runs `npm run compile` with the real AL compiler; run it locally to check before pushing (see CONTRIBUTING)
+- [ ] No `solution/` in the PR — this catalog is public; reference solutions are kept privately (see CONTRIBUTING → Reference solutions)
 - [ ] The task directory name equals `metadata.yaml` → `id`
 - [ ] Everything `task.md` promises is enforced by a test; good-practice extras are labelled "not graded"
 - [ ] Objects are referenced **by name**, never by literal ID
