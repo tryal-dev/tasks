@@ -16,5 +16,6 @@ table 50101 "Mini Journal Line"
     keys
     {
         key(PK; "Batch Name", "Line No.") { Clustered = true; }
+        key(BatchStatus; "Batch Name", Status) { }
     }
 }
