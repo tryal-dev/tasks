@@ -30,8 +30,8 @@ Pick object IDs in the range 50100–50199, and reference other objects **by nam
 |---|---|---|
 | `/exports/2026/invoice-1001.pdf` | `invoice-1001.pdf` | `pdf` |
 | `C:\Users\Anna\Documents\report.xlsx` | `report.xlsx` | `xlsx` |
-| `/exports/2026/` | `` (empty) | `` (empty) |
-| `/archive.2025/notes` | `notes` | `` (empty) |
+| `/exports/2026/` | (empty) | (empty) |
+| `/archive.2025/notes` | `notes` | (empty) |
 | `backup.2026-03-01.tar.gz` | `backup.2026-03-01.tar.gz` | `gz` |
 
 ## What the tests check

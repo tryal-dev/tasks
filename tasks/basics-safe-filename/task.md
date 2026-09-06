@@ -33,8 +33,8 @@ Pick object IDs in the range 50100–50199, and reference other objects **by nam
 | `Proposed` | `Extension` | `MaxLength` | Result |
 |---|---|---|---|
 | `Invoice 1001/2026: Müller & Co` | `pdf` | 100 | `Invoice 1001_2026_ Müller & Co.pdf` |
-| ` ..v1.2 notes . ` | `md` | 100 | `v1.2 notes.md` |
-| `` (empty) | `pdf` | 100 | `document.pdf` |
+| `' ..v1.2 notes . '` | `md` | 100 | `v1.2 notes.md` |
+| (empty) | `pdf` | 100 | `document.pdf` |
 | 300 letters | `pdf` | 100 | the first 96 letters + `.pdf` |
 
 ## What the tests check

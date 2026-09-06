@@ -34,7 +34,7 @@ procedure Fetch(RequestUri: Text; HttpClientHandler: Interface "Http Client Hand
 
 **1. `OrdersByCustomerUrl`** returns the endpoint with a single query option, `$filter`, whose value *before* encoding is exactly:
 
-```
+```text
 (CustomerName eq <name>) and (OrderDate ge <from>) and (OrderDate le <to>)
 ```
 
@@ -42,7 +42,7 @@ procedure Fetch(RequestUri: Text; HttpClientHandler: Interface "Http Client Hand
 
 **2. `OpenOrderSearchUrl`** returns the endpoint with two query options in this order — `$filter`, then `$top`. The filter value *before* encoding is exactly:
 
-```
+```text
 (Status eq 'Open') and ((contains(CustomerName,<text>)) or (contains(ExternalDocumentNo,<text>)))
 ```
 

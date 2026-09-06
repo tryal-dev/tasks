@@ -26,7 +26,7 @@ A pair where `TableID = DependsOnTableID` is legal — think of Item Category's 
 
 If at some point no remaining table can legally come next — a circular dependency — `GetImportOrder` must fail with exactly this error message:
 
-```
+```text
 No valid import order exists. Tables that cannot be imported: 50111, 50113, 50115.
 ```
 
