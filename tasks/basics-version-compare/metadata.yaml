@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-version-compare
+sortId: 183
+title: "1.10 Is Newer Than 1.9"
+author: "@Drakonian"
+difficulty: easy
+topic: basics
+tags:
+  - version
+  - tryfunction
+  - text
+  - comparison
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Text compares character by character, so '1' < '9' settles 1.10.0 against 1.9.5 before the second digit is ever read. Parse both sides into `Version` values and let the type compare them as numbers — but only after both carry all four parts."
+  - "`Version.Create('2.0')` is not equal to `Version.Create('2.0.0')`: the absent Build and Revision read back as -1, and `ToText()` prints 2.0 again. Read the four parts, replace anything below 0 with 0, and rebuild with `Version.Create(Major, Minor, Build, Revision)` — that value's `ToText()` is the normalized text, and two rebuilt values compare correctly."
+  - "`Version.Create(Text)` raises on 1.9.5-beta. Put the Create (after `Trim()` and dropping a leading v/V) inside a `[TryFunction]` local procedure that hands the rebuilt version out through a `var` parameter, and call it as `if not TryParse(Input, Parsed) then exit('')` — a try function only catches when its Boolean result is used."
+
+allowedDependencies:
+  - "Base Application"

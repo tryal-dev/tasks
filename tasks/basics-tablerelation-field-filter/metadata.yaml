@@ -1,0 +1,26 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-tablerelation-field-filter
+sortId: 191
+title: "Only This Item's Variants"
+author: "@Drakonian"
+difficulty: easy
+topic: basics
+
+tags:
+  - table
+  - table-extension
+  - table-relation
+  - validation
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "A `TableRelation` can carry a `where(...)` filter. Each entry compares a field of the related table with either a constant or a field of the record being validated — that second form is what ties a variant to the line's own item."
+  - "The relation on `\"Variant Code\"` points at the `Code` field of `\"Item Variant\"`, not at the table alone — name the field, then filter that table's `\"Item No.\"` by the line's `\"Item No.\"`. The region relation filters `\"Sales Region\"` on `Blocked` against a constant."
+  - "The relation check runs before the field's `OnValidate` trigger and only inside `Validate`. A plain assignment followed by `Modify` never consults it — the tests prove that, so do not add a trigger that re-checks the relation."
+  - "Inside the `OnValidate` trigger of `\"Item No.\"`, `xRec` still holds the previous item. Blank `\"Variant Code\"` only when the incoming value differs from `xRec`'s."
+
+allowedDependencies:
+  - "Base Application"

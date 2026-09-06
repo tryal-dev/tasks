@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-biginteger-bytes
+sortId: 184
+title: "Two Gigabytes Is Too Many"
+author: "@Drakonian"
+difficulty: easy
+topic: basics
+tags:
+  - biginteger
+  - integer
+  - overflow
+  - list
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "An AL Integer is a signed 32-bit number: 2,147,483,647 is its ceiling, and one more byte is a runtime error, not a wrap-around. Trace the type of every variable and every expression the bytes pass through on their way to the BigInteger result — the result type is the last stop, not the first."
+  - "TotalBytes: the accumulator you add each size into must be a BigInteger, not an Integer. A whole Decimal assigns to a BigInteger directly, so the loop body can stay as it is — only one declaration changes."
+  - "QuotaBytes: Integer x Integer is evaluated as an Integer before the result is widened, so 2 x 1,073,741,824 overflows inside the expression. Make one operand a BigInteger before multiplying — copy Gigabytes into a BigInteger variable and multiply that, or write the constant with an L suffix (1073741824L) so the literal itself is a BigInteger."
+
+allowedDependencies:
+  - "Base Application"

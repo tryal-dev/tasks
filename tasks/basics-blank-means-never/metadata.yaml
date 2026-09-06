@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-blank-means-never
+sortId: 182
+title: "The Certificate That Expired Before It Existed"
+author: "@Drakonian"
+difficulty: easy
+topic: basics
+tags:
+  - date
+  - blank-date
+  - table-extension
+  - filtering
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "A blank date is not \"no value\" to the comparison operators. `0D` is smaller than every real date, so `\"Certificate Expiry\" < AsOf` is true for a customer who has no certificate at all, and a running minimum that lets a blank date in can never return anything but blank."
+  - "Decide the blank case before comparing anything: a blank expiry answers IsExpired with false on its own, and inside the loop a blank expiry should be skipped before it ever reaches the comparison with the running minimum."
+  - "Keep a local Date for the running minimum. It starts blank; replace it whenever it is still blank or the current customer's real expiry is smaller — never when the current expiry is blank. Prefer a filter to a loop? Apply it to a copy of the record (`Copy`) so the caller gets its filters back exactly as they were."
+
+allowedDependencies:
+  - "Base Application"

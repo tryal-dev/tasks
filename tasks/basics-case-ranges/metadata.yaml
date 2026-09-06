@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-case-ranges
+sortId: 181
+title: "Ranges, Not If-Chains"
+author: "@Drakonian"
+difficulty: easy
+topic: basics
+tags:
+  - case
+  - ranges
+  - code
+  - control-statements
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "A `case` arm can hold a single value, a comma-separated list of values, or an inclusive range written `low..high`. The `else` arm runs when no other arm matched — that is where a score outside every band and a postcode on neither list belong."
+  - "`ShippingZone` never returns 1 or 2 because its value sets are lowercase. A `Code` parameter arrives uppercased (`ec1` is already `EC1` inside the procedure), but the literals in a `case` whose expression is a `Code` variable are compared exactly as written — they are not converted. Write every value set in uppercase."
+  - "`Grade` is one `case Score of` with five range arms — 90 to 100, 75 to 89, 60 to 74, 40 to 59, 0 to 39 — each exiting its letter, plus an `else` that exits Invalid. The starter's if-chain only ever checks lower bounds, so nothing stops 101 from being an A."
+
+allowedDependencies:
+  - "Base Application"

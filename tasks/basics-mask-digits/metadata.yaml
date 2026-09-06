@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-mask-digits
+sortId: 180
+title: "Mask the Card Number"
+author: "@Drakonian"
+difficulty: easy
+topic: basics
+tags:
+  - text
+  - char
+  - foreach
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Count before you mask: once you know how many digits the input holds, the number of digits to hide is that total minus four. When it is zero or less, the input comes back untouched; otherwise one pass from the start masks digits until that quota is used up, and every digit after that is one of the last four."
+  - "A Text is indexed like an array: Input[i] reads the character at position i as a Char, and Masked[i] := '*' overwrites it in place for positions 1 to StrLen(Masked); position StrLen(Masked) + 1 appends one character, and anything beyond that raises a run-time error. The simplest approach is to copy the input into a variable first and overwrite that copy in place - the result has the same length as the input, so every position you need already exists."
+  - "The in operator tests a Char against a range: Ch in ['0'..'9'] is true for exactly the ten digits. For DigitCount, foreach Ch in Input walks the text one Char at a time, so the whole procedure is a foreach, an if and a counter."
+
+allowedDependencies:
+  - "Base Application"

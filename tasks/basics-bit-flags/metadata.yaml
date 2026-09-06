@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-bit-flags
+sortId: 185
+title: "Five Switches in One Integer"
+author: "@Drakonian"
+difficulty: easy
+topic: basics
+tags:
+  - integer
+  - div
+  - mod
+  - bit-flags
+  - list
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Every flag is a power of two, so a preference value is the sum of its set flags: 9 is 8 + 1, Post and Email. Whether one flag is part of that sum is a question about integer division — look at what `Value div Bit` leaves you with, and at whether that quotient is odd or even."
+  - "Dividing by the flag with `div` throws away every smaller flag and moves the flag you are asking about into the ones position; `mod 2` on that quotient then reads it back as 0 or 1. Every larger flag doubles away into the even part of the quotient, so it never disturbs the answer."
+  - "With HasFlag in place, SetFlag is `add the flag, but only when HasFlag says it is missing`, and ClearFlag is the mirror image with a subtraction. For Channels, walk the four channel flags 1, 2, 4, 8 in that order and collect the names of the set ones; when HasFlag(Value, 16) is true, insert each name at index 1 instead of appending it and the list comes out reversed by itself. Put the range check somewhere all four procedures pass through."
+
+allowedDependencies:
+  - "Base Application"

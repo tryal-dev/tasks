@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-relation-field-length
+sortId: 190
+title: "The Relation That Overflows"
+author: "@Drakonian"
+difficulty: easy
+topic: basics
+tags:
+  - table
+  - table-relation
+  - code
+  - field-length
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Read the error message: the string is 20 characters long and the field allows 10. The parameter of AddNote is Code[20] — the table field it lands in is not."
+  - "A field that relates to another table's primary key must be declared with exactly that key's length. Customer.\"No.\" is Code[20] — anything narrower overflows at run time, anything wider lets in numbers the relation can never resolve. LinterCop rule LC0076 reports the mismatch at compile time."
+  - "The fix is one number in the table declaration: \"Customer No.\" becomes Code[20]. Leave TableRelation = Customer and the Validate call in AddNote as they are — the tests check both, and shortening the number inside AddNote would store a customer number that no customer has."
+
+allowedDependencies:
+  - "Base Application"

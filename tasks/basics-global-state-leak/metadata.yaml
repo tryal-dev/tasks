@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-global-state-leak
+sortId: 186
+title: "The Total That Kept Growing"
+author: "@Drakonian"
+difficulty: easy
+topic: basics
+tags:
+  - codeunit
+  - variables
+  - scope
+  - list
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Look at where `RunningTotal` is declared: in the codeunit's own `var` section, above the procedure. A variable declared there belongs to the codeunit instance and keeps its value from one call to the next — the tests declare one `Codeunit \"Line Totaler\"` variable and call `Total` on it twice, so the second call starts from the first call's total."
+  - "A variable declared inside the procedure — in the `var` section between the procedure header and its `begin` — starts at 0 on every call and is gone when the call returns. Accumulate into a local instead of the global and there is nothing left to leak."
+  - "If you would rather keep the global, reset it with `Clear(RunningTotal)` (or assign 0) as the first statement of `Total`, before the loop. A reset placed after `exit(...)` never runs — `exit` leaves the procedure immediately."
+
+allowedDependencies:
+  - "Base Application"

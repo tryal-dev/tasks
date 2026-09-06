@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-composite-key-get
+sortId: 189
+title: "The Key Has Two Parts"
+author: "@Drakonian"
+difficulty: easy
+topic: basics
+tags:
+  - get
+  - primary-key
+  - item-variant
+  - record
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Read the error the starter produces: it lists the identification fields with the values that were searched for. One of them holds a value you never meant for it, and the other is blank."
+  - "`Record.Get` takes one value per primary-key field, in the order the key declares them, and treats every value you leave out as blank. The Item Variant primary key is `\"Item No.\"` followed by `Code` — two values, item first."
+  - "Called as a bare statement, `Get` raises 'The Item Variant does not exist' when the row is missing. Use its Boolean result in an `if` and return an empty string on the false branch."
+
+allowedDependencies:
+  - "Base Application"

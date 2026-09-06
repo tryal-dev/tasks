@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-seeded-random
+sortId: 187
+title: "A Raffle You Can Replay"
+author: "@Drakonian"
+difficulty: easy
+topic: basics
+tags:
+  - random
+  - randomize
+  - seed
+  - list
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Randomize(Seed) restarts the generator, and every Random call after it continues one reproducible sequence. Call it once at the top of the draw — reseeding before every pick restarts the sequence each time, which is a different (and wrong) draw."
+  - "Random(N) returns a whole number from 1 to N inclusive, never 0, so Random(Pool.Count()) is already a valid 1-based list position. Subtracting 1 lands on index 0 as soon as Random returns 1 (Random(1) always does), and Random(N - 1) can never pick the last entrant in the pool."
+  - "Copy the entrants into a working pool first — a List parameter is the caller's own list, so RemoveAt on it would shrink what they passed in. Then loop while you still need winners and the pool is not empty: Get the entrant at the drawn position, Add it to the winners, RemoveAt that position."
+
+allowedDependencies:
+  - "Base Application"

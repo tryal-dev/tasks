@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-modify-without-get
+sortId: 188
+title: "Change the Phone, Keep the Customer"
+author: "@Drakonian"
+difficulty: easy
+topic: basics
+tags:
+  - record
+  - get
+  - modify
+  - customer
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "A record variable holds nothing until you load a row into it, and Modify never merges: it writes what the variable holds over the stored row. Right now the variable holds a number, a phone, and a blank in every other field."
+  - "Load the customer by its primary key first — Get takes the key value as its argument — then change the phone and write the row back. Every stored value travels with the variable, so only the phone differs."
+  - "A bare Get already raises \"The Customer does not exist…\" for an unknown number, which satisfies the error rule. For your own wording, use its Boolean result: when Get returns false, raise an Error that names the customer number; the success path is where the phone change goes."
+
+allowedDependencies:
+  - "Base Application"
