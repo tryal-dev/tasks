@@ -4,6 +4,7 @@ sortId: 55
 title: "A Change Log for Item Master Data"
 author: "@Drakonian"
 difficulty: easy
+isPro: false
 topic: extensibility
 
 tags:

@@ -4,6 +4,7 @@ sortId: 122
 title: "Unique, Except When Blank"
 author: "@Drakonian"
 difficulty: medium
+isPro: false
 topic: error-handling
 tags:
   - table-triggers

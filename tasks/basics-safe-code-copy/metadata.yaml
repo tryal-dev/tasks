@@ -4,6 +4,7 @@ sortId: 37
 title: "Copy Text Safely into Code Fields"
 author: "@Drakonian"
 difficulty: easy
+isPro: false
 topic: basics
 tags:
   - text

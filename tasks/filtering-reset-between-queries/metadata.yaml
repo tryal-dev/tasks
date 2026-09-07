@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: filtering-reset-between-queries
+sortId: 204
+title: "The Filter That Stayed"
+author: "@Drakonian"
+difficulty: easy
+isPro: false
+topic: filtering
+tags:
+  - reset
+  - setrange
+  - markedonly
+  - sales-header
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "All three procedures work on the one `SalesHeader` variable declared in the codeunit's `var` section. A global record keeps its filters from one call to the next — trace what `CountAllOrders` is really filtering on when it runs right after `CountOpenOrders`."
+  - "`SetRange` on a field replaces only the filter on that field. A filter on a field the current procedure never touches simply stays — and so do the marks and the marked-only view that `CountOrdersForCustomers` leaves behind, which no `SetRange` can remove."
+  - "`Reset` as the first statement of each procedure puts the record back to its pristine state: no filters, no marks, no marked-only view, primary key. Alternatively, declare the record as a local variable of each procedure — a local starts clean on every call."
+
+allowedDependencies:
+  - "Base Application"

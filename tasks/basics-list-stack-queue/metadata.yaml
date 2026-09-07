@@ -4,6 +4,7 @@ sortId: 28
 title: "A Stack and a Queue on One List"
 author: "@Drakonian"
 difficulty: easy
+isPro: false
 topic: basics
 tags:
   - list

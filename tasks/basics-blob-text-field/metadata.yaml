@@ -1,0 +1,26 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-blob-text-field
+sortId: 196
+title: "Bigger Than 2048"
+author: "@Drakonian"
+difficulty: easy
+isPro: false
+topic: basics
+tags:
+  - blob
+  - streams
+  - calcfields
+  - text-encoding
+  - table
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "A Blob never arrives with its row: after `Get` the field is empty until you `CalcFields` it, and that goes for `HasInstructions` as much as for `GetInstructions`. On the way in, the stream changes only your record variable — the table sees nothing until `Modify`."
+  - "`CreateOutStream` and `CreateInStream` both default to MSDos encoding, which has no room for an em dash, a `ł` or a `€`. Pass `TextEncoding::UTF8` on both sides — the tests write and read the Blob as UTF-8."
+  - "`ReadText` stops at the first line ending; `Read` into a `Text` variable, with no length given, reads a stream written by `WriteText` to its end. For an empty text, `Clear` the Blob field before `Modify` instead of writing zero bytes into it."
+
+allowedDependencies:
+  - "Base Application"

@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-currency-convert
+sortId: 199
+title: "Let the Base App Convert"
+author: "@Drakonian"
+difficulty: easy
+isPro: false
+topic: basics
+tags:
+  - currency
+  - exchange-rate
+  - rounding
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Posting never filters the Currency Exchange Rate table by hand. The table itself knows how to find the row in force on a date and how to apply it — look at its public procedures before writing a SetRange, and notice that its lookup already raises an error when no row has started yet."
+  - "`ExchangeRate(Date, CurrencyCode)` returns the currency factor for that date: Exchange Rate Amount divided by Relational Exch. Rate Amount, so 1 EUR = 7.45 LCY gives 1 / 7.45. `ExchangeAmtFCYToLCY(Date, CurrencyCode, Amount, Factor)` then divides the amount by the factor you hand it — it does not look the factor up itself, and a factor of 0 divides by zero."
+  - "The converted amount is in LCY, so round it to General Ledger Setup's Amount Rounding Precision, not to the foreign currency's. `Currency.Initialize` with a blank code copies that setup value into the record's Amount Rounding Precision; plain `Round` without a precision argument reads the same field. Nothing of yours is needed for the missing-rate case — just don't catch the table's error."
+
+allowedDependencies:
+  - "Base Application"

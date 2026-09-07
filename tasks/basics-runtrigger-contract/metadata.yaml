@@ -4,6 +4,7 @@ sortId: 36
 title: "Two Insert Paths: The RunTrigger Contract"
 author: "@Drakonian"
 difficulty: easy
+isPro: false
 topic: basics
 tags:
   - table

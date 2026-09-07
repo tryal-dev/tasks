@@ -4,6 +4,7 @@ sortId: 74
 title: "Top 5 Entries by Amount"
 author: "@Drakonian"
 difficulty: easy
+isPro: false
 topic: filtering
 tags:
   - sorting

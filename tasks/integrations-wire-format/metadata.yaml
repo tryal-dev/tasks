@@ -4,6 +4,7 @@ sortId: 127
 title: "Locale-Proof Evaluate and Format"
 author: "@Drakonian"
 difficulty: easy
+isPro: false
 topic: integrations
 tags:
   - format

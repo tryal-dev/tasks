@@ -4,6 +4,7 @@ sortId: 167
 title: "IBAN Verifier"
 author: "@Drakonian"
 difficulty: medium
+isPro: false
 topic: algorithm
 tags:
   - text

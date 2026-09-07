@@ -4,6 +4,7 @@ sortId: 47
 title: "Print in the Customer's Language"
 author: "@Drakonian"
 difficulty: medium
+isPro: false
 topic: basics
 tags:
   - language

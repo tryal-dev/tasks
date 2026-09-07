@@ -4,6 +4,7 @@ sortId: 157
 title: "Qty. per Unit Without the Drift"
 author: "@Drakonian"
 difficulty: easy
+isPro: false
 topic: algorithm
 tags:
   - rounding

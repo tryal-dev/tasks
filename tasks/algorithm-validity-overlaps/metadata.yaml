@@ -4,6 +4,7 @@ sortId: 175
 title: "Conflicting Price List Lines"
 author: "@Drakonian"
 difficulty: medium
+isPro: false
 topic: algorithm
 
 tags:

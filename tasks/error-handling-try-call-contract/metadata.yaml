@@ -4,6 +4,7 @@ sortId: 120
 title: "When Your Try Isn't a Try"
 author: "@Drakonian"
 difficulty: medium
+isPro: false
 topic: error-handling
 tags:
   - tryfunction

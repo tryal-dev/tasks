@@ -4,6 +4,7 @@ sortId: 91
 title: "Stop at the First Bad Line"
 author: "@Drakonian"
 difficulty: medium
+isPro: false
 topic: performance
 tags:
   - find-methods

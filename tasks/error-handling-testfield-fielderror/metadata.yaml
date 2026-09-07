@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: error-handling-testfield-fielderror
+sortId: 193
+title: "Say It Like the Platform"
+author: "@Drakonian"
+difficulty: easy
+isPro: false
+topic: error-handling
+tags:
+  - testfield
+  - fielderror
+  - error
+  - sales-header
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "The platform can already say all three things for you. A record knows its own field captions, table caption and primary key, and the Record data type has methods that raise a field-related error built from them - look through the Record methods whose names contain \"Field\"."
+  - "`Record.TestField(Field)` raises the \"must have a value\" message for a blank field, and the two-argument `TestField(Field, Value)` raises the \"must be equal to ... Current value is ...\" message when the field holds something else. Both take the field itself, not its name, so the caption and the document key come for free."
+  - "For a rule the platform cannot know, `Record.FieldError(Field, Text)` composes `<field caption> <your text> in <table caption> <primary key>.` - compare \"Shipment Date\" against WorkDate() yourself, then pass a Label reading exactly 'must not be in the past' with no trailing period (the platform adds it). Keep the checks in the order Ship-to Code, Status, Shipment Date, and leave the record alone."
+
+allowedDependencies:
+  - "Base Application"

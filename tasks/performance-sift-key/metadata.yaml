@@ -4,6 +4,7 @@ sortId: 96
 title: "Shelf Totals, Straight From the Index"
 author: "@Drakonian"
 difficulty: medium
+isPro: false
 topic: performance
 tags:
   - table

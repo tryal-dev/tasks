@@ -4,6 +4,7 @@ sortId: 77
 title: "Dynamic Filters from Configuration Rows"
 author: "@Drakonian"
 difficulty: medium
+isPro: false
 topic: filtering
 tags:
   - recordref

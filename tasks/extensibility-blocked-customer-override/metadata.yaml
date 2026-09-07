@@ -4,6 +4,7 @@ sortId: 60
 title: "The Cash-on-Delivery Exemption"
 author: "@Drakonian"
 difficulty: medium
+isPro: false
 topic: extensibility
 
 tags:

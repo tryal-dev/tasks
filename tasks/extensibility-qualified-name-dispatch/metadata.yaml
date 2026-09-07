@@ -4,6 +4,7 @@ sortId: 64
 title: "Dispatch by Fully Qualified Name"
 author: "@Drakonian"
 difficulty: medium
+isPro: false
 topic: extensibility
 tags:
   - reflection

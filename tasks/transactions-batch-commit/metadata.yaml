@@ -4,6 +4,7 @@ sortId: 101
 title: "One Poison Record Shouldn't Kill the Batch"
 author: "@Drakonian"
 difficulty: medium
+isPro: false
 topic: transactions
 tags:
   - commit

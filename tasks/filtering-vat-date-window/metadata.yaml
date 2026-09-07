@@ -4,6 +4,7 @@ sortId: 75
 title: "VAT Totals by VAT Date"
 author: "@Drakonian"
 difficulty: easy
+isPro: false
 topic: filtering
 tags:
   - vat

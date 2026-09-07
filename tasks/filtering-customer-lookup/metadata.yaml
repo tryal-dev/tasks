@@ -4,6 +4,7 @@ sortId: 68
 title: "Range, List and Not-Blank Lookups"
 author: "@Drakonian"
 difficulty: easy
+isPro: false
 topic: filtering
 tags:
   - setrange

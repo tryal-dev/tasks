@@ -4,6 +4,7 @@ sortId: 70
 title: "Sum a Filtered Set Correctly"
 author: "@Drakonian"
 difficulty: easy
+isPro: false
 topic: filtering
 tags:
   - findset

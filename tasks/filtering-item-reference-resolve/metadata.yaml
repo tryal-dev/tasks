@@ -4,6 +4,7 @@ sortId: 79
 title: "Resolve Scanned Codes Without a Prompt"
 author: "@Drakonian"
 difficulty: medium
+isPro: false
 topic: filtering
 tags:
   - item-reference

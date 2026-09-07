@@ -4,6 +4,7 @@ sortId: 107
 title: "Take the Deposit First"
 author: "@Drakonian"
 difficulty: medium
+isPro: false
 topic: transactions
 tags:
   - prepayment

@@ -4,6 +4,7 @@ sortId: 69
 title: "Filters That Understand TODAY, WEEK and ME"
 author: "@Drakonian"
 difficulty: easy
+isPro: false
 topic: filtering
 tags:
   - table

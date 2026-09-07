@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: filtering-gl-totaling
+sortId: 206
+title: "What Does the Total Line Total?"
+author: "@Drakonian"
+difficulty: medium
+isPro: false
+topic: filtering
+tags:
+  - setfilter
+  - flowfilter
+  - calcfields
+  - gl-account
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Totaling is not a value to compare against — it is a filter expression, and the Chart of Accounts reads it as one. The Record method that parses expressions turns `TRYAL-T1-1000..TRYAL-T1-1998|TRYAL-T1-2500` into exactly the set of account numbers it describes. Mind the blank case: handing an empty expression to that method removes the filter instead of matching nothing."
+  - "Once the accounts are filtered, narrow them to Account Type = Posting before summing anything. A Total or End-Total account that falls inside the range carries its own totaled figure, so including it counts the same entries twice."
+  - "\"Net Change\" on the G/L Account table is a FlowField wired to the \"Date Filter\" FlowFilter: put the window on the Date Filter, then read Net Change for each posting account in the filtered set and add them up — or sum G/L Entry Amount directly under the same account filter and a Posting Date range."
+
+allowedDependencies:
+  - "Base Application"

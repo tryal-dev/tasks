@@ -4,6 +4,7 @@ sortId: 116
 title: "The Invoice Hold"
 author: "@Drakonian"
 difficulty: easy
+isPro: false
 topic: error-handling
 tags:
   - table-extension

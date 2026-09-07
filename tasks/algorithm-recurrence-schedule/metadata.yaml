@@ -4,6 +4,7 @@ sortId: 172
 title: "Next N Occurrences"
 author: "@Drakonian"
 difficulty: medium
+isPro: false
 topic: algorithm
 tags:
   - dates

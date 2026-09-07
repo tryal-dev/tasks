@@ -4,6 +4,7 @@ sortId: 93
 title: "Sales per Salesperson, Without the Chatter"
 author: "@Drakonian"
 difficulty: medium
+isPro: false
 topic: performance
 tags:
   - query

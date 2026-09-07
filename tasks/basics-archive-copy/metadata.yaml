@@ -4,6 +4,7 @@ sortId: 45
 title: "Archive a Record with TransferFields"
 author: "@Drakonian"
 difficulty: medium
+isPro: false
 topic: basics
 tags:
   - table

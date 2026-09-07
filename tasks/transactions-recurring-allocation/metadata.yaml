@@ -4,6 +4,7 @@ sortId: 108
 title: "The Accrual That Posts Itself"
 author: "@Drakonian"
 difficulty: medium
+isPro: false
 topic: transactions
 tags:
   - recurring-journal

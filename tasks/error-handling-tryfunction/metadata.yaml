@@ -4,6 +4,7 @@ sortId: 121
 title: "Wrap It in a TryFunction"
 author: "@Drakonian"
 difficulty: medium
+isPro: false
 topic: error-handling
 tags:
   - tryfunction

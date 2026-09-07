@@ -4,6 +4,7 @@ sortId: 106
 title: "Ship Now, Invoice Later"
 author: "@Drakonian"
 difficulty: medium
+isPro: false
 topic: transactions
 tags:
   - posting

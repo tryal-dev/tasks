@@ -4,6 +4,7 @@ sortId: 10
 title: "Detect Real Changes Despite SQL DateTime Rounding"
 author: "@Drakonian"
 difficulty: easy
+isPro: false
 topic: basics
 tags:
   - datetime

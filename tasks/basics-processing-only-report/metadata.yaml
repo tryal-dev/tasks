@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-processing-only-report
+sortId: 201
+title: "A Report That Prints Nothing"
+author: "@Drakonian"
+difficulty: medium
+isPro: false
+topic: basics
+tags:
+  - report
+  - processing-only
+  - triggers
+  - flowfield
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "A processing-only report is a report object with `ProcessingOnly = true` and no layout at all; add `UseRequestPage = false` and it runs the moment it is called. The Customer data item does the looping for you — your code lives in its triggers, and inside them the unqualified field names refer to the current customer."
+  - "`OnPreDataItem` runs once before the first record, after the caller's view has been applied, so a `SetRange` there adds to the caller's filters instead of replacing them. `OnAfterGetRecord` runs once per record; `CurrReport.Skip()` drops that record. The FlowField is 0 until you `CalcFields` it."
+  - "Skip when the calculated balance due is not positive; put the flagging in the other branch of that `if`, as the Skip documentation example does: set the field, `Modify()`, and bump a global counter that `GetFlaggedCount` returns. Reset that counter in `OnPreDataItem` so a report variable that is run twice reports only the latest run."
+
+allowedDependencies:
+  - "Base Application"

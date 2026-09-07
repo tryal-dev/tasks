@@ -4,6 +4,7 @@ sortId: 41
 title: "Compose Endpoint URLs with Uri Builder"
 author: "@Drakonian"
 difficulty: easy
+isPro: false
 topic: basics
 
 tags:

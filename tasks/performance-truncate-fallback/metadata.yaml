@@ -4,6 +4,7 @@ sortId: 88
 title: "Wipe It Fast, Empty It Always"
 author: "@Drakonian"
 difficulty: easy
+isPro: false
 topic: performance
 tags:
   - bulk-delete

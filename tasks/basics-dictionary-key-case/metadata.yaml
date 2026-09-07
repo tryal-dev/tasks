@@ -4,6 +4,7 @@ sortId: 11
 title: "abc-1 Is ABC-1"
 author: "@Drakonian"
 difficulty: easy
+isPro: false
 topic: basics
 tags:
   - dictionary

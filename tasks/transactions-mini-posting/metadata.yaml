@@ -4,6 +4,7 @@ sortId: 113
 title: "A Miniature Posting Routine"
 author: "@Drakonian"
 difficulty: hard
+isPro: false
 topic: transactions
 tags:
   - posting

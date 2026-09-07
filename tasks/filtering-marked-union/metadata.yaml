@@ -4,6 +4,7 @@ sortId: 80
 title: "Union of Two Filtered Sets"
 author: "@Drakonian"
 difficulty: medium
+isPro: false
 topic: filtering
 tags:
   - mark

@@ -4,6 +4,7 @@ sortId: 137
 title: "When the API Says No"
 author: "@Drakonian"
 difficulty: medium
+isPro: false
 topic: integrations
 
 tags:

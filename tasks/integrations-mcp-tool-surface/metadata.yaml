@@ -4,6 +4,7 @@ sortId: 133
 title: "Expose the Right MCP Tools"
 author: "@Drakonian"
 difficulty: medium
+isPro: false
 topic: integrations
 tags:
   - mcp

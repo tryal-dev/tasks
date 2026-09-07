@@ -4,6 +4,7 @@ sortId: 63
 title: "Override Behavior with an IsHandled Event"
 author: "@Drakonian"
 difficulty: medium
+isPro: false
 topic: extensibility
 
 tags:

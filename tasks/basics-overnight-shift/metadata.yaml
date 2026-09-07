@@ -4,6 +4,7 @@ sortId: 30
 title: "The Night Shift Bug"
 author: "@Drakonian"
 difficulty: easy
+isPro: false
 topic: basics
 tags:
   - time

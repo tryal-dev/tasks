@@ -4,6 +4,7 @@ sortId: 20
 title: "Make a Proportional Thumbnail"
 author: "@Drakonian"
 difficulty: easy
+isPro: false
 topic: basics
 tags:
   - image

@@ -4,6 +4,7 @@ sortId: 126
 title: "A Module Secret Vault"
 author: "@Drakonian"
 difficulty: easy
+isPro: false
 topic: integrations
 tags:
   - isolated-storage

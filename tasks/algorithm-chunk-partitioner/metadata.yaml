@@ -4,6 +4,7 @@ sortId: 147
 title: "Balanced Chunks"
 author: "@Drakonian"
 difficulty: easy
+isPro: false
 topic: algorithm
 
 tags:

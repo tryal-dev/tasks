@@ -4,6 +4,7 @@ sortId: 131
 title: "Import an Order from JSON"
 author: "@Drakonian"
 difficulty: medium
+isPro: false
 topic: integrations
 tags:
   - json

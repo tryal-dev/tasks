@@ -4,6 +4,7 @@ sortId: 103
 title: "Document Lifecycle: Open, Released, Posted"
 author: "@Drakonian"
 difficulty: medium
+isPro: false
 topic: transactions
 tags:
   - status

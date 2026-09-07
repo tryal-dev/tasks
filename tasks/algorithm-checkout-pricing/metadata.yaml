@@ -4,6 +4,7 @@ sortId: 161
 title: "Supermarket Checkout"
 author: "@Drakonian"
 difficulty: medium
+isPro: false
 topic: algorithm
 tags:
   - pricing

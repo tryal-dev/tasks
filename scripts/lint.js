@@ -180,6 +180,11 @@ function lintTask(taskId, validate, topics, sortIds, solutionPolicy) {
       error(taskId, 'metadata.yaml: executionTier "compile_only" is not accepted in this catalog for now — author the task as full_execution with grading tests (see CONTRIBUTING.md)');
     }
 
+    // Repo policy: this catalog carries free tasks only.
+    if (meta.isPro === true) {
+      error(taskId, 'metadata.yaml: isPro must be false — this catalog carries free tasks only (see CONTRIBUTING.md)');
+    }
+
     if (meta.id !== undefined && meta.id !== taskId) {
       error(taskId, `metadata.yaml: id "${meta.id}" does not match the directory name (the directory name IS the task id)`);
     }
@@ -330,6 +335,9 @@ function lintTemplates(validate, topics, sortIds, solutionPolicy) {
     }
     if (meta.executionTier !== name) {
       warn(label, `executionTier "${meta.executionTier}" does not match the template name`);
+    }
+    if (meta.isPro === true) {
+      error(label, 'metadata.yaml: isPro must be false — this catalog carries free tasks only');
     }
     if (!isFile(path.join(tplDir, 'task.md'))) error(label, 'task.md is missing');
     if (!isDir(path.join(tplDir, 'starter'))) {

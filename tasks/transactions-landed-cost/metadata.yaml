@@ -4,6 +4,7 @@ sortId: 105
 title: "Landed Cost: Spread the Freight Across the Receipts"
 author: "@Drakonian"
 difficulty: medium
+isPro: false
 topic: transactions
 tags:
   - item-charge

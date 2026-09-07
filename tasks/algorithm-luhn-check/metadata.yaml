@@ -4,6 +4,7 @@ sortId: 153
 title: "Validate with Luhn"
 author: "@Drakonian"
 difficulty: easy
+isPro: false
 topic: algorithm
 tags:
   - text

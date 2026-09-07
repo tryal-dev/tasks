@@ -4,6 +4,7 @@ sortId: 111
 title: "Undo the Receipt, Prove the Reversal"
 author: "@Drakonian"
 difficulty: medium
+isPro: false
 topic: transactions
 tags:
   - purchase-receipt

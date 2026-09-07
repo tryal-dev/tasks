@@ -4,6 +4,7 @@ sortId: 21
 title: "The Next Serial Number"
 author: "@Drakonian"
 difficulty: easy
+isPro: false
 topic: basics
 tags:
   - incstr

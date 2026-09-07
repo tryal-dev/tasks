@@ -4,6 +4,7 @@ sortId: 1
 title: "Show the Customer Custom Field on the Card"
 author: "@Drakonian"
 difficulty: easy
+isPro: false
 topic: basics
 tags:
   - page-extension

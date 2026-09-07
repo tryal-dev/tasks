@@ -4,6 +4,7 @@ sortId: 52
 title: "Copy a Record into a Table Whose Field Numbers Disagree"
 author: "@Drakonian"
 difficulty: medium
+isPro: false
 topic: basics
 tags:
   - table

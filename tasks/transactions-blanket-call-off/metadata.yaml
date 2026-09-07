@@ -4,6 +4,7 @@ sortId: 102
 title: "Call Off the Blanket Order"
 author: "@Drakonian"
 difficulty: medium
+isPro: false
 topic: transactions
 tags:
   - blanket-order

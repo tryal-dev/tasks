@@ -4,6 +4,7 @@ sortId: 76
 title: "Search Across Columns"
 author: "@Drakonian"
 difficulty: medium
+isPro: false
 topic: filtering
 tags:
   - setfilter

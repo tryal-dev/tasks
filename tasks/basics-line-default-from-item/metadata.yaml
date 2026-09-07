@@ -4,6 +4,7 @@ sortId: 27
 title: "Default the Line from the Item Card"
 author: "@Drakonian"
 difficulty: easy
+isPro: false
 topic: basics
 tags:
   - table-extension

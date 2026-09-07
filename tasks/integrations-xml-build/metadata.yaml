@@ -4,6 +4,7 @@ sortId: 140
 title: "Generate an XML Document"
 author: "@Drakonian"
 difficulty: medium
+isPro: false
 topic: integrations
 tags:
   - xml

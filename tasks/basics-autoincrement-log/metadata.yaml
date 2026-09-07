@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-autoincrement-log
+sortId: 195
+title: "The Entry No. You Don't Assign"
+author: "@Drakonian"
+difficulty: easy
+isPro: false
+topic: basics
+tags:
+  - autoincrement
+  - table
+  - insert
+  - istemporary
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "The database can do the numbering for you: one property on the \"Entry No.\" field turns it into a self-numbering column, and the assigned number is sitting in your record variable the moment Insert returns. Look for AutoIncrement among the table field properties."
+  - "Insert must see 0 in \"Entry No.\" — a non-zero value is written as given and the numbering is skipped. Init() leaves primary-key fields alone, so a variable still positioned on the previous entry carries that number into the next Insert; set \"Entry No.\" to 0 yourself before every Insert, and read it back afterwards."
+  - "Record.IsTemporary() is true for an in-memory buffer, where the property does nothing. Check it first and stop with Error(...) whose text contains 'must not be temporary'; only then Init, zero the key, copy the message, Insert, and exit with the record's \"Entry No.\"."
+
+allowedDependencies:
+  - "Base Application"

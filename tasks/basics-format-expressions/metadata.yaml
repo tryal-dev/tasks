@@ -4,6 +4,7 @@ sortId: 17
 title: "Five Faces of One Date"
 author: "@Drakonian"
 difficulty: easy
+isPro: false
 topic: basics
 tags:
   - format

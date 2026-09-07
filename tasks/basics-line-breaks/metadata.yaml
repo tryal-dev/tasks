@@ -4,6 +4,7 @@ sortId: 26
 title: '\n Is Not a Newline'
 author: "@Drakonian"
 difficulty: easy
+isPro: false
 topic: basics
 tags:
   - text

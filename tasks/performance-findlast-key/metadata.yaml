@@ -4,6 +4,7 @@ sortId: 87
 title: "Latest Entry, One Read"
 author: "@Drakonian"
 difficulty: easy
+isPro: false
 topic: performance
 tags:
   - findlast

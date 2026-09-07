@@ -4,6 +4,7 @@ sortId: 19
 title: "Hello, World!"
 author: "@Drakonian"
 difficulty: easy
+isPro: false
 topic: basics
 tags:
   - text

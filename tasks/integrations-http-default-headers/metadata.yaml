@@ -4,6 +4,7 @@ sortId: 125
 title: "Default Headers and the Content-Type Gotcha"
 author: "@Drakonian"
 difficulty: easy
+isPro: false
 topic: integrations
 
 tags:

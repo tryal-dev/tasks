@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: filtering-filters-that-lie
+sortId: 192
+title: "Two Filters That Compile and Lie"
+author: "@Drakonian"
+difficulty: easy
+isPro: false
+topic: filtering
+tags:
+  - setrange
+  - setfilter
+  - customer
+  - debugging
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Nothing crashes, so trace each call by hand instead: SetFilter is handed an empty string, SetRange is handed a string with two dots in it. For each, ask what the platform receives and what it does with it. The Remarks on the SetFilter reference page answer the first question outright."
+  - "SetFilter parses its second argument as a filter expression, and an empty expression means 'no filter' — the call quietly removes any filter on the field instead of matching blank. The other filtering method on Record takes plain values, never expressions, and a blank value is a perfectly good value to match."
+  - "SetRange never parses anything: whatever it is handed is matched literally, so FromNo + '..' + ToNo looks for a customer whose number contains two dots (the community LinterCop analyzer flags exactly this as LC0008). The same method has an optional third parameter — a from-value and a to-value — and that overload is the inclusive range you meant."
+
+allowedDependencies:
+  - "Base Application"

@@ -4,6 +4,7 @@ sortId: 97
 title: "Distinct Values Without a Query"
 author: "@Drakonian"
 difficulty: medium
+isPro: false
 topic: performance
 tags:
   - table

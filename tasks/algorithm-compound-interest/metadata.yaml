@@ -5,6 +5,7 @@ sortId: 148
 title: "Math Without an Operator"
 author: "@Drakonian"
 difficulty: easy
+isPro: false
 topic: algorithm
 
 tags:

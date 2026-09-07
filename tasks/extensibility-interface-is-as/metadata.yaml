@@ -1,0 +1,26 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: extensibility-interface-is-as
+sortId: 203
+title: "Does This Carrier Track?"
+author: "@Drakonian"
+difficulty: medium
+isPro: false
+topic: extensibility
+tags:
+  - interface
+  - enum
+  - type-testing
+  - casting
+  - implements
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - 'The enum `Carrier` implements only `"IShipping Carrier"`, so the compiler refuses to assign a `Carrier` value to a variable of type `Interface ITrackable` — and a `case` over the built-in values cannot know about carriers other extensions add. Start from what you can always get: an `Interface "IShipping Carrier"` variable holding the carrier''s codeunit. What you need is a question you can ask that variable at run time.'
+  - 'Since Business Central 2024 release wave 2 an interface variable can be asked whether the codeunit behind it also implements another interface, and it can be converted to that interface when it does. The conversion on its own is not safe: applied to a codeunit that does not implement the target interface it raises a runtime error — which is exactly what the tests provoke on Ground Post, and what your `TrackingLink` must never let happen.'
+  - 'The two operators are `is` and `as`: `ShippingCarrier is ITrackable` answers the question (that is your `IsTrackable`), and `(ShippingCarrier as ITrackable).TrackingUrl(TrackingNo)` performs the call — guard it with the `is` test and return an empty text otherwise. Express Air still needs `implements "IShipping Carrier", ITrackable` and its own `TrackingUrl` for any of this to find something.'
+
+allowedDependencies:
+  - "Base Application"

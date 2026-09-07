@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-extended-text-lines
+sortId: 202
+title: "The Words That Follow the Item"
+author: "@Drakonian"
+difficulty: medium
+isPro: false
+topic: basics
+tags:
+  - extended-text
+  - sales-line
+  - run-trigger
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "The Insert Ext. Text action on the order page does not work out which text applies by itself — it hands the line to codeunit \"Transfer Extended Text\" (378). That codeunit offers two procedures for sales lines: one that checks whether any text applies and collects it, and one that inserts what was collected. The second does nothing unless the first ran and said yes."
+  - "The check wants a stored line: it reads the line's Document No. and Line No. to find the order (language, document date) and to number and attach the text lines. Pass true as its second parameter — that is what tells it to ignore the item card's Automatic Ext. Texts toggle — and call the insert procedure with the same line only when the check returns true."
+  - "Delete() and Delete(true) differ in exactly one thing: whether the sales line's OnDelete trigger runs. The cascade to the lines carrying the item line's Line No. in \"Attached to Line No.\" lives in that trigger — so Get the item line, delete it with the trigger, and leave the text lines to it."
+
+allowedDependencies:
+  - "Base Application"

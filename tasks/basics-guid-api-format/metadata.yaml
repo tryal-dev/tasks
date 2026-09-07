@@ -4,6 +4,7 @@ sortId: 18
 title: "Braces Off, Lowercase On"
 author: "@Drakonian"
 difficulty: easy
+isPro: false
 topic: basics
 tags:
   - guid

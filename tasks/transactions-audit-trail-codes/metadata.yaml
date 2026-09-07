@@ -4,6 +4,7 @@ sortId: 100
 title: "Source Code on Every Entry"
 author: "@Drakonian"
 difficulty: medium
+isPro: false
 topic: transactions
 tags:
   - audit-trail

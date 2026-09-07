@@ -1,0 +1,26 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-tableno-codeunit
+sortId: 200
+title: "Rec, Meet OnRun"
+author: "@Drakonian"
+difficulty: medium
+isPro: false
+topic: basics
+tags:
+  - codeunit
+  - tableno
+  - onrun
+  - rec
+  - by-reference
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "A codeunit's `TableNo` property names the table it is run with. Once it is set, `OnRun` silently gains a `var` record parameter of that table called `Rec` — and a caller that passes a record from any other table is refused at run time."
+  - "`Rec` inside `OnRun` is the caller's own variable, passed by reference. Hand it straight to `Apply`; copying it into a local record first, or taking the record by value in `Apply`, cuts the link and the caller sees none of the changes."
+  - "`Apply` writes the note as the text `Welcome aboard, `, the customer's `Name` and `!`, and touches `\"Payment Terms Code\"` only when it is blank. Do not call `Modify` anywhere, `OnRun` included — the tests read the row back from the database after both entry points and expect it unchanged."
+
+allowedDependencies:
+  - "Base Application"

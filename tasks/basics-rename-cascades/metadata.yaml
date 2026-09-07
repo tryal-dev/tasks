@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-rename-cascades
+sortId: 194
+title: "Rename Follows the Relation"
+author: "@Drakonian"
+difficulty: easy
+isPro: false
+topic: basics
+tags:
+  - table
+  - table-relation
+  - rename
+  - customer
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Two fields hold the same customer number, yet only one of them is supposed to move with the customer. What separates them is a single property in the table declaration, not a line of code anywhere."
+  - "TableRelation = Customer on \"Customer No.\" wires three things at once: the lookup, the Validate check that refuses a number no customer carries, and the rename cascade in which the platform rewrites every related field when the primary key changes. \"Legacy Customer No.\" stays a plain Code[20] so the same cascade passes it by."
+  - "AddNote: Init the record, Validate \"Customer No.\" with the number (assigning it directly skips the relation check), copy the number into \"Legacy Customer No.\", set Note, Insert. NotesFor: SetRange on \"Customer No.\" and return Count. If the rename tests still fail after that, the relation on \"Customer No.\" is missing."
+
+allowedDependencies:
+  - "Base Application"

@@ -4,6 +4,7 @@ sortId: 56
 title: "Stamp the Posted Invoice"
 author: "@Drakonian"
 difficulty: easy
+isPro: false
 topic: extensibility
 
 tags:

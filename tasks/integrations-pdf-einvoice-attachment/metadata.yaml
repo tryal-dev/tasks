@@ -4,6 +4,7 @@ sortId: 135
 title: "The Invoice Inside the PDF"
 author: "@Drakonian"
 difficulty: medium
+isPro: false
 topic: integrations
 
 tags:

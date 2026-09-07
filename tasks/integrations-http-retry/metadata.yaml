@@ -4,6 +4,7 @@ sortId: 144
 title: "Retry with Backoff"
 author: "@Drakonian"
 difficulty: hard
+isPro: false
 topic: integrations
 tags:
   - httpclient

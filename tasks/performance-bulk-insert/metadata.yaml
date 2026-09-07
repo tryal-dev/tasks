@@ -4,6 +4,7 @@ sortId: 89
 title: "Insert the Batch, Don't Interrogate It"
 author: "@Drakonian"
 difficulty: medium
+isPro: false
 topic: performance
 tags:
   - bulk-insert

@@ -4,6 +4,7 @@ sortId: 114
 title: "No Deleting Released Orders"
 author: "@Drakonian"
 difficulty: easy
+isPro: false
 topic: error-handling
 tags:
   - event-subscriber

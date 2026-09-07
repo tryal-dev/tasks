@@ -4,6 +4,7 @@ sortId: 73
 title: "On Hand, Per Location"
 author: "@Drakonian"
 difficulty: easy
+isPro: false
 topic: filtering
 tags:
   - setrange

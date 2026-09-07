@@ -5,6 +5,7 @@ sortId: 178
 title: "FIFO Cost of a Shipment"
 author: "@Drakonian"
 difficulty: hard
+isPro: false
 topic: algorithm
 tags:
   - fifo

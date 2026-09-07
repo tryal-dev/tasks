@@ -4,6 +4,7 @@ sortId: 159
 title: "Master Data Gatekeeper"
 author: "@Drakonian"
 difficulty: medium
+isPro: false
 topic: algorithm
 tags:
   - text

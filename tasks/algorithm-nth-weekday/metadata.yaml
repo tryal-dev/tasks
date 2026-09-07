@@ -4,6 +4,7 @@ sortId: 154
 title: "Second Tuesday Payment Run"
 author: "@Drakonian"
 difficulty: easy
+isPro: false
 topic: algorithm
 tags:
   - dates

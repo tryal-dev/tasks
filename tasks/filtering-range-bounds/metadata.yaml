@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: filtering-range-bounds
+sortId: 205
+title: "Is That Filter a Range?"
+author: "@Drakonian"
+difficulty: medium
+isPro: false
+topic: filtering
+tags:
+  - getfilter
+  - getrangemin
+  - date-filter
+  - cust-ledger-entry
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Two questions come before any date maths. Is there a filter on \"Posting Date\" at all? A record-wide has-a-filter check answers a different question — the field's own GetFilter text is empty exactly when rule 1 applies. And if there is one, is it a single range? Only then are there two bounds to read."
+  - "The platform hands you a range's lower and upper bound directly, and refuses with a runtime error when the filter is not a single range — the documentation's own example is a | list. There is no companion method that asks the question politely: the refusal itself is your answer, provided you can catch it instead of letting it escape."
+  - "Wrap the two bound reads in a [TryFunction] that hands them back through var parameters. A false result means rule 4: return GetFilter. A true result means a range: equal bounds give on, different bounds give from ... to. Format(SomeDate, 0, 9) renders a date as yyyy-mm-dd."
+
+allowedDependencies:
+  - "Base Application"

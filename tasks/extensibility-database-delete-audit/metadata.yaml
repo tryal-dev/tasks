@@ -4,6 +4,7 @@ sortId: 61
 title: "Audit Every Deleted Document"
 author: "@Drakonian"
 difficulty: medium
+isPro: false
 topic: extensibility
 
 tags:

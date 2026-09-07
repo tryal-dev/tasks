@@ -4,6 +4,7 @@ sortId: 3
 title: "Print the Eight-Line Address Block"
 author: "@Drakonian"
 difficulty: easy
+isPro: false
 topic: basics
 tags:
   - format-address

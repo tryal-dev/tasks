@@ -4,6 +4,7 @@ sortId: 72
 title: "Trace an Order's Fulfilment Across Posted Documents"
 author: "@Drakonian"
 difficulty: easy
+isPro: false
 topic: filtering
 tags:
   - sales

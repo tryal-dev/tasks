@@ -4,6 +4,7 @@ sortId: 117
 title: "Errors Worth Reading"
 author: "@Drakonian"
 difficulty: easy
+isPro: false
 topic: error-handling
 tags:
   - errorinfo

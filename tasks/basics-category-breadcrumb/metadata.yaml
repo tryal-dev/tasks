@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-category-breadcrumb
+sortId: 198
+title: "Where in the Tree Is This Item?"
+author: "@Drakonian"
+difficulty: easy
+isPro: false
+topic: basics
+tags:
+  - item-category
+  - list
+  - while-loop
+  - error
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Start from the item's Item Category Code and keep reading the Item Category record it names, moving to its Parent Category each time until that field is blank. You meet the codes bottom-up, so the path needs them in the opposite order — prepending each code you find (new code, separator, everything so far) leaves the root at the front without a second loop."
+  - "A List of [Code[20]] does double duty: it is the chain you collect and the visited set. Before you follow a parent code, ask the list whether it already Contains that code — if it does, that code is the one to name in the cycle error, and you must stop there. Without this check, the loop in the tests' two-category cycle never ends."
+  - "Use the Boolean return value of Get for the missing-parent rule: `if not ItemCategory.Get(ParentCode) then` is the whole check. Remember the child's code in a separate variable before that Get, because the error needs both codes. Depth is the list's Count, and the root is the element at index Count (lists are 1-based) — or an empty text when the list is empty."
+
+allowedDependencies:
+  - "Base Application"

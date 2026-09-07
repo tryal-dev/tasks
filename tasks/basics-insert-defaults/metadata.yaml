@@ -4,6 +4,7 @@ sortId: 23
 title: "Default Values on Insert"
 author: "@Drakonian"
 difficulty: easy
+isPro: false
 topic: basics
 tags:
   - table-extension

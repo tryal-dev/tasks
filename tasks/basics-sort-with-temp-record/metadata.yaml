@@ -1,0 +1,26 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-sort-with-temp-record
+sortId: 197
+title: "Sort It Like AL Does"
+author: "@Drakonian"
+difficulty: easy
+isPro: false
+topic: basics
+tags:
+  - temporary-table
+  - sorting
+  - keys
+  - dictionary
+  - list
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "A temporary record is read in the order of its current key, so start with the table: declare a key on Score and \"Customer No.\", then select it in the codeunit with SetCurrentKey before you loop. Without it the rows come back in primary-key order — by customer number."
+  - "Ascending(false) reverses every field of the current key, so equal scores would arrive with the highest customer number first. SetAscending takes one field and a direction: give Score the descending direction and leave \"Customer No.\" ascending."
+  - "Declare the buffer as a local variable of RankCustomers so every call starts from an empty buffer — or, if you keep it as a global, Reset and DeleteAll it before inserting. Check FindSet's result with an if: on an empty buffer an unchecked FindSet raises an error instead of just skipping the loop."
+
+allowedDependencies:
+  - "Base Application"

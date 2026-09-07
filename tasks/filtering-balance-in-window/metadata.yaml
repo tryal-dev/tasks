@@ -4,6 +4,7 @@ sortId: 67
 title: "Customer Balance in a Date Window"
 author: "@Drakonian"
 difficulty: easy
+isPro: false
 topic: filtering
 tags:
   - flowfield

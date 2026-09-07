@@ -4,6 +4,7 @@ sortId: 32
 title: "Last Segment, One-Based"
 author: "@Drakonian"
 difficulty: easy
+isPro: false
 topic: basics
 tags:
   - text

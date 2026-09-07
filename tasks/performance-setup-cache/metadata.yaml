@@ -4,6 +4,7 @@ sortId: 95
 title: "Setup Table Done Right"
 author: "@Drakonian"
 difficulty: medium
+isPro: false
 topic: performance
 tags:
   - setup-table

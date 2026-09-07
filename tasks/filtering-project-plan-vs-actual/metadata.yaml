@@ -4,6 +4,7 @@ sortId: 81
 title: "Project Plan vs. Actual per Task"
 author: "@Drakonian"
 difficulty: medium
+isPro: false
 topic: filtering
 tags:
   - projects

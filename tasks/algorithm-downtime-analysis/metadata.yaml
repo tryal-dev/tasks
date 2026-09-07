@@ -4,6 +4,7 @@ sortId: 164
 title: "The Maintenance Window"
 author: "@Drakonian"
 difficulty: medium
+isPro: false
 topic: algorithm
 
 tags:

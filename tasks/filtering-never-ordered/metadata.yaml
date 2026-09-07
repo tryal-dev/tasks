@@ -4,6 +4,7 @@ sortId: 71
 title: "Customers Who Never Ordered"
 author: "@Drakonian"
 difficulty: easy
+isPro: false
 topic: filtering
 tags:
   - isempty

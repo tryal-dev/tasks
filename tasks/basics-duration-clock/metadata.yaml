@@ -4,6 +4,7 @@ sortId: 13
 title: "Elapsed Time as hh:mm:ss"
 author: "@Drakonian"
 difficulty: easy
+isPro: false
 topic: basics
 tags:
   - datetime

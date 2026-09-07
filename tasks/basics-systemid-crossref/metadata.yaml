@@ -4,6 +4,7 @@ sortId: 50
 title: "References That Survive Rename"
 author: "@Drakonian"
 difficulty: medium
+isPro: false
 topic: basics
 tags:
   - table

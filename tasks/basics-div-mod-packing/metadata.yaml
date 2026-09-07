@@ -4,6 +4,7 @@ sortId: 12
 title: "Pallets, Boxes, and Loose Units"
 author: "@Drakonian"
 difficulty: easy
+isPro: false
 topic: basics
 tags:
   - div

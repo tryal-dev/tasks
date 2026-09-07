@@ -4,6 +4,7 @@ sortId: 179
 title: "Gilded Rose, AL Edition"
 author: "@Drakonian"
 difficulty: hard
+isPro: false
 topic: algorithm
 tags:
   - table

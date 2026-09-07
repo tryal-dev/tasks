@@ -4,6 +4,7 @@ sortId: 14
 title: "Map Carrier Wire Codes to an Enum"
 author: "@Drakonian"
 difficulty: easy
+isPro: false
 topic: basics
 tags:
   - enum

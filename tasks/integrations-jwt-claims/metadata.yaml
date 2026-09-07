@@ -4,6 +4,7 @@ sortId: 132
 title: "Read the Token Before You Trust It"
 author: "@Drakonian"
 difficulty: medium
+isPro: false
 topic: integrations
 tags:
   - jwt

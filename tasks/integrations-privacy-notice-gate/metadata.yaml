@@ -4,6 +4,7 @@ sortId: 136
 title: "Don't Call Before They Agree"
 author: "@Drakonian"
 difficulty: medium
+isPro: false
 topic: integrations
 tags:
   - privacy-notice

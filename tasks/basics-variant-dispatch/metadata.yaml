@@ -4,6 +4,7 @@ sortId: 53
 title: "One Procedure, Any Type"
 author: "@Drakonian"
 difficulty: medium
+isPro: false
 topic: basics
 tags:
   - variant

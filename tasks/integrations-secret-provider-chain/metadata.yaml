@@ -4,6 +4,7 @@ sortId: 138
 title: "Credentials Behind an Interface"
 author: "@Drakonian"
 difficulty: medium
+isPro: false
 topic: integrations
 tags:
   - interface

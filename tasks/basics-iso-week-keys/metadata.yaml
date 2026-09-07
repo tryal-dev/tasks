@@ -4,6 +4,7 @@ sortId: 24
 title: "Week 53 of Last Year"
 author: "@Drakonian"
 difficulty: easy
+isPro: false
 topic: basics
 tags:
   - dates

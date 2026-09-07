@@ -4,6 +4,7 @@ sortId: 39
 title: "Read Lines, Not Bytes"
 author: "@Drakonian"
 difficulty: easy
+isPro: false
 topic: basics
 tags:
   - streams

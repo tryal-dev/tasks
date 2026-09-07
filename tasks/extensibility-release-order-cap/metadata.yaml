@@ -4,6 +4,7 @@ sortId: 58
 title: "Enforce a Customer Order Cap at Release"
 author: "@Drakonian"
 difficulty: easy
+isPro: false
 topic: extensibility
 
 tags:

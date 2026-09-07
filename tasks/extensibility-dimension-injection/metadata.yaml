@@ -4,6 +4,7 @@ sortId: 62
 title: "Inject a Project Dimension into Posting"
 author: "@Drakonian"
 difficulty: medium
+isPro: false
 topic: extensibility
 
 tags:

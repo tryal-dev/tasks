@@ -4,6 +4,7 @@ sortId: 99
 title: "Write Back a Record You Read Earlier"
 author: "@Drakonian"
 difficulty: easy
+isPro: false
 topic: transactions
 tags:
   - concurrency

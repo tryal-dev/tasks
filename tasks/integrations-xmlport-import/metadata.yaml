@@ -4,6 +4,7 @@ sortId: 142
 title: "Import an Order Document with an XMLport"
 author: "@Drakonian"
 difficulty: medium
+isPro: false
 topic: integrations
 tags:
   - xmlport

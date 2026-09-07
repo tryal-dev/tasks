@@ -262,6 +262,8 @@ end;
 Full field reference: CONTRIBUTING.md. The ones that bite:
 
 - `executionTier: full_execution` — the only tier this catalog accepts.
+- `isPro: false` — required; this catalog carries free tasks only, so it is
+  never `true` here (the lint rejects it).
 - `sortId` — an integer unique across every TryAL catalog; each catalog owns
   a range (this repo's schema `minimum`/`maximum`). Take the highest existing
   `sortId` + 1. The template's placeholder is deliberately taken, so a fresh

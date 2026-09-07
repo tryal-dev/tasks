@@ -4,6 +4,7 @@ sortId: 51
 title: "Time Zones and Unix Timestamps"
 author: "@Drakonian"
 difficulty: medium
+isPro: false
 topic: basics
 tags:
   - datetime

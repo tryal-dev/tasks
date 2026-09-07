@@ -4,6 +4,7 @@ sortId: 123
 title: "Validate Against the Schema"
 author: "@Drakonian"
 difficulty: medium
+isPro: false
 topic: error-handling
 tags:
   - xml

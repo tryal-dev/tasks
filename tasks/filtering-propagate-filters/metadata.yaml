@@ -4,6 +4,7 @@ sortId: 82
 title: "Pass Filters Along"
 author: "@Drakonian"
 difficulty: medium
+isPro: false
 topic: filtering
 tags:
   - copyfilters

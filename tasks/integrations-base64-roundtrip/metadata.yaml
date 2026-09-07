@@ -4,6 +4,7 @@ sortId: 124
 title: "Base64 In, Base64 Out"
 author: "@Drakonian"
 difficulty: easy
+isPro: false
 topic: integrations
 tags:
   - base64

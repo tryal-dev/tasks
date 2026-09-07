@@ -4,6 +4,7 @@ sortId: 152
 title: "Map Dates to Fiscal Periods"
 author: "@Drakonian"
 difficulty: easy
+isPro: false
 topic: algorithm
 tags:
   - dates

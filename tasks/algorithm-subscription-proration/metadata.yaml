@@ -4,6 +4,7 @@ sortId: 156
 title: "Mid-Period Plan Change"
 author: "@Drakonian"
 difficulty: easy
+isPro: false
 topic: algorithm
 tags:
   - date

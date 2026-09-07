@@ -5,6 +5,7 @@ sortId: 174
 title: "Statement with Running Balance"
 author: "@Drakonian"
 difficulty: medium
+isPro: false
 topic: algorithm
 
 tags:

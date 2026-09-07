@@ -4,6 +4,7 @@ sortId: 48
 title: "A Lab Batch Header That Calculates Itself"
 author: "@Drakonian"
 difficulty: medium
+isPro: false
 topic: basics
 tags:
   - flowfield

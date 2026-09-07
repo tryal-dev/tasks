@@ -4,6 +4,7 @@ sortId: 85
 title: "Total Without a Loop"
 author: "@Drakonian"
 difficulty: easy
+isPro: false
 topic: performance
 tags:
   - ledger-entries

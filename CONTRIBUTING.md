@@ -55,8 +55,8 @@ zero to a merged PR.
    ```
 
    The lint checks the format contract: schema-valid metadata, id/dirname
-   match, unique sortId, required files, submission limits, valid topic. It
-   reports *all* findings at once.
+   match, unique sortId, required files, submission limits, valid topic,
+   `isPro: false`. It reports *all* findings at once.
 
    CI also **compiles** your starter and tests with the real AL compiler
    against the platform's pinned BC symbols
@@ -199,6 +199,7 @@ live validation in VS Code (with the YAML extension) as you type.
 | `title` | string | yes | Display title. |
 | `author` | string | no | Optional display credit, e.g. `"@your-github-handle"`. Courtesy only — legal attribution is git history + the repo [LICENSE](LICENSE). |
 | `difficulty` | `easy \| medium \| hard` | yes | |
+| `isPro` | boolean | yes | Whether the task is part of TryAL Pro. Always `false` here — this catalog carries free tasks only (lint-enforced). |
 | `topic` | string | yes | Must exist in [`topics.yaml`](topics.yaml). |
 | `tags` | string[] | no | Free-form facets for filtering. |
 | `executionTier` | `compile_only \| full_execution` | yes | Only `full_execution` is accepted in this catalog for now — see grading semantics above. |

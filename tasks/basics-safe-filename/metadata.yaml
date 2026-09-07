@@ -4,6 +4,7 @@ sortId: 38
 title: "A File Name the OS Accepts"
 author: "@Drakonian"
 difficulty: easy
+isPro: false
 topic: basics
 tags:
   - text

@@ -4,6 +4,7 @@ sortId: 177
 title: "Match the Bank Statement"
 author: "@Drakonian"
 difficulty: hard
+isPro: false
 topic: algorithm
 
 tags:

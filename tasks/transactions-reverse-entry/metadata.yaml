@@ -4,6 +4,7 @@ sortId: 109
 title: "Reverse It, Once"
 author: "@Drakonian"
 difficulty: medium
+isPro: false
 topic: transactions
 tags:
   - reversal

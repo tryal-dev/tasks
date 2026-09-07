@@ -4,6 +4,7 @@ sortId: 176
 title: "Promise a Ship Date"
 author: "@Drakonian"
 difficulty: medium
+isPro: false
 topic: algorithm
 tags:
   - dates

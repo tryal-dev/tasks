@@ -4,6 +4,7 @@ sortId: 189
 title: "The Key Has Two Parts"
 author: "@Drakonian"
 difficulty: easy
+isPro: false
 topic: basics
 tags:
   - get

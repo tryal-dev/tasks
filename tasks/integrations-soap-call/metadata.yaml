@@ -4,6 +4,7 @@ sortId: 145
 title: "Call a SOAP Service (Mocked)"
 author: "@Drakonian"
 difficulty: hard
+isPro: false
 topic: integrations
 tags:
   - soap

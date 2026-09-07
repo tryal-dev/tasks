@@ -4,6 +4,7 @@ sortId: 104
 title: "Return It at the Cost You Sold It"
 author: "@Drakonian"
 difficulty: medium
+isPro: false
 topic: transactions
 tags:
   - inventory-costing

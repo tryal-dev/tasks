@@ -16,6 +16,9 @@ title: "Your Task Title"
 # recorded by git history and covered by the repository's MIT license.
 # author: "@your-github-handle"
 difficulty: medium # easy | medium | hard
+# Whether the task is part of TryAL Pro. This catalog carries free tasks
+# only, so it is always false here (lint-enforced).
+isPro: false
 topic: algorithm # must exist in topics.yaml
 
 tags: [] # free-form facets for filtering, e.g. [rounding, vat]
