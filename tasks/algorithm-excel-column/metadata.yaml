@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: algorithm-excel-column
+sortId: 208
+title: "Column AA Comes After Z"
+author: "@Drakonian"
+difficulty: easy
+isPro: false
+topic: algorithm
+tags:
+  - text
+  - char
+  - excel
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Column letters look like a base-26 number, but the digits run A to Z for 1 to 26 and there is no digit for zero. Treating them as an ordinary base-26 number with A standing for 0 makes every multiple of 26 come out wrong — check what your code returns for 26 and 52 before anything else."
+  - "A Char is a number underneath: adding an Integer offset to the character 'A' gives you the letter at that offset, and subtracting 'A' from a letter gives the offset back. That is the whole alphabet lookup, in both directions — no 26-entry table needed."
+  - "Index to letters: subtract 1 first, then mod 26 gives the rightmost letter's offset and div 26 what is left to spell; repeat while something is left, building the text from the right. The subtract-1 is what turns 26 into Z instead of A@. Letters to index: uppercase the text once, then for each letter multiply the running result by 26 and add the letter's offset from 'A' plus 1."
+
+allowedDependencies:
+  - "Base Application"

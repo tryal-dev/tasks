@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: algorithm-acronym-vendor-code
+sortId: 209
+title: "Initials Make the Vendor Code"
+author: "@Drakonian"
+difficulty: easy
+isPro: false
+topic: algorithm
+tags:
+  - text
+  - vendor
+  - code-length
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Two phases keep this tidy: break the name into words first, then pick one character per word. The characters that neither split nor count are the trap — an apostrophe belongs to its word (O'Brien is one word with the initial O), and a word like & has no initial at all."
+  - "Classify every character as one of three things: a separator (space or hyphen), a letter or digit, or noise to drop. A word's initial is its first letter or digit, so a leading quote or parenthesis is skipped — and an empty word between two separators must not crash your code. For the number, only an exact match on the Vendor primary key is a collision."
+  - "In AL, Text.Split accepts several separators at once, Text[i] hands you a Char you can test with `in ['A' .. 'Z', 'a' .. 'z', '0' .. '9']`, and returning a 25-character Text from a Code[20] procedure raises a runtime error unless you CopyStr it first. For UniqueVendorNo, loop while Vendor.Get(Candidate) succeeds, bumping a counter and rebuilding the candidate from the base cut to 20 minus the suffix length."
+
+allowedDependencies:
+  - "Base Application"

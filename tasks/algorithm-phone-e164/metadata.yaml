@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: algorithm-phone-e164
+sortId: 210
+title: "One Phone Format for the SMS Gateway"
+author: "@Drakonian"
+difficulty: easy
+isPro: false
+topic: algorithm
+tags:
+  - text
+  - normalization
+  - validation
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Follow the statement's steps in the order given, and settle the shape of the number before you touch the digits: the extension marker, the position of the + and the letter check all look at the text as typed — once the separators are gone, that evidence is gone with them."
+  - "Two questions tell the three shapes apart: does the trimmed text start with +, and does the digit string start with 00? Everything else is national — drop a single leading 0 if there is one and put the default prefix in front. Count the digits of the finished result, not of the input: the country code counts, the dropped trunk zero does not."
+  - "DelChr(S, '=', Which) removes every character listed in Which from S. Called twice it turns into a keep-set: DelChr(S, '=', DelChr(S, '=', '0123456789')) first computes every non-digit character of S, then removes exactly those — leaving the digits. The same trick with the alphabet, compared against the original, tells you whether any letter is present."
+
+allowedDependencies:
+  - "Base Application"

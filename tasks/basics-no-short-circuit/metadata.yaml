@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: basics-no-short-circuit
+sortId: 211
+title: "AL Evaluates Both Sides"
+author: "@Drakonian"
+difficulty: easy
+isPro: false
+topic: basics
+tags:
+  - boolean
+  - operators
+  - if-then
+  - codeunit
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "Walk through `IsOverLimit` with `Qty = 0` by hand. Before `and` can combine its two sides, both sides need a value — and the right side is `Total / Qty`. AL has no short-circuit evaluation: a guard written as the left operand of `and` (or `or`) stops nothing."
+  - "A guard that must keep the second condition from running has to be a statement of its own: an `if` that tests the guard first and evaluates the second condition only inside its `then` branch, or an `if` that exits with `false` right away when the guard fails, so the code below it only runs for the safe case."
+  - "`HasOpenOrder` has the same shape: settle the blank case before `OpenOrderExists` is called, so its `Get` only ever runs for a real customer number. The helper itself stays as it is."
+
+allowedDependencies:
+  - "Base Application"

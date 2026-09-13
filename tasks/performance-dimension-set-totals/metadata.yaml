@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: performance-dimension-set-totals
+sortId: 212
+title: "Totals by a Dimension Nobody Made Global"
+author: "@Drakonian"
+difficulty: medium
+isPro: false
+topic: performance
+tags:
+  - dimensions
+  - dictionary
+  - sql-budget
+
+executionTier: full_execution
+transactionModel: auto_rollback
+companyIsolation: reuse
+
+hints:
+  - "The budget counts round trips, and the graded account's entries spread across more distinct dimension sets than the whole budget allows. Resolving sets one at a time — per entry, or once per distinct set with a memo — can never fit. Turn the question around: instead of asking each entry which value it carries, ask the dimension which sets carry it."
+  - "The `Dimension Set Entry` table is keyed the other way too: filter it on `Dimension Code` and one FindSet hands you every (set ID, value code) pair for that dimension in a single trip — the whole map from set to value, which a Dictionary of [Integer, Code[20]] holds comfortably."
+  - "Then one filtered pass over the account's G/L entries: look each entry's `Dimension Set ID` up in that dictionary (a miss means the set holds no value for the dimension — skip it) and add `Amount` under the value found. Two statements in total; a Query joining the two tables does it in one."
+
+allowedDependencies:
+  - "Base Application"

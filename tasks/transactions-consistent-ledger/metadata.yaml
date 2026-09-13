@@ -1,0 +1,26 @@
+# yaml-language-server: $schema=../../schema/metadata.schema.json
+id: transactions-consistent-ledger
+sortId: 207
+title: "The Ledger That Refuses to Commit"
+author: "@Drakonian"
+difficulty: medium
+isPro: false
+topic: transactions
+tags:
+  - consistency
+  - commit
+  - transaction-boundaries
+  - ledger
+  - double-entry
+
+executionTier: full_execution
+transactionModel: committed
+companyIsolation: fresh
+
+hints:
+  - "Read the refusal tests closely: the single leg must be written and readable before the commit, and the error must come out of `Commit()` itself, not out of your code. An `Error(...)` raised when the ledger does not balance fires too early. What you need is a way to tell the platform that the table is in a state that must not be made permanent yet."
+  - "The Record data type has a method built for exactly this accounting situation: it marks a table as consistent or inconsistent, and the platform refuses to commit any transaction while a table is marked inconsistent — without raising anything at the point you call it. Recompute the ledger's running balance after every leg you write and set the mark from it. That balance belongs to the transaction, not to your codeunit: a global variable starts over with every instance and survives a rollback, so derive it from the table."
+  - "After each `Insert`, total `Amount` over the whole `\"Petty Cash Entry\"` table with `CalcSums` — every committed transaction was balanced, so that total is exactly the running balance of the current one — and call `Consistent(<the total is zero>)` on a record variable of the table. `PostTransfer` guards the amount and posts its two legs through `PostEntry`; the second leg brings the total back to zero and clears the mark. Declare that record variable as a global of the codeunit and set every mark through it: a fresh local variable in each `PostEntry` call leaves the first leg's mark in force, and every balanced commit is refused."
+
+allowedDependencies:
+  - "Base Application"
