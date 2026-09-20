@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=../../schema/metadata.schema.json
 id: basics-add-page-field
-sortId: 1
+sortId: 19
 title: "Show the Customer Custom Field on the Card"
 author: "@Drakonian"
 difficulty: easy

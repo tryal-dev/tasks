@@ -21,6 +21,7 @@ The grading tests call `Greet` with an empty string, a fixed name, and a randoml
 
 ## Learn More
 
+- [Text.StrSubstNo(Text [, Any,...]) method](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/methods-auto/text/text-strsubstno-method)
 - [Codeunit object](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-codeunit-object)
 - [Working with AL methods](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-al-methods)
 - [Text data type](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/methods-auto/text/text-data-type)
