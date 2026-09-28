@@ -1,20 +1,34 @@
-# TryAL Tasks — community task catalog
+# TryAL Tasks
 
-Practice tasks for **TryAL.dev**, a practice platform for Microsoft
-Dynamics 365 Business Central (AL) developers. Every task in `tasks/` is served
-to users through the platform's REST API; submissions are compiled with the
-AL compiler and graded by test codeunits inside BC containers.
+Practice tasks for **[TryAL.dev](https://tryal.dev/)**, a free website for
+learning AL, the programming language of Microsoft Dynamics 365 Business
+Central.
 
-**Solve them at [https://tryal.dev/](https://tryal.dev/).** This repository is the source of truth
-for the tasks themselves — the platform imports them from a pinned, approved
-ref.
+Each task is a small coding problem. You write the code in your browser, and
+automated tests running on a real Business Central server check whether it
+works. Nothing to install.
 
-**Anyone can add a task.** Copy a template, fill it in, open a PR.
+- **Want to solve tasks?** Head to [tryal.dev](https://tryal.dev/).
+- **Found a mistake in a task?** [Report it](https://github.com/tryal-dev/tasks/issues/new?template=task-bug.yml).
+- **Want to write a task?** Anyone can — read on.
 
-**1. Copy the template.** The directory name **is** the task id:
-`<topic>-<slug>`, where the prefix is the task's topic from
-[`topics.yaml`](topics.yaml) and the slug describes what the user
-builds. It must match the `id` field in `metadata.yaml`.
+This repository holds all of the site's free tasks (Pro tasks are kept
+separately), and everything in it is [MIT-licensed](LICENSE).
+
+## Add a task
+
+A task is a folder with a problem statement, starter code, and the tests that
+check solutions. One rule matters most: **your own solution must pass every
+test, and the untouched starter code must fail at least one.** Otherwise
+there's nothing to solve.
+
+Have an idea but not sure it fits? [Propose it first](https://github.com/tryal-dev/tasks/issues/new?template=propose-task.yml)
+and get feedback before you spend time on tests.
+
+**1. Copy the template.** The folder name is the task id, in the form
+`<topic>-<slug>`: the topic comes from [`topics.yaml`](topics.yaml), and the
+slug briefly describes what the solver builds — for example
+`algorithm-vat-rounding`. It must match the `id` in `metadata.yaml`.
 
 Windows (PowerShell):
 
@@ -28,88 +42,72 @@ macOS / Linux (bash):
 cp -r templates/full_execution tasks/algorithm-your-idea
 ```
 
-**2. Fill in the files** — `metadata.yaml`, `task.md`, `starter/`,
-`tests/`. Write a `solution/` as well to prove the task, but it stays on
-your machine: this catalog is public and `tasks/*/solution/` is gitignored
-(see [CONTRIBUTING.md → Reference solutions](CONTRIBUTING.md#reference-solutions)).
-Every template file is annotated with what goes where,
-and [`tasks/basics-add-table-field`](tasks/basics-add-table-field)
-is a small complete example to crib from.
+**2. Fill in the files.** Each template file has comments explaining what goes
+where, and [`tasks/basics-add-table-field`](tasks/basics-add-table-field) is a
+small finished example.
 
-**3. Lint locally, then open a PR:**
+| File | What it is |
+|---|---|
+| `metadata.yaml` | Title, topic, difficulty, hints, and grading settings |
+| `task.md` | The problem statement solvers read |
+| `starter/*.al` | The code solvers start from, one file per AL object |
+| `tests/*.al` | The test codeunits that grade solutions |
+| `solution/*.al` | Your reference solution. **Keep it local** — this repository is public, so `solution/` is gitignored. A maintainer will ask you for it during review. |
+
+**3. Check it locally.** You need [Node.js](https://nodejs.org/) 20 or later:
 
 ```bash
 npm install
 npm run lint
 ```
 
-CI additionally compiles your starter and tests with the real AL
-compiler — see [CONTRIBUTING.md](CONTRIBUTING.md) for running that gate
-locally with `npm run compile`.
+CI also compiles your starter and tests with the real AL compiler. To run
+that check yourself with `npm run compile`, see
+[CONTRIBUTING.md → Quickstart](CONTRIBUTING.md#quickstart).
 
-Read **[CONTRIBUTING.md](CONTRIBUTING.md)** for the full walkthrough: grading
-semantics, the metadata field reference, and the quality bar your task must
-meet. Budget real time for the tests — the bar is that your reference
-solution passes every test and the unchanged `starter/` fails at least one,
-which is what makes a task worth solving. Not sure the idea fits the catalog? Open a
-[**Propose a new task** issue](https://github.com/Drakonian/tryal-dev-tasks/issues/new/choose)
-first and get feedback before writing tests.
+**4. Open a pull request.**
+
+[CONTRIBUTING.md](CONTRIBUTING.md) is the full guide: grading details, every
+`metadata.yaml` field, submission limits, and an optional AI-agent skill that
+helps you write a task.
+
+## What happens after you open a PR
+
+1. **Automatic checks.** CI lints your task and compiles the starter and tests
+   with the real AL compiler. Any problems are flagged right on the changed
+   lines.
+2. **Grading.** A maintainer runs your task in a real Business Central
+   container: the starter must compile but fail at least one test, and your
+   reference solution must pass them all. This step is manual because every
+   run uses a real container.
+3. **Review.** Tests run as trusted code on the site's servers, so every PR
+   needs a maintainer's approval. Only reviewed, merged tasks ever reach the
+   site.
+
+## How grading works
+
+A solver's code is compiled with the real AL compiler for the site's Business
+Central version, installed into a real Business Central container together
+with the task's test codeunits, and passes when every `[Test]` procedure
+passes. Solvers see the result of each test.
 
 ## Repository layout
 
 ```
-tasks/<task-id>/          one directory per task — the directory name IS the task id
-├── metadata.yaml         grading config + catalog metadata (JSON-Schema validated)
-├── task.md               problem statement served to users
+tasks/<task-id>/          one folder per task — the folder name is the task id
+├── metadata.yaml         task settings (validated against schema/)
+├── task.md               problem statement
 ├── starter/*.al          starter code, one file per AL object
-└── tests/*.al            the test codeunits that grade submissions
-                          (no solution/ — this repository is public; reference
-                          solutions live in a private sibling catalog and
-                          tasks/*/solution/ is gitignored here)
+└── tests/*.al            test codeunits that grade solutions
 
 templates/                copyable skeleton for new tasks
-schema/                   JSON Schema for metadata.yaml (live editor validation)
-topics.yaml               the platform's topic set
-compiler/symbols/         pinned BC symbols for the offline compile gate
-scripts/lint.js           offline format check — run via `npm run lint`
-scripts/compile.js        offline AL compile gate — run via `npm run compile`
-scripts/smoke.js          grades tasks against the real platform (Grade tasks workflow)
-.github/                  CI + manual grading workflows, issue forms, PR template, CODEOWNERS
-.claude/skills/           optional AI-agent authoring skill (see CONTRIBUTING)
+schema/                   JSON Schema for metadata.yaml (live validation in your editor)
+topics.yaml               the site's topics
+compiler/symbols/         pinned Business Central symbols for the offline compile check
+scripts/                  lint, compile, and grading scripts behind the npm commands
+.github/                  CI and grading workflows, issue forms, PR template
+.claude/skills/           optional AI-agent skill for writing tasks
 ```
-
-## How grading works
-
-Every task is graded **`full_execution`**: the submission is compiled with
-the real AL compiler against the platform's pinned BC version, published into
-a real Business Central container together with the task's test codeunits,
-and passes when every `[Test]` procedure passes. Users see per-test results.
-
-> The platform format also defines a `compile_only` tier (graded by
-> compilation alone). This catalog doesn't accept it for now — compiling
-> proves too little to make a task meaningful — so the lint rejects it.
-
-## Quality gates
-
-- **Lint (CI, offline):** format contract — schema-valid metadata, unique
-  sortId, required files, submission limits and topics.
-- **Compile gate (CI, offline):** each changed task's starter and tests are
-  compiled with the real AL compiler against the platform's pinned
-  BC symbols ([`compiler/symbols/`](compiler)) — catches invalid AL without
-  a BC container. Diagnostics show up as inline PR annotations; analyzer
-  findings are surfaced but non-fatal, like on the platform. Pushes to main
-  (and PRs touching shared files) compile the full catalog.
-- **Grading (CI, manual):** a maintainer runs the **Grade tasks** workflow
-  from the Actions tab for selected task ids (or `all`). Each task is uploaded
-  to the platform's staging area and graded in a real BC container: the
-  unchanged `starter/` must compile but fail at least one test. The reference
-  solution must pass every test too, but it is graded from the private
-  catalog — this repository does not carry solutions. It is never automatic —
-  every run occupies real containers on the platform host.
-- **Human review (always):** a task's `tests/` are trusted code executed in
-  the platform's containers, so every PR needs maintainer approval. The
-  platform imports tasks from a pinned, approved ref — never from an open
-  branch.
 
 ## License
 
