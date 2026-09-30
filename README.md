@@ -1,4 +1,20 @@
-# TryAL Tasks
+<p align="center">
+  <a href="https://tryal.dev/">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset=".github/assets/wordmark-dark.svg">
+      <img src=".github/assets/wordmark-light.svg" alt="tryal.dev" height="64">
+    </picture>
+  </a>
+</p>
+
+<p align="center"><strong>Learn AL by writing AL.</strong></p>
+
+<p align="center">
+  <a href="https://tryal.dev/"><img src="https://img.shields.io/badge/solve_on-tryal.dev-008d94" alt="Solve on tryal.dev"></a>
+  <a href="tasks"><img src="https://img.shields.io/github/directory-file-count/tryal-dev/tasks/tasks?type=dir&label=free%20tasks&color=008d94" alt="Free tasks"></a>
+  <a href="CONTRIBUTING.md"><img src="https://img.shields.io/badge/contributions-welcome-008d94" alt="Contributions welcome"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-008d94" alt="MIT license"></a>
+</p>
 
 Practice tasks for **[TryAL.dev](https://tryal.dev/)**, a free website for
 learning AL, the programming language of Microsoft Dynamics 365 Business
@@ -105,7 +121,7 @@ schema/                   JSON Schema for metadata.yaml (live validation in your
 topics.yaml               the site's topics
 compiler/symbols/         pinned Business Central symbols for the offline compile check
 scripts/                  lint, compile, and grading scripts behind the npm commands
-.github/                  CI and grading workflows, issue forms, PR template
+.github/                  CI and grading workflows, issue forms, PR template, README logo
 .claude/skills/           optional AI-agent skill for writing tasks
 ```
 
