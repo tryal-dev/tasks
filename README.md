@@ -16,7 +16,7 @@
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-008d94" alt="MIT license"></a>
 </p>
 
-Practice tasks for **[TryAL.dev](https://tryal.dev/)**, a free website for
+Practice tasks for **[tryal.dev](https://tryal.dev/)**, a free website for
 learning AL, the programming language of Microsoft Dynamics 365 Business
 Central.
 
